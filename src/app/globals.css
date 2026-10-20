@@ -84,6 +84,7 @@
   --input: oklch(0.929 0.013 255.508);
   --ring: oklch(0.546 0.245 262.881);
 
+  /* Status colors for readiness, deadlines and trackers */
   --success: oklch(0.627 0.194 149.214);
   --success-foreground: oklch(0.985 0.01 150);
   --warning: oklch(0.769 0.188 70.08);
