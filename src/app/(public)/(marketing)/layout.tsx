@@ -1,7 +1,7 @@
-
 import { cn } from "@/lib/utils";
 import { Geist, Geist_Mono, Nunito_Sans, Roboto } from "next/font/google";
 import { ReactNode } from "react";
+import Header from "@/components/layout/public/Header";
 
 const nunitoSansHeading = Nunito_Sans({
   subsets: ["latin"],
@@ -31,9 +31,8 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
         nunitoSansHeading.variable,
       )}
     >
-     
+      <Header />
       <main className="flex-1">{children}</main>
-      
     </div>
   );
 }

@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import Providers from "@/providers";
 import { Toaster } from "@/components/ui/toast";
 
-const roboto = Roboto({ subsets: ["latin"], variable: "--font-sans" });
+const roboto = Roboto({subsets:['latin'],variable:'--font-sans'});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
