@@ -9,7 +9,7 @@ import {
   userLogout,
   verifyStudentEmail,
 } from "@/api/auth.api";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export function useLogin() {
   return useMutation({
@@ -30,8 +30,15 @@ export function useRegisterStudent() {
 }
 
 export function useLogout() {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: userLogout,
+    onSuccess: () => {
+      // 1. Immediately clear the user data from React Query cache
+      queryClient.setQueryData(["user"], null);
+      queryClient.invalidateQueries({ queryKey: ["user"] });
+    },
   });
 }
 
