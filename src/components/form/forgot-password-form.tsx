@@ -115,7 +115,7 @@ export default function ForgotPasswordForm() {
         <Button
           type="submit"
           disabled={isPending}
-          className="w-full h-12 text-sm font-semibold rounded-2xl"
+          className="w-full h-10 text-sm font-semibold rounded-2xl"
         >
           {isPending ? (
             <>

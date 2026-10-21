@@ -76,37 +76,37 @@ export function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-20 transition-all duration-300 ${
         solid
-          ? "bg-background/90 backdrop-blur-xl border-b border-border/80 shadow-xs"
+          ? "bg-white/20 backdrop-blur-xl backdrop-saturate-150 border-b border-white/30 shadow-sm"
           : "bg-gradient-to-b from-black/60 via-black/30 to-transparent"
       }`}
     >
-      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-15  max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Left: Brand Logo */}
         <div className="flex items-center">
-                      {/* Logo */}
-            <div className="flex items-center">
-              <Link href="/" className="flex items-center gap-2">
-                <div className="size-12 overflow-hidden rounded-lg">
-                  <Image
-                    src="/logo1.png"
-                    alt="ShimanaPeriye Logo"
-                    width={32}
-                    height={32}
-                    className="h-full w-full object-cover"
-                    priority
-                  />
-                </div>
-                <span
-                  className={`hidden text-lg font-bold transition-colors sm:inline ${
-                    solid ? "text-primary" : "text-white"
-                  }`}
-                >
-                  ShimanaPeriye
-                </span>
-              </Link>
-            </div>
+          {/* Logo */}
+          <div className="flex items-center">
+            <Link href="/" className="flex items-center gap-2">
+              <div className="size-12 overflow-hidden rounded-lg">
+                <Image
+                  src="/logo1.png"
+                  alt="ShimanaPeriye Logo"
+                  width={32}
+                  height={32}
+                  className="h-full w-full object-cover"
+                  priority
+                />
+              </div>
+              <span
+                className={`hidden text-lg font-bold transition-colors sm:inline ${
+                  solid ? "text-primary" : "text-white"
+                }`}
+              >
+                ShimanaPeriye
+              </span>
+            </Link>
+          </div>
         </div>
 
         {/* Center: Desktop Nav Links */}
@@ -127,8 +127,8 @@ export function Header() {
                   isActive
                     ? "bg-primary text-primary-foreground shadow-xs"
                     : solid
-                    ? "text-muted-foreground hover:text-foreground hover:bg-muted/80"
-                    : "text-white/80 hover:text-white hover:bg-white/15"
+                      ? "text-muted-foreground hover:text-foreground hover:bg-muted/80"
+                      : "text-white/80 hover:text-white hover:bg-white/15"
                 }`}
               >
                 {item.label}
@@ -181,8 +181,8 @@ export function Header() {
                           role === "ADMIN"
                             ? "/admin"
                             : role === "MENTOR"
-                            ? "/mentor"
-                            : "/student"
+                              ? "/mentor"
+                              : "/student",
                         );
                       }}
                       className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-xs font-medium text-foreground hover:bg-muted transition-colors cursor-pointer"
@@ -286,7 +286,10 @@ export function Header() {
                   onClick={() => setMobileMenuOpen(false)}
                   className="w-full"
                 >
-                  <Button variant="outline" className="w-full h-10 rounded-xl font-semibold">
+                  <Button
+                    variant="outline"
+                    className="w-full h-10 rounded-xl font-semibold"
+                  >
                     Sign In
                   </Button>
                 </Link>
