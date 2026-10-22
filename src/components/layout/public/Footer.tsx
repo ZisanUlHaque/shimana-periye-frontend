@@ -1,179 +1,246 @@
 "use client";
 
-import Link from "next/link";
 import { useState, useEffect } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import {
+  ArrowRight,
+  ArrowUp,
+  GraduationCap,
+  Building2,
+  Globe,
+} from "lucide-react";
 
 export default function Footer() {
   const [showTopBtn, setShowTopBtn] = useState(false);
+  const [email, setEmail] = useState("");
 
   useEffect(() => {
-    const handleScroll = () => setShowTopBtn(window.scrollY > 400);
+    const handleScroll = () => {
+      setShowTopBtn(window.scrollY > 400);
+    };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (email) {
+      alert(`Subscribed with: ${email}`);
+      setEmail("");
+    }
+  };
 
   return (
-    <footer className="relative bg-gradient-to-b from-sky-50 to-blue-100 text-gray-700">
-
-      {/* ===== Wavy Divider ===== */}
-      <div className="absolute top-0 left-0 w-full -translate-y-[99%] leading-none overflow-hidden">
-        <svg className="relative block w-full h-[70px] sm:h-[90px] lg:h-[110px]" viewBox="0 0 1200 120" preserveAspectRatio="none">
-          <path d="M0,60 C300,10 900,110 1200,40 L1200,120 L0,120 Z" className="fill-sky-100/60" />
-        </svg>
-        <svg className="relative block w-full h-[80px] sm:h-[100px] lg:h-[120px] -mt-[60px] sm:-mt-[75px] lg:-mt-[90px]" viewBox="0 0 1200 120" preserveAspectRatio="none">
-          <path d="M0,40 C300,120 900,-20 1200,60 L1200,120 L0,120 Z" className="fill-sky-50" />
+    <footer className="relative bg-gradient-to-b from-sky-100 via-blue-50 to-sky-100 text-gray-700 pt-6">
+      
+      {/* 🌊 High-Contrast Wavy SVG Divider (Double Layer for Sharp Visibility) */}
+      <div className="absolute top-0 left-0 right-0 -translate-y-[99%] overflow-hidden leading-none pointer-events-none z-10">
+        <svg
+          className="relative block w-full h-[60px] sm:h-[90px] lg:h-[130px]"
+          viewBox="0 0 1200 120"
+          preserveAspectRatio="none"
+        >
+          {/* Layer 1: Darker Back Shadow Wave for high contrast against white background */}
+          <path
+            d="M0,0 C150,90 350,-40 500,60 C650,140 900,-20 1200,40 L1200,120 L0,120 Z"
+            className="fill-sky-300/40"
+          ></path>
+          {/* Layer 2: Main Front Wave matching Footer Top Gradient */}
+          <path
+            d="M0,30 C200,100 450,10 650,70 C850,130 1050,20 1200,50 L1200,120 L0,120 Z"
+            className="fill-sky-100"
+          ></path>
         </svg>
       </div>
 
-      {/* ===== Floating Newsletter Card (overlapping wave) ===== */}
-      <div className="relative max-w-3xl mx-auto px-6 -mt-16 sm:-mt-20 mb-10 z-20">
-        <div className="relative bg-gradient-to-br from-emerald-50 to-sky-50 border border-white shadow-2xl shadow-emerald-900/10 rounded-[2.5rem] px-8 py-10 sm:px-12 sm:py-12 text-center overflow-hidden">
-          
-          <div className="absolute -top-10 -left-10 w-32 h-32 bg-emerald-200/40 rounded-full blur-2xl pointer-events-none" />
-          <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-sky-200/40 rounded-full blur-2xl pointer-events-none" />
+      {/* 📬 Floating Newsletter Card (Overlapping the Wave) */}
+      <div className="relative max-w-3xl mx-auto px-6 -mt-16 sm:-mt-24 mb-12 z-20">
+        <div className="relative overflow-hidden rounded-[2.5rem] border border-white/80 bg-gradient-to-br from-emerald-50/90 via-white/90 to-sky-50/90 p-8 sm:p-10 shadow-xl shadow-sky-900/10 backdrop-blur-xl">
+          {/* Soft background decorative blobs */}
+          <div className="absolute -top-12 -right-12 h-40 w-40 rounded-full bg-emerald-400/20 blur-2xl" />
+          <div className="absolute -bottom-12 -left-12 h-40 w-40 rounded-full bg-sky-400/20 blur-2xl" />
 
-          <h3 className="relative text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
-            Never Miss a Deadline.
-          </h3>
-          <p className="relative text-gray-600 text-sm sm:text-base mb-6 max-w-md mx-auto">
-            Subscribe to get scholarship deadlines, university updates, and expert tips — straight to your inbox.
-          </p>
+          <div className="relative z-10 text-center">
+            <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">
+              Never Miss a Deadline.
+            </h3>
+            <p className="mt-2 text-sm text-slate-600 max-w-md mx-auto">
+              Subscribe to get scholarship deadlines, university updates, and expert tips — straight to your inbox.
+            </p>
 
-          <form className="relative max-w-md mx-auto">
-            <div className="flex items-center bg-white rounded-full shadow-md pl-5 pr-1.5 py-1.5">
+            <form onSubmit={handleSubscribe} className="mt-6 max-w-md mx-auto relative flex items-center">
               <input
                 type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email address"
-                className="flex-1 bg-transparent outline-none text-sm text-gray-700 placeholder:text-gray-400"
+                required
+                className="w-full rounded-full border border-emerald-200/80 bg-white/90 px-6 py-4 pr-16 text-sm text-slate-800 placeholder-slate-400 shadow-inner focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
               />
               <button
                 type="submit"
+                className="absolute right-2 flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-r from-emerald-500 to-sky-500 text-white shadow-md hover:scale-105 transition-transform"
                 aria-label="Subscribe"
-                className="shrink-0 bg-gradient-to-r from-emerald-500 to-sky-500 hover:from-emerald-600 hover:to-sky-600 text-white p-3 rounded-full shadow-md transition-all duration-300 hover:scale-105"
               >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
+                <ArrowRight className="h-5 w-5" />
               </button>
-            </div>
-          </form>
-
-          <p className="relative text-xs text-gray-400 mt-3">No spam. Unsubscribe anytime.</p>
+            </form>
+            <p className="mt-3 text-[11px] text-slate-400">
+              No spam. Unsubscribe anytime.
+            </p>
+          </div>
         </div>
       </div>
 
-      {/* ===== Inner wrapper (dot-grid + watermark + main content) ===== */}
+      {/* Main Footer Container */}
       <div className="relative overflow-hidden">
-
-        {/* ===== Subtle Dot Grid Background Texture ===== */}
+        {/* Subtle dot-grid texture */}
         <div
-          className="absolute inset-0 opacity-[0.4] pointer-events-none"
+          className="absolute inset-0 opacity-40 pointer-events-none"
           style={{
             backgroundImage: "radial-gradient(circle, #94a3b8 1px, transparent 1px)",
             backgroundSize: "24px 24px",
           }}
         />
 
-        {/* ===== Giant Watermark Text ===== */}
-        <h1 className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/4 text-[18vw] sm:text-[14vw] font-extrabold text-emerald-900/[0.03] select-none pointer-events-none whitespace-nowrap">
+        {/* Faded Watermark */}
+        <h1 className="absolute bottom-10 left-1/2 -translate-x-1/2 text-[18vw] sm:text-[14vw] font-black text-emerald-900/[0.03] select-none pointer-events-none tracking-tighter whitespace-nowrap">
           ShimanaPeriye
         </h1>
 
-        {/* ===== Main Footer Content ===== */}
-        <div className="relative max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 pt-10 pb-10 z-10">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-
-            {/* Brand */}
-            <div className="sm:col-span-2 lg:col-span-1">
-              <div className="flex items-center gap-2 mb-4">
-                <span className="text-2xl">✈️</span>
-                <h2 className="text-2xl font-bold bg-gradient-to-r from-emerald-600 to-sky-600 bg-clip-text text-transparent">
+        <div className="relative mx-auto max-w-7xl px-6 pt-6 pb-12">
+          {/* Main Footer Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-slate-300/60">
+            
+            {/* 1. Brand & Logo Column */}
+            <div className="space-y-4">
+              <Link href="/" className="flex items-center gap-2.5">
+                <div className="size-11 overflow-hidden rounded-xl bg-white shadow-md shadow-emerald-500/10 border border-emerald-100 p-0.5 flex items-center justify-center">
+                  <Image
+                    src="/logo1.png"
+                    alt="ShimanaPeriye Logo"
+                    width={40}
+                    height={40}
+                    className="h-full w-full object-cover rounded-lg"
+                    priority
+                  />
+                </div>
+                <span className="text-xl font-bold bg-gradient-to-r from-slate-900 via-emerald-800 to-sky-700 bg-clip-text text-transparent">
                   ShimanaPeriye
-                </h2>
-              </div>
-              <p className="text-gray-600 leading-relaxed mb-6 max-w-sm">
-                Your all-in-one higher study platform. Discover worldwide universities,
-                track scholarship deadlines, and prepare applications with verified mentor guidance.
+                </span>
+              </Link>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                Your all-in-one higher study platform. Discover universities, apply for scholarships, and connect with verified mentors worldwide.
               </p>
-
-              <div className="flex gap-3">
-                {[
-                  { name: "Facebook", path: "M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.4h-1.2c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0 0 22 12z" },
-                  { name: "Twitter", path: "M22 5.9c-.7.3-1.5.6-2.3.7.8-.5 1.5-1.3 1.8-2.3-.8.5-1.7.8-2.6 1a4.1 4.1 0 0 0-7 3.7A11.7 11.7 0 0 1 3.4 4.6a4.1 4.1 0 0 0 1.3 5.5c-.7 0-1.3-.2-1.9-.5v.1c0 2 1.4 3.6 3.3 4a4.1 4.1 0 0 1-1.9.1 4.1 4.1 0 0 0 3.8 2.8A8.2 8.2 0 0 1 2 18.6a11.6 11.6 0 0 0 6.3 1.8c7.5 0 11.7-6.3 11.7-11.7v-.5c.8-.6 1.5-1.3 2-2.1z" },
-                  { name: "LinkedIn", path: "M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.1c.5-.9 1.8-1.9 3.7-1.9 4 0 4.7 2.6 4.7 6v6.2h-4v-5.5c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9V21H9z" },
-                  { name: "Instagram", path: "M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm10 2c1.7 0 3 1.3 3 3v10c0 1.7-1.3 3-3 3H7c-1.7 0-3-1.3-3-3V7c0-1.7 1.3-3 3-3h10zm-5 3a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6zm4.5-3a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" },
-                ].map((icon) => (
-                  <a
-                    key={icon.name}
-                    href="#"
-                    aria-label={icon.name}
-                    className="group relative p-[2px] rounded-full bg-gradient-to-br from-emerald-400 to-sky-400 hover:from-emerald-500 hover:to-sky-500 transition-all hover:scale-110 duration-300"
-                  >
-                    <span className="flex items-center justify-center bg-white w-9 h-9 rounded-full">
-                      <svg className="w-4 h-4 text-gray-600 group-hover:text-emerald-600 transition-colors" fill="currentColor" viewBox="0 0 24 24">
-                        <path d={icon.path} />
-                      </svg>
-                    </span>
-                  </a>
-                ))}
+              
+              {/* Social Icons */}
+              <div className="flex gap-3 pt-2">
+                <SocialIcon href="#" icon={<FacebookIcon />} ariaLabel="Facebook" />
+                <SocialIcon href="#" icon={<TwitterIcon />} ariaLabel="Twitter" />
+                <SocialIcon href="#" icon={<LinkedInIcon />} ariaLabel="LinkedIn" />
+                <SocialIcon href="#" icon={<InstagramIcon />} ariaLabel="Instagram" />
               </div>
             </div>
 
+            {/* 2. Platform Column */}
             <FooterLinkGroup
               title="Platform"
-              icon="🎓"
-              links={["Universities", "Scholarships", "Mentors", "Roadmaps"]}
+              icon={<GraduationCap className="h-4 w-4 text-emerald-600" />}
+              links={[
+                { label: "Universities", href: "/universities" },
+                { label: "Scholarships", href: "/scholarships" },
+                { label: "Mentors", href: "/mentors" },
+                { label: "Roadmaps", href: "/roadmaps" },
+              ]}
             />
 
+            {/* 3. Company Column */}
             <FooterLinkGroup
               title="Company"
-              icon="🏢"
-              links={["About Us", "Careers", "Blog", "Contact"]}
+              icon={<Building2 className="h-4 w-4 text-emerald-600" />}
+              links={[
+                { label: "About Us", href: "/about" },
+                { label: "Careers", href: "/careers" },
+                { label: "Blog", href: "/blog" },
+                { label: "Contact", href: "/contact" },
+              ]}
             />
 
-            <div>
-              <h3 className="text-gray-900 font-semibold mb-4 flex items-center gap-2">
-                <span>🌐</span> Reach
-              </h3>
-              <ul className="space-y-3 text-sm text-gray-600">
-                <li>50+ Countries Supported</li>
-                <li>500+ Partner Universities</li>
-                <li>10,000+ Students Guided</li>
+            {/* 4. Reach Stats Column */}
+            <div className="space-y-4">
+              <h4 className="text-sm font-bold uppercase tracking-wider text-slate-900 flex items-center gap-2">
+                <Globe className="h-4 w-4 text-emerald-600" /> Our Reach
+              </h4>
+              <ul className="space-y-3 text-sm text-slate-600">
+                <li className="flex items-center gap-2 font-medium">
+                  <span className="h-2 w-2 rounded-full bg-emerald-500"></span>
+                  50+ Countries Supported
+                </li>
+                <li className="flex items-center gap-2 font-medium">
+                  <span className="h-2 w-2 rounded-full bg-sky-500"></span>
+                  500+ Partner Universities
+                </li>
+                <li className="flex items-center gap-2 font-medium">
+                  <span className="h-2 w-2 rounded-full bg-indigo-500"></span>
+                  10,000+ Students Guided
+                </li>
               </ul>
             </div>
+
           </div>
 
-          <div className="border-t border-gray-300/60 mt-14 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-gray-500 text-center sm:text-left">
+          {/* Bottom Bar */}
+          <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 font-medium">
             <p>© {new Date().getFullYear()} ShimanaPeriye. All rights reserved.</p>
-
-            <div className="flex items-center gap-2 bg-white/70 border border-gray-200 px-3 py-1.5 rounded-full shadow-sm text-xs">
-              <span>🌐</span>
-              <span>Available in 50+ Countries</span>
+            
+            <div className="flex items-center gap-2 bg-white/70 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-slate-200/80 shadow-xs">
+              <span className="text-emerald-600 font-semibold">🌐 Available in 50+ Countries</span>
             </div>
 
             <div className="flex gap-6">
-              <Link href="/privacy" className="hover:text-emerald-600 transition">Privacy Policy</Link>
-              <Link href="/terms" className="hover:text-emerald-600 transition">Terms of Service</Link>
+              <Link href="/privacy" className="hover:text-emerald-700 transition-colors">Privacy Policy</Link>
+              <Link href="/terms" className="hover:text-emerald-700 transition-colors">Terms of Service</Link>
             </div>
           </div>
         </div>
       </div>
 
-      <button
-        onClick={scrollToTop}
-        aria-label="Back to top"
-        className={`fixed bottom-6 right-6 z-50 bg-gradient-to-r from-emerald-500 to-sky-500 text-white p-3 rounded-full shadow-lg hover:scale-110 transition-all duration-300 ${
-          showTopBtn ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"
-        }`}
-      >
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-        </svg>
-      </button>
+      {/* Floating Back to Top Button */}
+      {showTopBtn && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-6 right-6 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-r from-emerald-500 to-sky-500 text-white shadow-xl shadow-emerald-500/30 transition-all hover:scale-110 active:scale-95"
+          aria-label="Back to top"
+        >
+          <ArrowUp className="h-5 w-5" />
+        </button>
+      )}
     </footer>
   );
+}
+
+{/* Helper Sub-components */}
+
+function SocialIcon({ href, icon, ariaLabel }: { href: string; icon: React.ReactNode; ariaLabel: string }) {
+  return (
+    <a
+      href={href}
+      aria-label={ariaLabel}
+      className="flex h-9 w-9 items-center justify-center rounded-xl bg-white border border-slate-200 text-slate-600 shadow-xs hover:border-emerald-400 hover:text-emerald-600 hover:shadow-md transition-all"
+    >
+      {icon}
+    </a>
+  );
+}
+
+interface LinkItem {
+  label: string;
+  href: string;
 }
 
 function FooterLinkGroup({
@@ -182,38 +249,60 @@ function FooterLinkGroup({
   links,
 }: {
   title: string;
-  icon: string;
-  links: string[];
+  icon: React.ReactNode;
+  links: LinkItem[];
 }) {
   return (
-    <div>
-      <h3 className="text-gray-900 font-semibold mb-4 flex items-center gap-2">
-        <span>{icon}</span> {title}
-      </h3>
-      <ul className="space-y-3 text-sm">
+    <div className="space-y-4">
+      <h4 className="text-sm font-bold uppercase tracking-wider text-slate-900 flex items-center gap-2">
+        {icon} {title}
+      </h4>
+      <ul className="space-y-2.5 text-sm font-medium">
         {links.map((link) => (
-          <li key={link}>
+          <li key={link.label}>
             <Link
-              href="#"
-              className="group inline-flex items-center gap-1 text-gray-600 hover:text-emerald-600 transition-colors"
+              href={link.href}
+              className="group inline-flex items-center text-slate-600 hover:text-emerald-600 transition-colors"
             >
-              <span className="relative">
-                {link}
-                <span className="absolute left-0 -bottom-0.5 w-0 group-hover:w-full h-[1px] bg-emerald-500 transition-all duration-300" />
-              </span>
-              <svg
-                className="w-3 h-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={2}
-                viewBox="0 0 24 24"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-              </svg>
+              <span>{link.label}</span>
+              <ArrowRight className="h-3 w-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-1 transition-all text-emerald-500" />
             </Link>
           </li>
         ))}
       </ul>
     </div>
+  );
+}
+
+{/* Inline Social SVG Icons */}
+function FacebookIcon() {
+  return (
+    <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24">
+      <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" />
+    </svg>
+  );
+}
+
+function TwitterIcon() {
+  return (
+    <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24">
+      <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z" />
+    </svg>
+  );
+}
+
+function LinkedInIcon() {
+  return (
+    <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24">
+      <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.25V10.9H6.46M7.86 6.74a1.6 1.6 0 1 0 0 3.2 1.6 1.6 0 0 0 0-3.2z" />
+    </svg>
+  );
+}
+
+function InstagramIcon() {
+  return (
+    <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24">
+      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+    </svg>
   );
 }
