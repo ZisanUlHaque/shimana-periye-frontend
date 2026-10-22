@@ -33,7 +33,6 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
       )}
     >
       <Header />
-      
       <main className="flex-1">{children}</main>
       <Footer />
     </div>

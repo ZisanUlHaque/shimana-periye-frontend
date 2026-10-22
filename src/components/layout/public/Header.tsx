@@ -16,12 +16,20 @@ import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/toast";
 import Image from "next/image";
 
-const navItems = [
+// 👇 login ছাড়া যা দেখাবে
+const guestNavItems = [
   { label: "Home", href: "/" },
-  { label: "Universities", href: "/universities" },
   { label: "Scholarships", href: "/scholarships" },
-  { label: "Mentors", href: "/mentors" },
+  { label: "About Us", href: "/about" },
+];
+
+// 👇 login করার পর যা দেখাবে
+const authNavItems = [
+  { label: "Home", href: "/" },
+  { label: "Scholarships", href: "/scholarships" },
+  { label: "About Us", href: "/about" },
   { label: "Roadmaps", href: "/roadmaps" },
+  { label: "Mentors", href: "/mentors" },
 ];
 
 export function Header() {
@@ -36,6 +44,9 @@ export function Header() {
   const user = userData?.data?.user || userData?.data;
   const { mutate: logout } = useLogout();
 
+  // 👇 user থাকলে authNavItems, না থাকলে guestNavItems
+  const navItems = user ? authNavItems : guestNavItems;
+
   const isHome = pathname === "/";
   const solid = !isHome || isScrolled;
 
@@ -46,7 +57,6 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close dropdown on outside click
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (
@@ -85,7 +95,6 @@ export function Header() {
       <div className="mx-auto flex h-15  max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Left: Brand Logo */}
         <div className="flex items-center">
-          {/* Logo */}
           <div className="flex items-center">
             <Link href="/" className="flex items-center gap-2">
               <div className="size-12 overflow-hidden rounded-lg">
@@ -140,7 +149,6 @@ export function Header() {
         {/* Right: Actions */}
         <div className="flex items-center gap-3">
           {user ? (
-            /* User profile dropdown */
             <div className="relative" ref={dropdownRef}>
               <button
                 type="button"
@@ -218,7 +226,6 @@ export function Header() {
               )}
             </div>
           ) : (
-            /* Auth links */
             <div className="hidden sm:flex items-center gap-2">
               <Link href="/login">
                 <Button
