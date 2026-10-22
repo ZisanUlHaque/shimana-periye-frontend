@@ -1,2 +1,3 @@
 export * from "./auth.hook";
-export * from "./dashboard.hook";
+export * from "./academic-record.hook";
+export * from "./application-task.hook";
