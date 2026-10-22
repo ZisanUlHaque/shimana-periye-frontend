@@ -86,11 +86,10 @@ export function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-20 transition-all duration-300 ${
-        solid
+      className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${solid
           ? "bg-white/20 backdrop-blur-xl backdrop-saturate-150 border-b border-white/30 shadow-sm"
           : "bg-gradient-to-b from-black/60 via-black/30 to-transparent"
-      }`}
+        }`}
     >
       <div className="mx-auto flex h-15  max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Left: Brand Logo */}
@@ -108,9 +107,8 @@ export function Header() {
                 />
               </div>
               <span
-                className={`hidden text-lg font-bold transition-colors sm:inline ${
-                  solid ? "text-primary" : "text-white"
-                }`}
+                className={`hidden text-lg font-bold transition-colors sm:inline ${solid ? "text-primary" : "text-white"
+                  }`}
               >
                 ShimanaPeriye
               </span>
@@ -120,11 +118,10 @@ export function Header() {
 
         {/* Center: Desktop Nav Links */}
         <nav
-          className={`hidden md:flex items-center gap-1 rounded-full border px-4 py-1.5 shadow-xs transition-colors duration-200 ${
-            solid
+          className={`hidden md:flex items-center gap-1 rounded-full border px-4 py-1.5 shadow-xs transition-colors duration-200 ${solid
               ? "border-border/80 bg-card/60 backdrop-blur-md"
               : "border-white/20 bg-white/10 backdrop-blur-md"
-          }`}
+            }`}
         >
           {navItems.map((item) => {
             const isActive = pathname === item.href;
@@ -132,13 +129,12 @@ export function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`rounded-full px-4 py-1.5 text-sm font-semibold transition-all duration-150 ${
-                  isActive
+                className={`rounded-full px-4 py-1.5 text-sm font-semibold transition-all duration-150 ${isActive
                     ? "bg-primary text-primary-foreground shadow-xs"
                     : solid
                       ? "text-muted-foreground hover:text-foreground hover:bg-muted/80"
                       : "text-white/80 hover:text-white hover:bg-white/15"
-                }`}
+                  }`}
               >
                 {item.label}
               </Link>
@@ -153,11 +149,10 @@ export function Header() {
               <button
                 type="button"
                 onClick={() => setUserDropdownOpen((prev) => !prev)}
-                className={`flex items-center gap-2 rounded-full p-1 pl-1.5 pr-3 border transition-colors ${
-                  solid
+                className={`flex items-center gap-2 rounded-full p-1 pl-1.5 pr-3 border transition-colors ${solid
                     ? "border-border bg-card text-foreground hover:bg-muted"
                     : "border-white/30 bg-white/10 text-white hover:bg-white/20"
-                }`}
+                  }`}
               >
                 <div className="flex size-8 items-center justify-center rounded-full bg-primary text-primary-foreground text-xs font-bold shadow-xs">
                   {user.name?.[0]?.toUpperCase() || "U"}
@@ -230,11 +225,10 @@ export function Header() {
               <Link href="/login">
                 <Button
                   variant="ghost"
-                  className={`h-9 rounded-xl px-4 text-xs font-semibold ${
-                    solid
+                  className={`h-9 rounded-xl px-4 text-xs font-semibold ${solid
                       ? "text-foreground hover:bg-muted"
                       : "text-white hover:bg-white/15 hover:text-white"
-                  }`}
+                    }`}
                 >
                   Sign In
                 </Button>
@@ -251,11 +245,10 @@ export function Header() {
           <button
             type="button"
             onClick={() => setMobileMenuOpen((prev) => !prev)}
-            className={`rounded-xl p-2 md:hidden ${
-              solid
+            className={`rounded-xl p-2 md:hidden ${solid
                 ? "text-foreground hover:bg-muted"
                 : "text-white hover:bg-white/15"
-            }`}
+              }`}
             aria-label="Toggle menu"
           >
             {mobileMenuOpen ? (
@@ -276,11 +269,10 @@ export function Header() {
                 key={item.href}
                 href={item.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className={`rounded-xl px-4 py-2.5 text-sm font-semibold transition-colors ${
-                  pathname === item.href
+                className={`rounded-xl px-4 py-2.5 text-sm font-semibold transition-colors ${pathname === item.href
                     ? "bg-primary text-primary-foreground"
                     : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                }`}
+                  }`}
               >
                 {item.label}
               </Link>
