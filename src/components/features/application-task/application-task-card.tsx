@@ -10,8 +10,8 @@ import { useUpdateTaskStatus } from "@/hooks/application-task.hook";
 const STATUS_META: Record<string, { label: string; className: string }> = {
   PENDING: { label: "Pending", className: "bg-amber-500/10 text-amber-600 dark:text-amber-400" },
   IN_PROGRESS: { label: "In Progress", className: "bg-blue-500/10 text-blue-600 dark:text-blue-400" },
-  COMPLETED: { label: "Completed", className: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400" },
-  CANCELLED: { label: "Cancelled", className: "bg-rose-500/10 text-rose-600 dark:text-rose-400" },
+  DONE: { label: "Done", className: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400" },
+  BLOCKED: { label: "Blocked", className: "bg-rose-500/10 text-rose-600 dark:text-rose-400" },
 };
 
 interface ApplicationTaskCardProps {
@@ -31,7 +31,7 @@ export function ApplicationTaskCard({
 
   const meta = STATUS_META[task.status] ?? STATUS_META.PENDING;
   const isOverdue =
-    task.deadline && task.status !== "COMPLETED" && new Date(task.deadline).getTime() < Date.now();
+    task.deadline && task.status !== "DONE" && new Date(task.deadline).getTime() < Date.now();
 
   return (
     <div className="group relative flex flex-col gap-3 rounded-2xl border border-border/70 bg-card p-5 shadow-xs transition-all duration-200 hover:border-border hover:shadow-sm">

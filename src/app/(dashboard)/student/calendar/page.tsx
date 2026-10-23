@@ -1,14 +1,14 @@
+import { CalendarView } from "@/components/features/calendar/calendar-view";
 import { PageHeader } from "@/components/layout/public/page-header";
 
-export default function CalendarPage() {
+export default function StudentCalendarPage() {
   return (
-    <div className="flex flex-1 flex-col gap-6 p-6">
+    <div className="space-y-6">
       <PageHeader
         title="Calendar"
-        description="Deadlines, tasks and interview calls in one place."
+        description="All your deadlines, tasks, interviews and test dates in one place."
       />
-      {/* TODO: GET /api/v1/calendar/events */}
-      {/* TODO: GET /api/v1/calendar/export.ics (subscribe link) */}
+      <CalendarView />
     </div>
   );
 }

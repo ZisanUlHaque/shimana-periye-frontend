@@ -1,24 +1,14 @@
+import { ShortlistList } from "@/components/features/shortlist/shortlist-list";
 import { PageHeader } from "@/components/layout/public/page-header";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
 
-export default function ShortlistPage() {
+export default function StudentShortlistPage() {
   return (
-    <div className="flex flex-1 flex-col gap-6 p-6">
+    <div className="space-y-6">
       <PageHeader
-        title="My Shortlist"
-        description="Opportunities you're considering."
-        action={
-          <Link href="/student/shortlist/compare">
-            <Button size="sm" variant="outline">
-              Compare
-            </Button>
-          </Link>
-        }
+        title="Shortlist"
+        description="Opportunities you've saved for later. Select 2+ to compare."
       />
-      {/* TODO: GET /api/v1/shortlist */}
-      {/* TODO: PATCH /api/v1/shortlist/:id */}
-      {/* TODO: DELETE /api/v1/shortlist/:id */}
+      <ShortlistList />
     </div>
   );
 }

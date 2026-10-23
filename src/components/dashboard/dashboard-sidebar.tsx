@@ -148,9 +148,19 @@ export function DashboardSidebar({ role }: { role: Role }) {
             onClick={() => setMenuOpen((p) => !p)}
             className="flex w-full items-center gap-2.5 rounded-xl p-2 text-left transition-colors hover:bg-sidebar-accent"
           >
-            <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary/70 text-xs font-bold text-primary-foreground shadow-sm">
-              {user?.name?.[0]?.toUpperCase() || "U"}
-            </div>
+   <div className="relative flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-primary to-primary/70 text-xs font-bold text-primary-foreground shadow-sm">
+  {user?.imageUrl ? (
+    <Image
+      src={user.imageUrl}
+      alt={user?.name ?? "User"}
+      fill
+      sizes="36px"
+      className="object-cover"
+    />
+  ) : (
+    user?.name?.[0]?.toUpperCase() || "U"
+  )}
+</div>
             <div className="flex min-w-0 flex-1 flex-col">
               <span className="truncate text-xs font-semibold text-sidebar-foreground">
                 {user?.name || "Loading..."}
@@ -168,7 +178,13 @@ export function DashboardSidebar({ role }: { role: Role }) {
                 type="button"
                 onClick={() => {
                   setMenuOpen(false);
-                  router.push("/profile");
+                  const profilePath =
+                    role === "STUDENT"
+                      ? "/student/profile"
+                      : role === "MENTOR"
+                        ? "/mentor/profile"
+                        : "/admin/profile";
+                  router.push(profilePath);
                 }}
                 className="flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-xs font-medium text-foreground hover:bg-muted"
               >

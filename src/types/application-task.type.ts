@@ -1,8 +1,8 @@
 export const TaskStatus = {
   PENDING: "PENDING",
   IN_PROGRESS: "IN_PROGRESS",
-  COMPLETED: "COMPLETED",
-  CANCELLED: "CANCELLED",
+  DONE: "DONE",
+  BLOCKED: "BLOCKED",
 } as const;
 
 export type TaskStatus = (typeof TaskStatus)[keyof typeof TaskStatus];
@@ -15,6 +15,7 @@ export interface IApplicationTask {
   deadline: string | null;
   status: TaskStatus;
   dependsOnId: string | null;
+  reminderSentAt: string | null;
   createdAt: string;
   updatedAt: string;
 }

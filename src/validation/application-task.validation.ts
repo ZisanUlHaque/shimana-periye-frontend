@@ -1,11 +1,6 @@
 import { z } from "zod";
 
-export const TASK_STATUS_OPTIONS = [
-  "PENDING",
-  "IN_PROGRESS",
-  "COMPLETED",
-  "CANCELLED",
-] as const;
+export const TASK_STATUS_OPTIONS = ["PENDING", "IN_PROGRESS", "DONE", "BLOCKED"] as const;
 
 const CreateApplicationTaskZodSchema = z.object({
   title: z
@@ -39,3 +34,4 @@ export const ApplicationTaskValidation = {
   UpdateApplicationTaskZodSchema,
   UpdateTaskStatusZodSchema,
 };
+
