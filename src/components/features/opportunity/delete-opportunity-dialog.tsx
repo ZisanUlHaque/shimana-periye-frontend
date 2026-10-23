@@ -7,26 +7,24 @@ import { useDeleteOpportunity } from "@/hooks/opportunity.hook";
 
 interface DeleteOpportunityDialogProps {
   id: string;
-  trigger?: React.ReactNode;
 }
 
-export function DeleteOpportunityDialog({ id, trigger }: DeleteOpportunityDialogProps) {
-  const { mutate: deleteOpportunity, isPending } = useDeleteOpportunity();
+export function DeleteOpportunityDialog({ id }: DeleteOpportunityDialogProps) {
+  const deleteMutation = useDeleteOpportunity();
 
   return (
     <ConfirmDialog
-      trigger={
-        trigger ?? (
-          <Button variant="ghost" size="icon" className="size-7 text-muted-foreground hover:text-destructive">
-            <Trash2 className="size-3.5" />
-          </Button>
-        )
-      }
-      title="Delete this opportunity?"
-      description="This action cannot be undone. Students will no longer see this opportunity."
+      title="Delete Opportunity"
+      description="Are you sure you want to delete this opportunity? This action cannot be undone."
       confirmLabel="Delete"
-      isPending={isPending}
-      onConfirm={() => deleteOpportunity(id)}
+      isPending={deleteMutation.isPending}
+      destructive
+      onConfirm={() => deleteMutation.mutate(id)}
+      trigger={
+        <button className="flex size-7 items-center justify-center rounded-md text-muted-foreground hover:bg-destructive/10 hover:text-destructive">
+          <Trash2 className="size-3.5" />
+        </button>
+      }
     />
   );
 }

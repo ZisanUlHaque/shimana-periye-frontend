@@ -1,5 +1,11 @@
+import type { Metadata } from "next";
 import { PageHeader } from "@/components/layout/public/page-header";
 import { Button } from "@/components/ui/button";
+
+export const metadata: Metadata = {
+  title: "Mock Interview",
+  description: "AI-generated questions and interview practice",
+};
 
 export default async function InterviewPracticePage({
   params,

@@ -1,76 +1,76 @@
+"use client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { OpportunityApi } from "@/api/opportunity.api";
 import { toast } from "@/components/ui/toast";
-import {
-  createOpportunity,
-  getAllOpportunities,
-  getOpportunityById,
-  updateOpportunity,
-  deleteOpportunity,
-  getDeadlineChangeLogs,
-} from "@/api/opportunity.api";
 import type {
   ICreateOpportunityPayload,
-  IUpdateOpportunityParams,
-  IOpportunityFilters,
+  IOpportunityListParams,
+  IUpdateOpportunityPayload,
 } from "@/types/opportunity.type";
 
-export const OPPORTUNITIES_QUERY_KEY = (filters?: IOpportunityFilters) =>
-  ["opportunities", filters ?? {}] as const;
-export const OPPORTUNITY_QUERY_KEY = (id: string) => ["opportunities", id] as const;
-export const OPPORTUNITY_DEADLINE_LOGS_QUERY_KEY = (id: string) =>
-  ["opportunities", id, "deadline-logs"] as const;
+export const OPPORTUNITIES_QUERY_KEY = (params?: IOpportunityListParams) =>
+  ["opportunities", params] as const;
+export const OPPORTUNITY_QUERY_KEY = (id: string) => ["opportunity", id] as const;
+export const DEADLINE_LOGS_QUERY_KEY = (id: string) =>
+  ["opportunity-deadline-logs", id] as const;
 
-export const useGetAllOpportunities = (filters?: IOpportunityFilters) =>
+export const useOpportunities = (params?: IOpportunityListParams) =>
   useQuery({
-    queryKey: OPPORTUNITIES_QUERY_KEY(filters),
-    queryFn: () => getAllOpportunities(filters),
+    queryKey: OPPORTUNITIES_QUERY_KEY(params),
+    queryFn: async () => {
+      const res = await OpportunityApi.getAllOpportunities(params);
+      return { data: res.data, meta: res.meta };
+    },
   });
 
-export const useGetOpportunityById = (id: string) =>
+export const useOpportunity = (id: string) =>
   useQuery({
     queryKey: OPPORTUNITY_QUERY_KEY(id),
-    queryFn: () => getOpportunityById(id),
-    enabled: Boolean(id),
+    queryFn: async () => (await OpportunityApi.getOpportunityById(id)).data,
+    enabled: !!id,
   });
 
-export const useGetDeadlineChangeLogs = (id: string) =>
+export const useOpportunityDeadlineLogs = (id: string) =>
   useQuery({
-    queryKey: OPPORTUNITY_DEADLINE_LOGS_QUERY_KEY(id),
-    queryFn: () => getDeadlineChangeLogs(id),
-    enabled: Boolean(id),
+    queryKey: DEADLINE_LOGS_QUERY_KEY(id),
+    queryFn: async () => (await OpportunityApi.getDeadlineChangeLogs(id)).data,
+    enabled: !!id,
   });
 
 export const useCreateOpportunity = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (payload: ICreateOpportunityPayload) => createOpportunity(payload),
+    mutationFn: (payload: ICreateOpportunityPayload) =>
+      OpportunityApi.createOpportunity(payload),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["opportunities"] });
-      toast.add({ title: "Opportunity created", description: "It is now visible to students.", type: "success" });
+      toast.add({ title: "Opportunity created", type: "success" });
     },
-    onError: (err: any) => {
+    onError: (error: any) => {
       toast.add({
         title: "Failed to create opportunity",
-        description: err?.data?.message || err?.message || "Something went wrong.",
+        description: error?.data?.message ?? "Something went wrong",
         type: "error",
       });
     },
   });
 };
 
-export const useUpdateOpportunity = () => {
+export const useUpdateOpportunity = (id: string) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (params: IUpdateOpportunityParams) => updateOpportunity(params),
-    onSuccess: (_data, variables) => {
+    mutationFn: (payload: IUpdateOpportunityPayload) =>
+      OpportunityApi.updateOpportunity(id, payload),
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["opportunities"] });
-      queryClient.invalidateQueries({ queryKey: OPPORTUNITY_QUERY_KEY(variables.id) });
-      toast.add({ title: "Opportunity updated", description: "Changes saved.", type: "success" });
+      queryClient.invalidateQueries({ queryKey: OPPORTUNITY_QUERY_KEY(id) });
+      queryClient.invalidateQueries({ queryKey: DEADLINE_LOGS_QUERY_KEY(id) });
+      toast.add({ title: "Opportunity updated", type: "success" });
     },
-    onError: (err: any) => {
+    onError: (error: any) => {
       toast.add({
         title: "Failed to update opportunity",
-        description: err?.data?.message || err?.message || "Something went wrong.",
+        description: error?.data?.message ?? "Something went wrong",
         type: "error",
       });
     },
@@ -80,15 +80,15 @@ export const useUpdateOpportunity = () => {
 export const useDeleteOpportunity = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (id: string) => deleteOpportunity(id),
+    mutationFn: (id: string) => OpportunityApi.deleteOpportunity(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["opportunities"] });
-      toast.add({ title: "Opportunity deleted", description: "It has been removed.", type: "success" });
+      toast.add({ title: "Opportunity deleted", type: "success" });
     },
-    onError: (err: any) => {
+    onError: (error: any) => {
       toast.add({
         title: "Failed to delete opportunity",
-        description: err?.data?.message || err?.message || "Something went wrong.",
+        description: error?.data?.message ?? "Something went wrong",
         type: "error",
       });
     },

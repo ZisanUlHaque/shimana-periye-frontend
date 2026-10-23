@@ -1,5 +1,11 @@
+import type { Metadata } from "next";
 import { MentorApplicationDetail } from "@/components/features/application/mentor-application-detail";
 import { PageHeader } from "@/components/layout/public/page-header";
+
+export const metadata: Metadata = {
+  title: "Mentee's Application",
+  description: "View their progress and status.",
+};
 
 interface MentorApplicationDetailPageProps {
   params: Promise<{ id: string }>;

@@ -1,18 +1,50 @@
+import type { IUniversity } from "./university.type";
+
 export const OpportunityType = {
   PROGRAMME: "PROGRAMME",
   PROFESSOR_OPENING: "PROFESSOR_OPENING",
   LAB_POSITION: "LAB_POSITION",
   FUNDING: "FUNDING",
 } as const;
-
 export type OpportunityType = (typeof OpportunityType)[keyof typeof OpportunityType];
 
-export interface IOpportunityUniversitySummary {
+export type VerificationStatus = "VERIFIED" | "NEEDS_RECHECK";
+
+export interface IOpportunityUniversityRef {
   id: string;
   name: string;
   country: string;
 }
+export interface IOpportunityProfessorRef {
+  id: string;
+  name: string;
+}
+export interface IOpportunityLabRef {
+  id: string;
+  name: string;
+}
 
+// PLACEHOLDER shapes — Professor/Lab/Requirement modules not built yet.
+// Replace once those backend files are shared.
+export interface IProfessorFull {
+  id: string;
+  name: string;
+  universityId: string;
+  [key: string]: unknown;
+}
+export interface ILabFull {
+  id: string;
+  name: string;
+  universityId: string;
+  [key: string]: unknown;
+}
+export interface IRequirementFull {
+  id: string;
+  opportunityId: string;
+  [key: string]: unknown;
+}
+
+// Shape from getAllOpportunities (list) — partial nested refs
 export interface IOpportunity {
   id: string;
   type: OpportunityType;
@@ -25,11 +57,24 @@ export interface IOpportunity {
   source: string;
   lastCheckedAt: string;
   createdById: string;
+  isDeleted: boolean;
+  deletedAt: string | null;
   createdAt: string;
   updatedAt: string;
-  university?: IOpportunityUniversitySummary;
-  professor?: { id: string; name: string } | null;
-  lab?: { id: string; name: string } | null;
+  university: IOpportunityUniversityRef;
+  professor: IOpportunityProfessorRef | null;
+  lab: IOpportunityLabRef | null;
+   _count?: { requirements: number };
+  verificationStatus: VerificationStatus;
+}
+
+// Shape from getOpportunityById (detail) — FULL nested objects
+export interface IOpportunityDetail
+  extends Omit<IOpportunity, "university" | "professor" | "lab" | "_count"> {
+  university: IUniversity;
+  professor: IProfessorFull | null;
+  lab: ILabFull | null;
+  requirements: IRequirementFull[];
 }
 
 export interface ICreateOpportunityPayload {
@@ -39,27 +84,17 @@ export interface ICreateOpportunityPayload {
   professorId?: string;
   labId?: string;
   fieldOfStudy: string;
-  deadline?: string;
+  deadline?: string | null;
   source: string;
   lastCheckedAt: string;
 }
 
-export interface IUpdateOpportunityPayload {
-  type?: OpportunityType;
-  title?: string;
+export interface IUpdateOpportunityPayload
+  extends Partial<Omit<ICreateOpportunityPayload, "professorId" | "labId" | "deadline">> {
   professorId?: string | null;
   labId?: string | null;
-  fieldOfStudy?: string;
   deadline?: string | null;
-  source?: string;
-  lastCheckedAt?: string;
 }
-
-export interface IUpdateOpportunityParams {
-  id: string;
-  payload: IUpdateOpportunityPayload;
-}
-
 export interface IOpportunityFilters {
   searchTerm?: string;
   type?: OpportunityType;
@@ -68,6 +103,11 @@ export interface IOpportunityFilters {
   country?: string;
   deadlineFrom?: string;
   deadlineTo?: string;
+}
+
+export interface IOpportunityListParams extends IOpportunityFilters {
+  page?: number;
+  limit?: number;
 }
 
 export interface IDeadlineChangeLog {

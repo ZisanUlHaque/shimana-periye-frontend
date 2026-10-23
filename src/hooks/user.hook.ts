@@ -5,7 +5,7 @@ import { uploadProfileImage } from "@/api";
 export const useUploadProfileImage = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: uploadProfileImage,
+    mutationFn: uploadProfileImage              ,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["user"] });
       toast.add({

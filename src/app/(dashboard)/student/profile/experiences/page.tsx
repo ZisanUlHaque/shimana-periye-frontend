@@ -1,5 +1,6 @@
+import { ExperienceDialog } from "@/components/features/experience/experience-dialog";
+import { ExperienceList } from "@/components/features/experience/experience-list";
 import { PageHeader } from "@/components/layout/public/page-header";
-import { Button } from "@/components/ui/button";
 
 export default function ExperiencesPage() {
   return (
@@ -7,9 +8,9 @@ export default function ExperiencesPage() {
       <PageHeader
         title="Experience"
         description="Work, lab, or research experience."
-        action={<Button size="sm">Add Experience</Button>}
+        action={<ExperienceDialog />}
       />
-      {/* TODO: CRUD /api/v1/experiences */}
+      <ExperienceList />
     </div>
   );
 }

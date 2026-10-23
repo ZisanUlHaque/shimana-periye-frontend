@@ -1,8 +1,8 @@
 "use client";
 
-import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import type { IOpportunityFilters, OpportunityType } from "@/types/opportunity.type";
+import { useUniversities } from "@/hooks/university.hook";
 
 const TYPE_OPTIONS: { value: OpportunityType | ""; label: string }[] = [
   { value: "", label: "All Types" },
@@ -18,24 +18,21 @@ interface OpportunityFilterBarProps {
 }
 
 export function OpportunityFilterBar({ filters, onChange }: OpportunityFilterBarProps) {
+  const { data: universitiesData } = useUniversities({ limit: 100 });
+
   return (
-    <div className="flex flex-wrap items-center gap-3 rounded-2xl border border-border/70 bg-card p-3">
-      <div className="relative min-w-[220px] flex-1">
-        <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-        <Input
-          placeholder="Search opportunities…"
-          value={filters.searchTerm ?? ""}
-          onChange={(e) => onChange({ ...filters, searchTerm: e.target.value || undefined })}
-          className="pl-9"
-        />
-      </div>
+    <div className="flex flex-wrap items-center gap-3">
+      <Input
+        placeholder="Search by title or field of study..."
+        value={filters.searchTerm ?? ""}
+        onChange={(e) => onChange({ ...filters, searchTerm: e.target.value || undefined })}
+        className="max-w-xs"
+      />
 
       <select
         value={filters.type ?? ""}
-        onChange={(e) =>
-          onChange({ ...filters, type: (e.target.value || undefined) as OpportunityType | undefined })
-        }
-        className="h-9 rounded-md border border-input bg-transparent px-3 text-sm shadow-xs outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50"
+        onChange={(e) => onChange({ ...filters, type: (e.target.value || undefined) as OpportunityType | undefined })}
+        className="h-9 rounded-md border border-input bg-transparent px-3 text-sm shadow-xs outline-none"
       >
         {TYPE_OPTIONS.map((opt) => (
           <option key={opt.value} value={opt.value}>
@@ -44,18 +41,32 @@ export function OpportunityFilterBar({ filters, onChange }: OpportunityFilterBar
         ))}
       </select>
 
-      <Input
-        placeholder="Field of study"
-        value={filters.fieldOfStudy ?? ""}
-        onChange={(e) => onChange({ ...filters, fieldOfStudy: e.target.value || undefined })}
-        className="w-[180px]"
-      />
+      <select
+        value={filters.universityId ?? ""}
+        onChange={(e) => onChange({ ...filters, universityId: e.target.value || undefined })}
+        className="h-9 rounded-md border border-input bg-transparent px-3 text-sm shadow-xs outline-none"
+      >
+        <option value="">All Universities</option>
+        {universitiesData?.data.map((uni) => (
+          <option key={uni.id} value={uni.id}>
+            {uni.name}
+          </option>
+        ))}
+      </select>
 
       <Input
-        placeholder="Country"
-        value={filters.country ?? ""}
-        onChange={(e) => onChange({ ...filters, country: e.target.value || undefined })}
-        className="w-[150px]"
+        type="date"
+        value={filters.deadlineFrom ?? ""}
+        onChange={(e) => onChange({ ...filters, deadlineFrom: e.target.value || undefined })}
+        className="w-auto"
+        title="Deadline from"
+      />
+      <Input
+        type="date"
+        value={filters.deadlineTo ?? ""}
+        onChange={(e) => onChange({ ...filters, deadlineTo: e.target.value || undefined })}
+        className="w-auto"
+        title="Deadline to"
       />
     </div>
   );

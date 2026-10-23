@@ -41,7 +41,15 @@ export function UniversityDialog({ university, trigger }: UniversityDialogProps)
     >
       {(close) => (
         <UniversityForm
-          defaultValues={university}
+          defaultValues={
+            university
+              ? {
+                  name: university.name,
+                  country: university.country,
+                  website: university.website ?? undefined,
+                }
+              : undefined
+          }
           isSubmitting={mutation.isPending}
           submitLabel={isEdit ? "Update" : "Create"}
           onSubmit={(values) => {

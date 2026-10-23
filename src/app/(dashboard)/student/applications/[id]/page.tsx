@@ -1,5 +1,11 @@
+import type { Metadata } from "next";
 import { ApplicationDetail } from "@/components/features/application/application-detail";
 import { PageHeader } from "@/components/layout/public/page-header";
+
+export const metadata: Metadata = {
+  title: "Application Details",
+  description: "Manage status, interview, and decision.",
+};
 
 interface ApplicationDetailPageProps {
   params: Promise<{ id: string }>;

@@ -6,7 +6,7 @@ import { Bookmark, Scale } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ShortlistCard } from "./shortlist-card";
 import { useMyShortlist } from "@/hooks/shortlist.hook";
-import { ListState } from "@/components/shared/list-state.tsxlist-state";
+import { ListState } from "@/components/shared/list-state";
 
 const MAX_COMPARE = 5;
 const MIN_COMPARE = 2;

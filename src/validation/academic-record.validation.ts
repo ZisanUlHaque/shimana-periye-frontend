@@ -2,18 +2,6 @@ import { z } from "zod";
 
 const currentYear = new Date().getFullYear();
 
-/** Converts empty string / undefined → undefined, otherwise → Number */
-const optionalNumber = (min: number, max: number, label: string) =>
-  z.preprocess(
-    (val) =>
-      val === "" || val === null || val === undefined ? undefined : Number(val),
-    z
-      .number()
-      .min(min, `${label} must be at least ${min}`)
-      .max(max, `${label} must be at most ${max}`)
-      .optional(),
-  );
-
 export const AcademicRecordZodSchema = z
   .object({
     degree: z
@@ -28,9 +16,23 @@ export const AcademicRecordZodSchema = z
       .string()
       .min(2, "Field of study must be at least 2 characters")
       .max(150, "Field of study must be at most 150 characters"),
-    gpa: optionalNumber(0, 5, "GPA"),
-    startYear: optionalNumber(1950, currentYear + 1, "Start year"),
-    endYear: optionalNumber(1950, currentYear + 10, "End year"),
+    gpa: z
+      .number()
+      .min(0, "GPA must be at least 0")
+      .max(5, "GPA must be at most 5")
+      .optional(),
+    startYear: z
+      .number()
+      .int()
+      .min(1950, "Start year must be at least 1950")
+      .max(currentYear + 1, "Start year cannot be in the future")
+      .optional(),
+    endYear: z
+      .number()
+      .int()
+      .min(1950, "End year must be at least 1950")
+      .max(currentYear + 10, "End year is too far in future")
+      .optional(),
   })
   .refine(
     (data) =>

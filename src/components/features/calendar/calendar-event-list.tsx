@@ -1,6 +1,6 @@
 "use client";
 
-import { ListState } from "@/components/shared/list-state.tsxlist-state";
+import { ListState } from "@/components/shared/list-state";
 import { ICalendarEvent } from "@/types/calendar.type";
 import { CalendarDays } from "lucide-react";
 import { dateKey, formatEventDateLabel } from "./calendar-date-utils";

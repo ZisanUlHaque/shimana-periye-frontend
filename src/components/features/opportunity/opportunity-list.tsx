@@ -1,11 +1,11 @@
 "use client";
 
 import { Compass } from "lucide-react";
-import { useGetAllOpportunities } from "@/hooks/opportunity.hook";
 import { OpportunityCard } from "./opportunity-card";
 import { OpportunityDialog } from "./opportunity-dialog";
 import type { IOpportunityFilters } from "@/types/opportunity.type";
-import { ListState } from "@/components/shared/list-state.tsxlist-state";
+import { useOpportunities } from "@/hooks/opportunity.hook";
+import { ListState } from "@/components/shared/list-state";
 
 interface OpportunityListProps {
   filters?: IOpportunityFilters;
@@ -13,7 +13,7 @@ interface OpportunityListProps {
 }
 
 export function OpportunityList({ filters, isAdmin = false }: OpportunityListProps) {
-  const { data, isLoading, isError } = useGetAllOpportunities(filters);
+  const { data, isLoading, isError } = useOpportunities(filters);
   const opportunities = data?.data ?? [];
 
   return (

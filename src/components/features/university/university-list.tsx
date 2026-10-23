@@ -6,7 +6,7 @@ import { UniversityCard } from "./university-card";
 import { useUniversities } from "@/hooks/university.hook";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ListState } from "@/components/shared/list-state.tsxlist-state";
+import { ListState } from "@/components/shared/list-state";
 
 interface UniversityListProps {
   isAdmin?: boolean;

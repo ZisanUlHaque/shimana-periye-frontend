@@ -1,5 +1,6 @@
+import { TestRecordDialog } from "@/components/features/test-record/test-record-dialog";
+import { TestRecordList } from "@/components/features/test-record/test-record-list";
 import { PageHeader } from "@/components/layout/public/page-header";
-import { Button } from "@/components/ui/button";
 
 export default function TestRecordsPage() {
   return (
@@ -7,9 +8,9 @@ export default function TestRecordsPage() {
       <PageHeader
         title="Test Scores"
         description="IELTS, TOEFL, GRE, GMAT records."
-        action={<Button size="sm">Add Test Score</Button>}
+        action={<TestRecordDialog />}
       />
-      {/* TODO: CRUD /api/v1/test-records */}
+      <TestRecordList />
     </div>
   );
 }

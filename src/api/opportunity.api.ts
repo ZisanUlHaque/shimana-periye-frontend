@@ -1,54 +1,59 @@
 import apiClient from "@/lib/apiClient";
+import type { IApiListResponse, IApiResponse } from "@/types/api.type";
 import type {
-  IOpportunity,
   ICreateOpportunityPayload,
-  IUpdateOpportunityParams,
-  IOpportunityFilters,
   IDeadlineChangeLog,
+  IOpportunity,
+  IOpportunityDetail,
+  IOpportunityListParams,
+  IUpdateOpportunityPayload,
 } from "@/types/opportunity.type";
 
-function buildQueryString(filters?: IOpportunityFilters) {
-  if (!filters) return "";
-  const params = new URLSearchParams();
-  Object.entries(filters).forEach(([key, value]) => {
-    if (value !== undefined && value !== "") params.set(key, String(value));
+const buildQueryString = (params?: Record<string, unknown>) => {
+  if (!params) return "";
+  const searchParams = new URLSearchParams();
+  Object.entries(params).forEach(([key, value]) => {
+    if (value !== undefined && value !== null && value !== "") {
+      searchParams.append(key, String(value));
+    }
   });
-  const qs = params.toString();
+  const qs = searchParams.toString();
   return qs ? `?${qs}` : "";
-}
+};
 
-export function createOpportunity(payload: ICreateOpportunityPayload) {
-  return apiClient<{ success: boolean; data: IOpportunity }>("/opportunities", {
+const createOpportunity = (payload: ICreateOpportunityPayload) =>
+  apiClient<IApiResponse<IOpportunity>>("/opportunities", {
     method: "POST",
     body: payload,
   });
-}
 
-export function getAllOpportunities(filters?: IOpportunityFilters) {
-  return apiClient<{ success: boolean; data: IOpportunity[] }>(
-    `/opportunities${buildQueryString(filters)}`
+const getAllOpportunities = (params?: IOpportunityListParams) =>
+  apiClient<IApiListResponse<IOpportunity>>(
+    `/opportunities${buildQueryString(params as Record<string, unknown>)}`,
   );
-}
 
-export function getOpportunityById(id: string) {
-  return apiClient<{ success: boolean; data: IOpportunity }>(`/opportunities/${id}`);
-}
+const getOpportunityById = (id: string) =>
+  apiClient<IApiResponse<IOpportunityDetail>>(`/opportunities/${id}`);
 
-export function updateOpportunity({ id, payload }: IUpdateOpportunityParams) {
-  return apiClient<{ success: boolean; data: IOpportunity }>(`/opportunities/${id}`, {
+const updateOpportunity = (id: string, payload: IUpdateOpportunityPayload) =>
+  apiClient<IApiResponse<IOpportunity>>(`/opportunities/${id}`, {
     method: "PATCH",
     body: payload,
   });
-}
 
-export function deleteOpportunity(id: string) {
-  return apiClient<{ success: boolean; data: null }>(`/opportunities/${id}`, {
-    method: "DELETE",
-  });
-}
+const deleteOpportunity = (id: string) =>
+  apiClient<IApiResponse<null>>(`/opportunities/${id}`, { method: "DELETE" });
 
-export function getDeadlineChangeLogs(id: string) {
-  return apiClient<{ success: boolean; data: IDeadlineChangeLog[] }>(
-    `/opportunities/${id}/deadline-logs`
+const getDeadlineChangeLogs = (opportunityId: string) =>
+  apiClient<IApiResponse<IDeadlineChangeLog[]>>(
+    `/opportunities/${opportunityId}/deadline-logs`,
   );
-}
+
+export const OpportunityApi = {
+  createOpportunity,
+  getAllOpportunities,
+  getOpportunityById,
+  updateOpportunity,
+  deleteOpportunity,
+  getDeadlineChangeLogs,
+};

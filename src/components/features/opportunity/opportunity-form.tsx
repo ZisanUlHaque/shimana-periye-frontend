@@ -42,24 +42,32 @@ export function OpportunityForm({
     limit: 100,
   });
 
-  const form = useForm({
-    defaultValues: {
-      type: defaultValues?.type ?? "PROGRAMME",
-      title: defaultValues?.title ?? "",
-      universityId: defaultValues?.universityId ?? "",
-      professorId: defaultValues?.professorId ?? "",
-      labId: defaultValues?.labId ?? "",
-      fieldOfStudy: defaultValues?.fieldOfStudy ?? "",
-      deadline: toDateInputValue(defaultValues?.deadline),
-      source: defaultValues?.source ?? "",
-      lastCheckedAt:
-        toDateInputValue(defaultValues?.lastCheckedAt) || toDateInputValue(new Date().toISOString()),
-    } as OpportunityFormValues,
-    validators: {
-      onSubmit: OpportunityValidation.CreateOpportunityZodSchema,
-    },
-    onSubmit: ({ value }) => onSubmit(value),
-  });
+const form = useForm({
+  defaultValues: {
+    type: defaultValues?.type ?? "PROGRAMME",
+    title: defaultValues?.title ?? "",
+    universityId: defaultValues?.universityId ?? "",
+    professorId: defaultValues?.professorId ?? "",
+    labId: defaultValues?.labId ?? "",
+    fieldOfStudy: defaultValues?.fieldOfStudy ?? "",
+    deadline: toDateInputValue(defaultValues?.deadline),
+    source: defaultValues?.source ?? "",
+    lastCheckedAt:
+      toDateInputValue(defaultValues?.lastCheckedAt) || toDateInputValue(new Date().toISOString()),
+  } as OpportunityFormValues,
+  validators: {
+    onSubmit: OpportunityValidation.CreateOpportunityZodSchema,
+  },
+  onSubmit: ({ value }) => {
+    const sanitized: OpportunityFormValues = {
+      ...value,
+      professorId: value.professorId?.trim() ? value.professorId.trim() : undefined,
+      labId: value.labId?.trim() ? value.labId.trim() : undefined,
+      deadline: value.deadline?.trim() ? value.deadline.trim() : undefined,
+    };
+    onSubmit(sanitized);
+  },
+});
 
   return (
     <form

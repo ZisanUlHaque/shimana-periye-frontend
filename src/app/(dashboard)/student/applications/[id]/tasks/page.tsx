@@ -1,6 +1,12 @@
+import type { Metadata } from "next";
 import { ApplicationTaskDialog } from "@/components/features/application-task/application-task-dialog";
 import { ApplicationTaskList } from "@/components/features/application-task/application-task-list";
 import { PageHeader } from "@/components/layout/public/page-header";
+
+export const metadata: Metadata = {
+  title: "Application Tasks",
+  description: "Track the action items for this application.",
+};
 
 interface ApplicationTasksPageProps {
   params: Promise<{ id: string }>;

@@ -1,11 +1,12 @@
 "use client";
 
-import { Plus } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import { Pencil, Plus } from "lucide-react";
 import { FormDialog } from "@/components/shared/form-dialog";
+import { Button } from "@/components/ui/button";
 import { OpportunityForm } from "./opportunity-form";
 import { useCreateOpportunity, useUpdateOpportunity } from "@/hooks/opportunity.hook";
-import type { IOpportunity } from "@/types/opportunity.type";
+import type { ICreateOpportunityPayload, IOpportunity, IUpdateOpportunityPayload } from "@/types/opportunity.type";
 import type { OpportunityFormValues } from "@/validation";
 
 interface OpportunityDialogProps {
@@ -14,43 +15,58 @@ interface OpportunityDialogProps {
 }
 
 export function OpportunityDialog({ opportunity, trigger }: OpportunityDialogProps) {
-  const isEdit = Boolean(opportunity);
-  const { mutate: createOpportunity, isPending: isCreating } = useCreateOpportunity();
-  const { mutate: updateOpportunity, isPending: isUpdating } = useUpdateOpportunity();
-  const isSubmitting = isCreating || isUpdating;
+  const [open, setOpen] = useState(false);
+  const isEdit = !!opportunity;
+
+  const createMutation = useCreateOpportunity();
+  const updateMutation = useUpdateOpportunity(opportunity?.id ?? "");
+
+  const handleSubmit = (values: OpportunityFormValues) => {
+    if (isEdit) {
+      const payload: IUpdateOpportunityPayload = {
+        ...values,
+        professorId: values.professorId?.trim() ? values.professorId.trim() : null,
+        labId: values.labId?.trim() ? values.labId.trim() : null,
+        deadline: values.deadline?.trim() ? values.deadline.trim() : null,
+      } as IUpdateOpportunityPayload;
+      updateMutation.mutate(payload, { onSuccess: () => setOpen(false) });
+    } else {
+      const payload: ICreateOpportunityPayload = {
+        ...values,
+        professorId: values.professorId?.trim() ? values.professorId.trim() : undefined,
+        labId: values.labId?.trim() ? values.labId.trim() : undefined,
+        deadline: values.deadline?.trim() ? values.deadline.trim() : undefined,
+      } as ICreateOpportunityPayload;
+      createMutation.mutate(payload, { onSuccess: () => setOpen(false) });
+    }
+  };
+
+  const mutation = isEdit ? updateMutation : createMutation;
+
+  const defaultTrigger = isEdit ? (
+    <Button size="icon" variant="ghost">
+      <Pencil className="size-4" />
+    </Button>
+  ) : (
+    <Button>
+      <Plus className="size-4" />
+      New Opportunity
+    </Button>
+  );
 
   return (
     <FormDialog
-      title={isEdit ? "Edit Opportunity" : "Add Opportunity"}
-      trigger={
-        trigger ?? (
-          <Button className="gap-1.5">
-            <Plus className="size-4" />
-            Add Opportunity
-          </Button>
-        )
-      }
+      open={open}
+      onOpenChange={setOpen}
+      title={isEdit ? "Edit Opportunity" : "Create Opportunity"}
+      trigger={trigger ?? defaultTrigger}
     >
-      {(close) => (
-        <OpportunityForm
-          defaultValues={opportunity}
-          isSubmitting={isSubmitting}
-          submitLabel={isEdit ? "Save Changes" : "Create Opportunity"}
-          onSubmit={(values: OpportunityFormValues) => {
-            const payload = {
-              ...values,
-              professorId: values.professorId || undefined,
-              labId: values.labId || undefined,
-              deadline: values.deadline || undefined,
-            };
-            if (isEdit && opportunity) {
-              updateOpportunity({ id: opportunity.id, payload }, { onSuccess: close });
-            } else {
-              createOpportunity(payload, { onSuccess: close });
-            }
-          }}
-        />
-      )}
+      <OpportunityForm
+        defaultValues={opportunity}
+        onSubmit={handleSubmit}
+        isSubmitting={mutation.isPending}
+        submitLabel={isEdit ? "Save Changes" : "Create Opportunity"}
+      />
     </FormDialog>
   );
 }
