@@ -1,7 +1,7 @@
 "use client";
 
 import { useForm } from "@tanstack/react-form";
-import { Loader2 } from "lucide-react";
+import { Loader2, Send } from "lucide-react";
 import type { IOutreachLog } from "@/types/outreach-log.type";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
@@ -165,12 +165,14 @@ export function OutreachLogForm({
           <Button
             type="submit"
             disabled={!canSubmit || isSubmitting}
-            className="mt-2 w-full"
+            className="mt-2 w-full gap-2"
           >
-            {(isSubmitting || isFormSubmitting) && (
+            {isSubmitting || isFormSubmitting ? (
               <Loader2 className="size-4 animate-spin" />
+            ) : (
+              <Send className="size-4" />
             )}
-            Log Outreach
+            Send & Log Cold Email
           </Button>
         )}
       </form.Subscribe>

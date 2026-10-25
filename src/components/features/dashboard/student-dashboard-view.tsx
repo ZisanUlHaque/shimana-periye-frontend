@@ -1,10 +1,12 @@
 "use client";
 
+import { useState } from "react";
 import { useStudentDashboard } from "@/hooks/dashboard.hook";
 import { useGetMe } from "@/hooks/auth.hook";
 import { useGetMyOutreachLogs } from "@/hooks/outreach-log.hook";
 import { useOpportunities } from "@/hooks/opportunity.hook";
 import { useMyShortlist } from "@/hooks/shortlist.hook";
+import { useMyReadiness } from "@/hooks/readiness.hook";
 import {
   Compass,
   Mail,
@@ -22,10 +24,16 @@ import {
   Clock,
   ExternalLink,
   ChevronRight,
+  ChevronDown,
+  ChevronUp,
   TrendingUp,
   FileCheck2,
   Users,
   Video,
+  BookOpen,
+  HelpCircle,
+  Lightbulb,
+  Info,
 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -38,6 +46,8 @@ export function StudentDashboardView() {
   const user = userRes?.data?.user || userRes?.data;
   const studentProfile = user?.studentProfile;
 
+  const [showGuide, setShowGuide] = useState(true);
+
   const { data: dashRes, isLoading: isDashLoading } = useStudentDashboard();
   const dashboard = dashRes?.data;
 
@@ -48,6 +58,7 @@ export function StudentDashboardView() {
   const opportunities = oppsRes?.data ?? [];
 
   const { data: shortlistedItems = [] } = useMyShortlist();
+  const { data: readinessRes } = useMyReadiness();
 
   if (isDashLoading) {
     return (
@@ -76,7 +87,11 @@ export function StudentDashboardView() {
     unreadReminders: 0,
   };
 
-  const readinessScore = dashboard?.readiness?.overallScore ?? 0;
+  const readinessScore =
+    readinessRes?.data?.totalScore ??
+    dashboard?.readiness?.totalScore ??
+    dashboard?.readiness?.overallScore ??
+    0;
   const upcomingReminders = Array.isArray(dashboard?.upcomingReminders)
     ? dashboard.upcomingReminders
     : [];
@@ -182,7 +197,209 @@ export function StudentDashboardView() {
         </div>
       </div>
 
-      {/* ── 2. ProfReach Outreach & Admissions Pipeline Funnel ── */}
+      {/* ── 2. Live Admissions Milestone Updates (Dynamic Updates) ── */}
+      <div className="rounded-2xl border border-primary/20 bg-gradient-to-r from-primary/5 via-card to-background p-4 shadow-xs">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-3">
+            <div
+              className={`flex size-11 shrink-0 items-center justify-center rounded-2xl font-black text-sm shadow-2xs ${
+                readinessScore >= 80
+                  ? "bg-emerald-500/15 text-emerald-600 ring-1 ring-emerald-500/30"
+                  : readinessScore >= 40
+                  ? "bg-amber-500/15 text-amber-600 ring-1 ring-amber-500/30"
+                  : "bg-primary/15 text-primary ring-1 ring-primary/30"
+              }`}
+            >
+              {readinessScore >= 80 ? "✓" : `${readinessScore}%`}
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-bold text-foreground">
+                  {readinessScore >= 80
+                    ? "🎉 Readiness Done! Outstanding Admission Profile"
+                    : readinessScore >= 40
+                    ? "🚀 Readiness in Progress"
+                    : "🎯 Admissions Setup in Progress"}
+                </span>
+                <Badge
+                  variant={readinessScore >= 80 ? "default" : "secondary"}
+                  className={`text-[10px] font-bold ${
+                    readinessScore >= 80 ? "bg-emerald-600 hover:bg-emerald-600 text-white" : ""
+                  }`}
+                >
+                  {readinessScore >= 80 ? "Readiness Done" : `${readinessScore}% Complete`}
+                </Badge>
+              </div>
+              <p className="text-[11px] text-muted-foreground mt-0.5">
+                {readinessScore >= 80
+                  ? "Your academic profile, SOP/CV, and target applications are well aligned for review."
+                  : "Upload SOP drafts, request professor recommendations, and attend 1-on-1 mentor guidance to achieve 100% readiness."}
+              </p>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2">
+            <Link href="/student/readiness">
+              <Button size="xs" variant="outline" className="text-xs gap-1 rounded-xl">
+                <Sparkles className="size-3 text-primary" />
+                Readiness Checklist
+              </Button>
+            </Link>
+            <Link href="/student/documents">
+              <Button size="xs" variant="outline" className="text-xs gap-1 rounded-xl">
+                <FileCheck2 className="size-3 text-blue-500" />
+                Upload SOP/CV
+              </Button>
+            </Link>
+            <Link href="/student/recommendations">
+              <Button size="xs" variant="outline" className="text-xs gap-1 rounded-xl">
+                <Mail className="size-3 text-violet-500" />
+                Request LOR
+              </Button>
+            </Link>
+            <Link href="/student/mentor-booking">
+              <Button size="xs" variant="outline" className="text-xs gap-1 rounded-xl">
+                <Video className="size-3 text-rose-500" />
+                1-on-1 Advising
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* ── 3. Platform Module Guide (Roadmap & Feature Explorer) ── */}
+      <div className="rounded-2xl border border-border/70 bg-card p-5 shadow-xs transition-all">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            <span className="flex size-8 items-center justify-center rounded-xl bg-primary/10 text-primary">
+              <Lightbulb className="size-4" />
+            </span>
+            <div>
+              <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
+                Platform Roadmap & Module Guide
+                <Badge variant="outline" className="text-[10px] text-primary border-primary/30">
+                  Quick Guide
+                </Badge>
+              </h3>
+              <p className="text-xs text-muted-foreground">
+                Understand each module of the platform to accelerate your graduate study and admissions journey.
+              </p>
+            </div>
+          </div>
+
+          <Button
+            size="sm"
+            variant="ghost"
+            onClick={() => setShowGuide(!showGuide)}
+            className="text-xs gap-1.5 text-muted-foreground hover:text-foreground"
+          >
+            {showGuide ? "Hide Guide" : "Show Guide"}
+            {showGuide ? <ChevronUp className="size-3.5" /> : <ChevronDown className="size-3.5" />}
+          </Button>
+        </div>
+
+        {showGuide && (
+          <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 pt-3 border-t border-border/60">
+            {/* Guide Card 1 */}
+            <div className="rounded-xl border border-border/60 bg-muted/20 p-3.5 space-y-1.5 hover:border-primary/40 transition-colors">
+              <div className="flex items-center justify-between">
+                <span className="flex items-center gap-1.5 text-xs font-bold text-foreground">
+                  <GraduationCap className="size-3.5 text-primary" />
+                  Profile & Academics
+                </span>
+                <Link href="/student/profile" className="text-[10px] text-primary font-semibold hover:underline">
+                  Go to Profile →
+                </Link>
+              </div>
+              <p className="text-[11px] text-muted-foreground leading-relaxed">
+                Update your CGPA, IELTS/GRE scores, publications, and research fields to calibrate automated matching.
+              </p>
+            </div>
+
+            {/* Guide Card 2 */}
+            <div className="rounded-xl border border-border/60 bg-muted/20 p-3.5 space-y-1.5 hover:border-primary/40 transition-colors">
+              <div className="flex items-center justify-between">
+                <span className="flex items-center gap-1.5 text-xs font-bold text-foreground">
+                  <Compass className="size-3.5 text-blue-500" />
+                  Opportunities & Labs
+                </span>
+                <Link href="/student/opportunities" className="text-[10px] text-primary font-semibold hover:underline">
+                  Explore →
+                </Link>
+              </div>
+              <p className="text-[11px] text-muted-foreground leading-relaxed">
+                Browse fully-funded Master's & PhD openings, lab assistantships, and inspect your match compatibility scores.
+              </p>
+            </div>
+
+            {/* Guide Card 3 */}
+            <div className="rounded-xl border border-border/60 bg-muted/20 p-3.5 space-y-1.5 hover:border-primary/40 transition-colors">
+              <div className="flex items-center justify-between">
+                <span className="flex items-center gap-1.5 text-xs font-bold text-foreground">
+                  <FileCheck2 className="size-3.5 text-emerald-500" />
+                  Document Review Hub
+                </span>
+                <Link href="/student/documents" className="text-[10px] text-primary font-semibold hover:underline">
+                  Upload Draft →
+                </Link>
+              </div>
+              <p className="text-[11px] text-muted-foreground leading-relaxed">
+                Upload your Statement of Purpose (SOP) and Academic CV for instant AI evaluation and mentor critiques.
+              </p>
+            </div>
+
+            {/* Guide Card 4 */}
+            <div className="rounded-xl border border-border/60 bg-muted/20 p-3.5 space-y-1.5 hover:border-primary/40 transition-colors">
+              <div className="flex items-center justify-between">
+                <span className="flex items-center gap-1.5 text-xs font-bold text-foreground">
+                  <Mail className="size-3.5 text-violet-500" />
+                  Letters of Recommendation
+                </span>
+                <Link href="/student/recommendations" className="text-[10px] text-primary font-semibold hover:underline">
+                  Manage LOR →
+                </Link>
+              </div>
+              <p className="text-[11px] text-muted-foreground leading-relaxed">
+                Deliver automated formal recommendation emails to referees and monitor submission status with follow-up dates.
+              </p>
+            </div>
+
+            {/* Guide Card 5 */}
+            <div className="rounded-xl border border-border/60 bg-muted/20 p-3.5 space-y-1.5 hover:border-primary/40 transition-colors">
+              <div className="flex items-center justify-between">
+                <span className="flex items-center gap-1.5 text-xs font-bold text-foreground">
+                  <Video className="size-3.5 text-rose-500" />
+                  1-on-1 Mock Interview
+                </span>
+                <Link href="/student/mentor-booking" className="text-[10px] text-primary font-semibold hover:underline">
+                  Book Slot →
+                </Link>
+              </div>
+              <p className="text-[11px] text-muted-foreground leading-relaxed">
+                Schedule dedicated 1-on-1 strategy sessions from mentor calendars and practice admissions interviews via Google Meet.
+              </p>
+            </div>
+
+            {/* Guide Card 6 */}
+            <div className="rounded-xl border border-border/60 bg-muted/20 p-3.5 space-y-1.5 hover:border-primary/40 transition-colors">
+              <div className="flex items-center justify-between">
+                <span className="flex items-center gap-1.5 text-xs font-bold text-foreground">
+                  <Sparkles className="size-3.5 text-amber-500" />
+                  Readiness & Checklist
+                </span>
+                <Link href="/student/readiness" className="text-[10px] text-primary font-semibold hover:underline">
+                  Check Score →
+                </Link>
+              </div>
+              <p className="text-[11px] text-muted-foreground leading-relaxed">
+                Inspect your live admissions readiness percentage and complete remaining checklist criteria to achieve 100%.
+              </p>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* ── 4. ProfReach Outreach & Admissions Pipeline Funnel ── */}
       <div className="flex flex-col gap-3 rounded-2xl border border-border/70 bg-card p-5 shadow-xs">
         <div className="flex items-center justify-between">
           <div>

@@ -9,6 +9,32 @@ import { XIcon, CircleCheckIcon, InfoIcon, TriangleAlertIcon, OctagonXIcon, Load
 
 const toast = ToastPrimitive.createToastManager()
 
+function cleanToastMessage(msg?: any): any {
+  if (typeof msg !== "string") return msg;
+  if (
+    msg.includes("http://") ||
+    msg.includes("https://") ||
+    msg.match(/\[(GET|POST|PUT|PATCH|DELETE)\]/i)
+  ) {
+    const clean = msg
+      .replace(/https?:\/\/[^\s\)]+/gi, "")
+      .replace(/\[(GET|POST|PUT|PATCH|DELETE)\]\s*""?:?/gi, "")
+      .replace(/\(\s*\)/g, "")
+      .trim();
+    return clean || "An unexpected error occurred. Please try again.";
+  }
+  return msg;
+}
+
+const originalAdd = toast.add.bind(toast);
+toast.add = ((options: any) => {
+  if (options && typeof options === "object") {
+    if (options.title) options.title = cleanToastMessage(options.title);
+    if (options.description) options.description = cleanToastMessage(options.description);
+  }
+  return originalAdd(options);
+}) as typeof toast.add;
+
 function ToastProvider({ ...props }: ToastPrimitive.Provider.Props) {
   return <ToastPrimitive.Provider {...props} />
 }
@@ -35,9 +61,9 @@ function Toast({ className, ...props }: ToastPrimitive.Root.Props) {
     <ToastPrimitive.Root
       data-slot="toast"
       className={cn(
-        "group/toast pointer-events-auto absolute right-0 bottom-0 z-[calc(1000-var(--toast-index))] w-full origin-bottom rounded-md border bg-popover text-popover-foreground shadow-lg will-change-transform outline-none select-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50",
-        "[--gap:0.75rem] [--height:var(--toast-frontmost-height,var(--toast-height))] [--offset-y:calc(var(--toast-offset-y)*-1+calc(var(--toast-index)*var(--gap)*-1)+var(--toast-swipe-movement-y))] [--peek:0.75rem] [--scale:calc(max(0,1-(var(--toast-index)*0.1)))] [--shrink:calc(1-var(--scale))]",
-        "h-(--height) [transform:translateX(var(--toast-swipe-movement-x))_translateY(calc(var(--toast-swipe-movement-y)-(var(--toast-index)*var(--peek))-(var(--shrink)*var(--height))))_scale(var(--scale))] [transition:transform_500ms_cubic-bezier(0.22,1,0.36,1),opacity_500ms,height_150ms]",
+        "group/toast pointer-events-auto absolute right-0 bottom-0 z-[calc(1000-var(--toast-index))] w-full origin-bottom rounded-2xl border border-border/80 bg-background/95 backdrop-blur-md text-popover-foreground shadow-xl shadow-black/10 will-change-transform outline-none select-none hover:shadow-2xl hover:border-primary/40 transition-all",
+        "[--gap:0.75rem] [--height:var(--toast-frontmost-height,var(--toast-height))] [--offset-y:calc(var(--toast-offset-y)*-1+calc(var(--toast-index)*var(--gap)*-1)+var(--toast-swipe-movement-y))] [--peek:0.75rem] [--scale:calc(max(0,1-(var(--toast-index)*0.08)))] [--shrink:calc(1-var(--scale))]",
+        "h-(--height) [transform:translateX(var(--toast-swipe-movement-x))_translateY(calc(var(--toast-swipe-movement-y)-(var(--toast-index)*var(--peek))-(var(--shrink)*var(--height))))_scale(var(--scale))] [transition:transform_400ms_cubic-bezier(0.22,1,0.36,1),opacity_400ms,height_150ms]",
         "after:absolute after:top-full after:left-0 after:h-[calc(var(--gap)+1px)] after:w-full after:content-['']",
         "data-expanded:h-(--toast-height) data-expanded:[transform:translateX(var(--toast-swipe-movement-x))_translateY(var(--offset-y))]",
         "data-limited:opacity-0 data-starting-style:[transform:translateY(150%)]",
@@ -111,7 +137,7 @@ function ToastAction({
 function ToastClose({
   className,
   children,
-  render = <Button variant="ghost" size="icon-sm" />,
+  render = <Button variant="ghost" size="icon-xs" className="size-6 rounded-lg text-muted-foreground hover:bg-muted/80 hover:text-foreground" />,
   ...props
 }: ToastPrimitive.Close.Props) {
   return (
@@ -126,7 +152,7 @@ function ToastClose({
       {...props}
     >
       {children ?? (
-        <XIcon aria-hidden="true" />
+        <XIcon className="size-3.5" aria-hidden="true" />
       )}
     </ToastPrimitive.Close>
   )
@@ -137,31 +163,41 @@ function ToastIcon({ type }: { type: string | undefined }) {
 
   if (type === "success") {
     icon = (
-      <CircleCheckIcon aria-hidden="true" />
+      <span className="flex size-7 shrink-0 items-center justify-center rounded-xl bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 ring-1 ring-emerald-500/30">
+        <CircleCheckIcon className="size-3.5" aria-hidden="true" />
+      </span>
     )
   }
 
   if (type === "info") {
     icon = (
-      <InfoIcon aria-hidden="true" />
+      <span className="flex size-7 shrink-0 items-center justify-center rounded-xl bg-blue-500/15 text-blue-600 dark:text-blue-400 ring-1 ring-blue-500/30">
+        <InfoIcon className="size-3.5" aria-hidden="true" />
+      </span>
     )
   }
 
   if (type === "warning") {
     icon = (
-      <TriangleAlertIcon aria-hidden="true" />
+      <span className="flex size-7 shrink-0 items-center justify-center rounded-xl bg-amber-500/15 text-amber-600 dark:text-amber-400 ring-1 ring-amber-500/30">
+        <TriangleAlertIcon className="size-3.5" aria-hidden="true" />
+      </span>
     )
   }
 
   if (type === "error") {
     icon = (
-      <OctagonXIcon className="text-destructive" aria-hidden="true" />
+      <span className="flex size-7 shrink-0 items-center justify-center rounded-xl bg-rose-500/15 text-rose-600 dark:text-rose-400 ring-1 ring-rose-500/30">
+        <OctagonXIcon className="size-3.5" aria-hidden="true" />
+      </span>
     )
   }
 
   if (type === "loading") {
     icon = (
-      <Loader2Icon className="animate-spin" aria-hidden="true" />
+      <span className="flex size-7 shrink-0 items-center justify-center rounded-xl bg-primary/15 text-primary ring-1 ring-primary/30">
+        <Loader2Icon className="size-3.5 animate-spin" aria-hidden="true" />
+      </span>
     )
   }
 
@@ -172,7 +208,7 @@ function ToastIcon({ type }: { type: string | undefined }) {
   return (
     <span
       data-slot="toast-icon"
-      className="shrink-0 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4"
+      className="shrink-0"
     >
       {icon}
     </span>

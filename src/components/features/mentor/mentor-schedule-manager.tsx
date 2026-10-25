@@ -23,6 +23,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Dialog,
   DialogContent,
@@ -57,6 +58,11 @@ export function MentorScheduleManager() {
       return;
     }
 
+    let link = meetingLink.trim();
+    if (!/^https?:\/\//i.test(link)) {
+      link = `https://${link}`;
+    }
+
     const startDateTime = new Date(`${date}T${startTime}:00`).toISOString();
     const endDateTime = new Date(`${date}T${endTime}:00`).toISOString();
 
@@ -73,7 +79,7 @@ export function MentorScheduleManager() {
       {
         startDateTime,
         endDateTime,
-        meetingLink: meetingLink.trim(),
+        meetingLink: link,
       },
       {
         onSuccess: () => {
@@ -107,8 +113,18 @@ export function MentorScheduleManager() {
     );
   }
 
-  const bookedSlots = schedules.filter((s) => s.isBooked);
-  const availableSlots = schedules.filter((s) => !s.isBooked);
+  const totalBookedCount = schedules.reduce(
+    (sum, s) => sum + (s.bookings?.length ?? (s.isBooked ? 1 : 0)),
+    0
+  );
+  const totalAvailableCount = schedules.reduce(
+    (sum, s) => sum + (s.availableSlots ?? (s.isBooked ? 0 : 1)),
+    0
+  );
+  const totalSlotsCapacity = schedules.reduce(
+    (sum, s) => sum + (s.totalSlots ?? 1),
+    0
+  );
 
   return (
     <div className="flex flex-col gap-6 p-4 sm:p-6">
@@ -129,16 +145,25 @@ export function MentorScheduleManager() {
       {/* Metrics Row */}
       <div className="grid gap-4 sm:grid-cols-3">
         <div className="rounded-2xl border border-border/70 bg-card p-5 shadow-xs">
-          <span className="text-xs font-medium text-muted-foreground">Total Slots Published</span>
-          <p className="mt-1 text-2xl font-bold text-foreground">{schedules.length}</p>
+          <span className="text-xs font-medium text-muted-foreground">Total Slots Capacity</span>
+          <p className="mt-1 text-2xl font-bold text-foreground">
+            {totalSlotsCapacity}{" "}
+            <span className="text-xs font-normal text-muted-foreground">
+              across {schedules.length} {schedules.length === 1 ? "window" : "windows"}
+            </span>
+          </p>
         </div>
         <div className="rounded-2xl border border-border/70 bg-card p-5 shadow-xs">
           <span className="text-xs font-medium text-muted-foreground">Confirmed Student Bookings</span>
-          <p className="mt-1 text-2xl font-bold text-primary">{bookedSlots.length}</p>
+          <p className="mt-1 text-2xl font-bold text-emerald-600 dark:text-emerald-400">
+            {totalBookedCount}
+          </p>
         </div>
         <div className="rounded-2xl border border-border/70 bg-card p-5 shadow-xs">
           <span className="text-xs font-medium text-muted-foreground">Open Slots Available</span>
-          <p className="mt-1 text-2xl font-bold text-foreground">{availableSlots.length}</p>
+          <p className="mt-1 text-2xl font-bold text-primary">
+            {totalAvailableCount}
+          </p>
         </div>
       </div>
 
@@ -148,7 +173,7 @@ export function MentorScheduleManager() {
           <h3 className="text-base font-semibold text-foreground">
             Your Mentorship Slots
           </h3>
-          <Badge variant="outline">{schedules.length} Slots</Badge>
+          <Badge variant="outline">{schedules.length} Time Windows</Badge>
         </div>
 
         {schedules.length === 0 ? (
@@ -176,26 +201,51 @@ export function MentorScheduleManager() {
               const start = new Date(slot.startDateTime);
               const end = new Date(slot.endDateTime);
               const isPast = end < new Date();
+              const bookings = slot.bookings || [];
+              const hasBookings = bookings.length > 0;
+              const isFullyBooked = (slot.availableSlots ?? 1) === 0;
 
               return (
                 <div
                   key={slot.id}
                   className={`flex flex-col justify-between rounded-2xl border p-4 shadow-xs transition-colors ${
-                    slot.isBooked
-                      ? "border-primary/40 bg-primary/5"
-                      : "border-border/70 bg-muted/20"
+                    isFullyBooked
+                      ? "border-emerald-500/40 bg-emerald-500/5 dark:bg-emerald-950/10"
+                      : hasBookings
+                      ? "border-amber-500/40 bg-amber-500/5 dark:bg-amber-950/10"
+                      : "border-border/70 bg-card"
                   }`}
                 >
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
                       <Badge
-                        variant={slot.isBooked ? "default" : isPast ? "secondary" : "outline"}
-                        className="text-[10px]"
+                        variant={
+                          isFullyBooked
+                            ? "default"
+                            : hasBookings
+                            ? "secondary"
+                            : isPast
+                            ? "secondary"
+                            : "outline"
+                        }
+                        className={`text-[10px] ${
+                          isFullyBooked
+                            ? "bg-emerald-600 hover:bg-emerald-600 text-white"
+                            : hasBookings
+                            ? "bg-amber-600 hover:bg-amber-600 text-white"
+                            : ""
+                        }`}
                       >
-                        {slot.isBooked ? "Booked by Student" : isPast ? "Past Slot" : "Open for Booking"}
+                        {isFullyBooked
+                          ? `Fully Booked (${bookings.length} students)`
+                          : hasBookings
+                          ? `Partially Booked (${bookings.length}/${slot.totalSlots || 1})`
+                          : isPast
+                          ? "Past Window"
+                          : `Open for Booking (${slot.availableSlots ?? 1} left)`}
                       </Badge>
 
-                      {!slot.isBooked && (
+                      {!hasBookings && (
                         <Button
                           variant="ghost"
                           size="icon-xs"
@@ -211,6 +261,7 @@ export function MentorScheduleManager() {
                       <div className="flex items-center gap-1.5 text-xs font-bold text-foreground">
                         <Calendar className="size-3.5 text-primary" />
                         {start.toLocaleDateString(undefined, {
+                          timeZone: "Asia/Dhaka",
                           weekday: "short",
                           month: "short",
                           day: "numeric",
@@ -219,27 +270,84 @@ export function MentorScheduleManager() {
                       </div>
                       <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground mt-1">
                         <Clock className="size-3.5" />
-                        {start.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })} –{" "}
-                        {end.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                        {start.toLocaleTimeString([], {
+                          timeZone: "Asia/Dhaka",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                          hour12: true,
+                        })}{" "}
+                        –{" "}
+                        {end.toLocaleTimeString([], {
+                          timeZone: "Asia/Dhaka",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                          hour12: true,
+                        })}{" "}
+                        (BST)
                       </div>
                     </div>
 
-                    {slot.booking && (
-                      <div className="rounded-xl border border-primary/20 bg-background/80 p-2.5 text-xs space-y-1">
-                        <div className="flex items-center gap-1 text-[11px] font-semibold text-primary">
-                          <Users className="size-3" />
-                          Consultation Agenda:
+                    {/* Booked Students List */}
+                    {hasBookings && (
+                      <div className="space-y-2 mt-3 pt-3 border-t border-border/60">
+                        <span className="flex items-center gap-1 text-[11px] font-semibold text-foreground">
+                          <Users className="size-3 text-primary" />
+                          Booked Students ({bookings.length}):
+                        </span>
+
+                        <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
+                          {bookings.map((b) => (
+                            <div
+                              key={b.id}
+                              className="rounded-xl border border-border/80 bg-background/90 p-2.5 text-xs space-y-1.5 shadow-2xs"
+                            >
+                              <div className="flex items-center justify-between gap-2">
+                                <div className="flex items-center gap-2">
+                                  <Avatar className="size-6 rounded-lg ring-1 ring-primary/20">
+                                    <AvatarImage src={b.student?.imageUrl ?? undefined} />
+                                    <AvatarFallback className="text-[10px] bg-primary/10 text-primary font-bold">
+                                      {(b.student?.name || "S").slice(0, 2).toUpperCase()}
+                                    </AvatarFallback>
+                                  </Avatar>
+                                  <div className="min-w-0">
+                                    <p className="font-semibold text-foreground text-xs truncate">
+                                      {b.student?.name || "Student"}
+                                    </p>
+                                    <p className="text-[10px] text-muted-foreground truncate">
+                                      {b.student?.email}
+                                    </p>
+                                  </div>
+                                </div>
+                                <Badge variant="secondary" className="text-[9px] font-bold px-1.5 py-0 shrink-0">
+                                  Slot #{b.slotNumber || 1}
+                                </Badge>
+                              </div>
+
+                              <div className="flex items-center gap-1.5 text-[11px] font-medium text-emerald-600 dark:text-emerald-400">
+                                <Clock className="size-3" />
+                                {b.formattedTimeBD || (b.startDateTime && b.endDateTime
+                                  ? `${new Date(b.startDateTime).toLocaleTimeString([], {
+                                      timeZone: "Asia/Dhaka",
+                                      hour: "2-digit",
+                                      minute: "2-digit",
+                                      hour12: true,
+                                    })} – ${new Date(b.endDateTime).toLocaleTimeString([], {
+                                      timeZone: "Asia/Dhaka",
+                                      hour: "2-digit",
+                                      minute: "2-digit",
+                                      hour12: true,
+                                    })} (BST)`
+                                  : "Allocated Slot")}
+                              </div>
+
+                              {b.notes && (
+                                <p className="text-[10px] text-muted-foreground bg-muted/40 p-1.5 rounded-lg italic">
+                                  "{b.notes}"
+                                </p>
+                              )}
+                            </div>
+                          ))}
                         </div>
-                        {slot.booking.topic && (
-                          <p className="font-medium text-foreground">
-                            Topic: {slot.booking.topic}
-                          </p>
-                        )}
-                        {slot.booking.notes && (
-                          <p className="text-[11px] text-muted-foreground">
-                            "{slot.booking.notes}"
-                          </p>
-                        )}
                       </div>
                     )}
                   </div>
@@ -252,7 +360,7 @@ export function MentorScheduleManager() {
                       className="inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline"
                     >
                       <Video className="size-3.5" />
-                      Join Meeting
+                      Join Google Meet
                       <ExternalLink className="size-3" />
                     </a>
                   </div>

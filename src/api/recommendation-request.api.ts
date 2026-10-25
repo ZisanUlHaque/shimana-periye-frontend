@@ -27,10 +27,7 @@ export function createRecommendationRequest(
 
   return apiClient("/recommendation-requests", {
     method: "POST",
-    body: {
-      body: reqData,
-      ...reqData,
-    },
+    body: reqData,
   });
 }
 

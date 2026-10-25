@@ -32,6 +32,8 @@ export function useCreateRecommendationRequest() {
       queryClient.invalidateQueries({
         queryKey: RECOMMENDATION_REQUESTS_QUERY_KEY,
       });
+      queryClient.invalidateQueries({ queryKey: ["readiness"] });
+      queryClient.invalidateQueries({ queryKey: ["dashboard"] });
       toast.add({
         title: "Recommendation requested",
         description: "Your reference request has been logged.",

@@ -25,10 +25,19 @@ export interface IStudentDashboard {
     readAt: string | null;
   }>;
   readiness?: {
-    overallScore: number;
-    categoryScores: Record<string, number>;
-    breakdown: Record<string, any>;
-    recommendations: string[];
+    totalScore?: number;
+    level?: string;
+    items?: Array<{
+      key: string;
+      label: string;
+      earned: number;
+      max: number;
+      completed: boolean;
+    }>;
+    overallScore?: number;
+    categoryScores?: Record<string, number>;
+    breakdown?: Record<string, any>;
+    recommendations?: string[];
   };
 }
 

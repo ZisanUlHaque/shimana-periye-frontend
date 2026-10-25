@@ -6,6 +6,8 @@ import {
   getDocumentById,
   getMyDocuments,
   updateDocument,
+  getDocumentsForMentor,
+  updateVersionReviewStatus,
 } from "@/api/document.api";
 import { STUDENT_COMPLETENESS_QUERY_KEY } from "./student-profile.hook";
 import { toast } from "@/components/ui/toast";
@@ -38,6 +40,8 @@ export function useCreateDocument() {
       queryClient.invalidateQueries({
         queryKey: STUDENT_COMPLETENESS_QUERY_KEY,
       });
+      queryClient.invalidateQueries({ queryKey: ["readiness"] });
+      queryClient.invalidateQueries({ queryKey: ["dashboard"] });
       toast.add({
         title: "Document uploaded",
         description: "Your document file has been uploaded.",
@@ -131,6 +135,39 @@ export function useGetAiFeedback() {
       toast.add({
         title: "AI Review failed",
         description: error?.message ?? "Could not generate feedback.",
+        type: "error",
+      });
+    },
+  });
+}
+
+export function useGetDocumentsForMentor(studentProfileId: string, applicationId?: string) {
+  return useQuery({
+    queryKey: [...DOCUMENTS_QUERY_KEY, "mentor", studentProfileId, applicationId],
+    queryFn: () => getDocumentsForMentor(studentProfileId, applicationId),
+    enabled: Boolean(studentProfileId),
+  });
+}
+
+export function useUpdateVersionReviewStatus() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ versionId, reviewStatus }: { versionId: string; reviewStatus: string }) =>
+      updateVersionReviewStatus(versionId, reviewStatus),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: DOCUMENTS_QUERY_KEY });
+      queryClient.invalidateQueries({ queryKey: ["dashboard", "mentor"] });
+      toast.add({
+        title: "Review status updated",
+        description: "Student has been notified of your review decision.",
+        type: "success",
+      });
+    },
+    onError: (error: any) => {
+      toast.add({
+        title: "Failed to update review status",
+        description: error?.message ?? "Something went wrong.",
         type: "error",
       });
     },

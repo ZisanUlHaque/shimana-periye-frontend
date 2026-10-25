@@ -41,7 +41,12 @@ export function RecommendationRequestForm({
         RecommendationRequestValidation.CreateRecommendationRequestZodSchema,
     },
     onSubmit: ({ value }) => {
-      onSubmit(value);
+      onSubmit({
+        professorName: value.professorName.trim(),
+        professorEmail: value.professorEmail?.trim() || undefined,
+        applicationId: value.applicationId?.trim() || undefined,
+        followUpAt: value.followUpAt?.trim() || undefined,
+      });
     },
   });
 

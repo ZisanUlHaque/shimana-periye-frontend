@@ -16,17 +16,8 @@ export function getDocumentById(id: string) {
 export function createDocument(payload: ICreateDocumentPayload) {
   const formData = new FormData();
   formData.append("file", payload.file);
-
-  const bodyData: any = {
-    type: payload.type,
-  };
-  if (payload.applicationId && payload.applicationId.trim() !== "") {
-    bodyData.applicationId = payload.applicationId.trim();
-  }
-
-  // Support both body JSON field and direct form fields
-  formData.append("body", JSON.stringify(bodyData));
   formData.append("type", payload.type);
+
   if (payload.applicationId && payload.applicationId.trim() !== "") {
     formData.append("applicationId", payload.applicationId.trim());
   }
@@ -66,5 +57,16 @@ export function deleteDocument(id: string) {
 export function getAiFeedbackForDocument(id: string) {
   return apiClient(`/documents/${id}/ai-feedback`, {
     method: "POST",
+  });
+}
+
+export function getDocumentsForMentor(studentProfileId: string, applicationId?: string) {
+  return apiClient(`/documents/student/${studentProfileId}${applicationId ? `?applicationId=${applicationId}` : ""}`);
+}
+
+export function updateVersionReviewStatus(versionId: string, reviewStatus: string) {
+  return apiClient(`/documents/versions/${versionId}/review-status`, {
+    method: "PATCH",
+    body: { reviewStatus },
   });
 }

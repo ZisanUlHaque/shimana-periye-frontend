@@ -12,8 +12,14 @@ import {
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export function useLogin() {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: userLogin,
+    onSuccess: (data) => {
+      queryClient.setQueryData(["user"], data);
+      queryClient.invalidateQueries({ queryKey: ["user"] });
+    },
   });
 }
 

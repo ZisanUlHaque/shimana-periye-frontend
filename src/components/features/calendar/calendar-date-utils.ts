@@ -15,7 +15,8 @@ export function formatEventDateLabel(dateStr: string) {
   if (isSameDay(date, now)) return "Today";
   if (isSameDay(date, tomorrow)) return "Tomorrow";
 
-  return date.toLocaleDateString(undefined, {
+  return date.toLocaleDateString("en-US", {
+    timeZone: "Asia/Dhaka",
     weekday: "short",
     month: "short",
     day: "numeric",
@@ -25,12 +26,18 @@ export function formatEventDateLabel(dateStr: string) {
 
 export function formatEventTime(dateStr: string, allDay?: boolean) {
   if (allDay) return "All day";
-  return new Date(dateStr).toLocaleTimeString(undefined, {
-    hour: "numeric",
-    minute: "2-digit",
-  });
+  return (
+    new Date(dateStr).toLocaleTimeString("en-US", {
+      timeZone: "Asia/Dhaka",
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    }) + " (BST)"
+  );
 }
 
 export function dateKey(dateStr: string) {
-  return new Date(dateStr).toDateString();
+  // Format key based on Bangladesh Time so groupings are timezone-accurate
+  const d = new Date(dateStr);
+  return d.toLocaleDateString("en-CA", { timeZone: "Asia/Dhaka" }); // YYYY-MM-DD
 }
