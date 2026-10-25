@@ -1,0 +1,338 @@
+[
+  {
+    "id": "lor-guide",
+    "title": "Comprehensive Guide to Letters of Recommendation (LOR)",
+    "category": "Letters of Recommendation",
+    "categoryKey": "lor",
+    "readTime": "6 min read",
+    "icon": "FileSignature",
+    "accentColor": "emerald",
+    "coverImage": "/assets/guides/lor-sample.jpg",
+    "pdfUrl": "/assets/guides/lor.pdf",
+    "pdfName": "Academic_Recommendation_Letter_Template.pdf",
+    "summary": "Everything you need to know about requesting, formatting, and structuring an impactful academic Letter of Recommendation for Master's, PhD, and scholarship applications.",
+    "definition": "A Letter of Recommendation (LOR) is an official document authored by a professor, academic supervisor, or employer endorsing a candidate's candidacy for higher education, competitive scholarships, or academic research appointments.",
+    "objective": "To corroborate your academic qualifications, validate your intellectual capability, and provide third-party verification that you possess the rigor to succeed in graduate programs.",
+    "formatting": {
+      "length": "1.0 – 1.5 pages (approx. 400 – 600 words)",
+      "font": "Times New Roman or Calibri, 11 – 12 pt",
+      "lineSpacing": "1.0 or 1.15 line spacing",
+      "fileType": "PDF format (mandatory on official university/institutional letterhead)",
+      "signature": "Must include handwritten or verified digital signature, recommender's full name, designation, department, and official institutional email (.edu / university domain)."
+    },
+    "practicalTips": [
+      "Select recommenders who know your work intimately — research supervisors, capstone mentors, or senior course instructors — rather than distant figures of high rank.",
+      "Equip your referee with your updated CV, draft SOP, and unofficial transcripts so they can cite concrete project milestones and quantitative accomplishments.",
+      "Formally request recommendation letters at least 3 to 4 weeks prior to university application deadlines.",
+      "Never draft the LOR entirely yourself unless your supervisor explicitly requests a rough working draft for their personal revision and signature.",
+      "Always ensure your referee submits from an official institutional domain (.edu / university domain) rather than generic webmail (Gmail, Yahoo, Outlook)."
+    ],
+    "structure": [
+      {
+        "paragraph": "Paragraph 1: Introducing the Recommender & Candidate Ranking",
+        "purpose": "Establishes recommender credibility, relationship duration, and comparative percentile ranking.",
+        "example": "It is my pleasure to write in support of the application of Mr. Ian Harris for the Research Training Program (RTP) Scholarship to pursue his PhD at The University of Queensland. Harris has been an exemplary student in my Animal Nutrition and Metabolism class at Bangladesh Agricultural University (BAU). In my experience, he ranks within the top 5% of all Animal Science students I have taught and supervised over the past five years."
+      },
+      {
+        "paragraph": "Paragraph 2: Academic Strengths & Coursework Mastery",
+        "purpose": "Highlights intellectual rigor, problem-solving, and subject matter grasp.",
+        "example": "Harris has demonstrated outstanding academic performance throughout his studies. He consistently ranked among the top students in his class and showed exceptional mastery of subjects related to poultry nutrition, metabolism, and experimental design. His strong grasp of quantitative analysis, critical thinking, and problem-solving has been evident in both coursework and research activities, reflecting his commitment to academic excellence."
+      },
+      {
+        "paragraph": "Paragraph 3: Research Aptitude, Methodologies & Scientific Output",
+        "purpose": "Focuses on technical competencies, lab skills, statistical packages, and publications.",
+        "example": "Harris possesses strong research and analytical skills, with proficiency in statistical analysis using R and SAS. His work on amino acid supplementation in broiler diets, published in Livestock Science, highlights his ability to design experiments, interpret data, and communicate scientific findings effectively. His integration of metabolic pathway insights with nutritional data demonstrates both technical competence and scientific depth, making him a promising candidate for advanced research in poultry nutrition and metabolism."
+      },
+      {
+        "paragraph": "Paragraph 4: Interpersonal Traits, Collaboration & Leadership",
+        "purpose": "Illustrates teamwork, professional ethics, maturity, and departmental contributions.",
+        "example": "Harris works well both independently and as part of a team, showing initiative and a collaborative spirit in every project. His professionalism, humility, and willingness to assist others make him a valued member of any academic or research environment. He consistently demonstrates integrity and a positive attitude, contributing to a productive and supportive atmosphere in both the classroom and laboratory."
+      },
+      {
+        "paragraph": "Paragraph 5: Final Endorsement & Contact Information",
+        "purpose": "Concludes with an unreserved recommendation and offer for follow-up verification.",
+        "example": "In conclusion, I am pleased to give Mr. Ian Harris my highest recommendation for his RTP Scholarship. Please feel free to contact me if you require any additional information or clarification."
+      }
+    ],
+    "authorNote": "Adjust page margins and spacing so the recommendation letter fits cleanly on one standard letterhead page without trailing single-line overflows.",
+    "images": [
+      {
+        "url": "/assets/guides/lor-sample.jpg",
+        "caption": "Official Sample Letter of Recommendation (LOR) - 1-Page Layout Standard",
+        "previewUrl": "/assets/guides/lor-sample.jpg"
+      }
+    ]
+  },
+  {
+    "id": "motivation-letter-vs-sop",
+    "title": "Motivation Letter vs. Statement of Purpose (SOP)",
+    "category": "Application Essays",
+    "categoryKey": "essays",
+    "readTime": "5 min read",
+    "icon": "Layers",
+    "accentColor": "blue",
+    "coverImage": "/assets/guides/motivation-vs-sop.jpg",
+    "pdfUrl": "/assets/guides/motivation.pdf",
+    "pdfName": "Motivation_Letter_vs_SOP_Masterclass.pdf",
+    "summary": "Master the critical distinctions between a personal Motivation Letter and an academic Statement of Purpose (SOP) to target admissions committees effectively.",
+    "definition": "While both documents convey your candidacy, a Motivation Letter is personally driven and vision-oriented, whereas a Statement of Purpose is academically grounded and research-focused.",
+    "comparison": [
+      {
+        "type": "Motivation Letter",
+        "focus": "Personal passion, career trajectory, core motivations, and societal impact.",
+        "coreQuestions": [
+          "Why are you passionate about studying this discipline?",
+          "What is your long-term career dream or vision?",
+          "How will this specific degree empower you to contribute solutions to your home country or global community?"
+        ]
+      },
+      {
+        "type": "Statement of Purpose (SOP)",
+        "focus": "Academic credentials, research methodology, technical competencies, and lab trajectories.",
+        "coreQuestions": [
+          "What empirical research and capstone experiments have you executed in the past?",
+          "What specialized laboratory and analytical competencies do you possess (e.g. Nutrient analysis, in vitro digestibility, bioinformatics)?",
+          "What precise academic questions or doctoral problems do you plan to investigate?"
+        ]
+      }
+    ],
+    "formatting": {
+      "length": "500 – 750 words (maximum 1 to 1.5 pages)",
+      "layout": "Logical, cohesive narrative divided into structured paragraphs (never use raw tables or disjointed bullet lists)",
+      "font": "Times New Roman, Calibri, or Arial — 12 pt professional font",
+      "margins": "Standard 1 inch (2.54 cm) on all 4 sides",
+      "fileType": "PDF format (mandatory)"
+    },
+    "practicalTips": [
+      "Do not submit an SOP when a university explicitly requests a Motivation Letter, and vice versa.",
+      "European scholarship programs (e.g. Erasmus Mundus, DAAD, Swedish Institute) often emphasize Motivation Letters focusing on societal development.",
+      "North American and Australian graduate schools (US, Canada, Australia) typically require an academic Statement of Purpose prioritizing research match."
+    ],
+    "authorNote": "Always keep formatting clean and avoid distracting colors or headers. The strength lies in the clarity of your academic narrative.",
+    "images": [
+      {
+        "url": "/assets/guides/motivation-vs-sop.jpg",
+        "caption": "Motivation Letter vs Statement of Purpose Structural Comparison Chart",
+        "previewUrl": "/assets/guides/motivation-vs-sop.jpg"
+      }
+    ]
+  },
+  {
+    "id": "fresh-graduate-cv",
+    "title": "Essential Academic CV Structure for Fresh Graduates",
+    "category": "Academic CV & Resume",
+    "categoryKey": "cv",
+    "readTime": "7 min read",
+    "icon": "FileText",
+    "accentColor": "purple",
+    "coverImage": "/assets/guides/cv-structure-1.jpg",
+    "pdfUrl": "/assets/guides/cv.pdf",
+    "pdfName": "International_Academic_CV_Standard_Template.pdf",
+    "summary": "A comprehensive breakdown of all mandatory and optional sections required in an international graduate school curriculum vitae (CV).",
+    "definition": "An academic Curriculum Vitae (CV) summarizes your education, research training, publications, teaching experience, and technical competencies for graduate admissions committees.",
+    "sections": [
+      {
+        "title": "1. Personal & Contact Details",
+        "details": "Clearly state your full legal name, professional email address, phone number, LinkedIn profile, and Google Scholar / ORCID profile if available. Avoid personal photos or marital status for US/Canada applications."
+      },
+      {
+        "title": "2. Academic Credentials & Education",
+        "details": "List degrees in reverse chronological order with institution name, major/department, graduation year, and GPA/CGPA (highlight if in the top percentage of your class)."
+      },
+      {
+        "title": "3. Thesis & Capstone Research Projects",
+        "details": "Detail your thesis title, advisor name, methodologies used, and key scientific findings. Demonstrates primary research proficiency."
+      },
+      {
+        "title": "4. Internships & Work Experience",
+        "details": "Summarize relevant industry, clinic, or lab internships using action verbs (e.g., 'Formulated', 'Engineered', 'Analyzed') in bullet points."
+      },
+      {
+        "title": "5. Coursework & Academic Projects",
+        "details": "Highlight significant group research projects or capstone assignments illustrating analytical problem-solving and collaboration."
+      },
+      {
+        "title": "6. Technical, Laboratory & Software Skills",
+        "details": "Group your proficiencies: Computational tools (R, Python, SPSS, SAS, Excel), Wet Lab / Field techniques (PCR, Chromatography, Spectrophotometry), and Soft Skills (Technical writing, Scientific presenting)."
+      },
+      {
+        "title": "7. Language Proficiency",
+        "details": "Specify language fluency levels (e.g., English — Fluent / IELTS 8.0, Bengali — Native)."
+      },
+      {
+        "title": "8. Certifications & Professional Training",
+        "details": "Include specialized online training, methodology bootcamps, and verified certificates that demonstrate continuous learning."
+      },
+      {
+        "title": "9. Honors, Awards & Competitions",
+        "details": "List dean's honors, competitive scholarships, paper awards, and university recognitions that set you apart."
+      },
+      {
+        "title": "10. Leadership & Extracurricular Activities",
+        "details": "Highlight club executive roles, university society positions, and student advocacy that illustrate organizational leadership."
+      },
+      {
+        "title": "11. Community Engagement & Volunteering",
+        "details": "Showcase social impact, scientific outreach, and community engagement indicating a well-rounded character."
+      },
+      {
+        "title": "12. Research Interests & Academic Hobbies (Optional)",
+        "details": "Briefly mention aligned intellectual hobbies (e.g., scientific blogging, competitive coding); keep concise and relevant."
+      },
+      {
+        "title": "13. Academic References",
+        "details": "Provide names, titles, departments, and emails of 1–2 faculty supervisors, or note 'Available upon request'."
+      }
+    ],
+    "formatting": {
+      "length": "2 – 3 pages for graduate admissions",
+      "font": "Calibri, Helvetica, or Times New Roman, 10 – 11 pt",
+      "margins": "0.75 – 1 inch margins",
+      "fileType": "PDF format"
+    },
+    "authorNote": "Keep typography clean and maintain consistent bullet indentation across all sections.",
+    "images": [
+      {
+        "url": "/assets/guides/cv-structure-1.jpg",
+        "caption": "Academic CV Section Architecture & Formatting Guide (Part 1)",
+        "previewUrl": "/assets/guides/cv-structure-1.jpg"
+      },
+      {
+        "url": "/assets/guides/cv-structure-2.jpg",
+        "caption": "Academic CV Section Architecture & Formatting Guide (Part 2)",
+        "previewUrl": "/assets/guides/cv-structure-2.jpg"
+      }
+    ]
+  },
+  {
+    "id": "sop-dos-and-donts",
+    "title": "Statement of Purpose (SOP): Critical Do's and Don'ts",
+    "category": "Application Essays",
+    "categoryKey": "essays",
+    "readTime": "6 min read",
+    "icon": "Award",
+    "accentColor": "amber",
+    "coverImage": "/assets/guides/sop-dos-donts-1.jpeg",
+    "pdfUrl": "/assets/guides/sop.pdf",
+    "pdfName": "Statement_of_Purpose_SOP_Master_Guide.pdf",
+    "summary": "Proven principles to make your SOP stand out to graduate admissions committees while avoiding common disqualifiers.",
+    "definition": "The Statement of Purpose (SOP) is an essay reflecting your intellectual identity, research motivations, and institutional fit. It proves to the committee why you belong in their program.",
+    "dos": [
+      {
+        "title": "1. Articulate Specific, Actionable Goals",
+        "description": "State clearly where you see yourself in 5 to 10 years. Explain how completing this degree will equip you to make tangible contributions to scientific knowledge or your home country."
+      },
+      {
+        "title": "2. Demonstrate Explicit University & Program Fit",
+        "description": "Specify why you chose this exact department, curriculum, and faculty lab. Explain how your research questions synergize with active departmental research groups."
+      },
+      {
+        "title": "3. Showcase Tangible Milestones & Research Evidence",
+        "description": "Describe specific scientific challenges, research internships, and leadership roles that demonstrate your technical endurance and analytical capability."
+      },
+      {
+        "title": "4. Frame Obstacles as Proof of Resilience",
+        "description": "Address experimental setbacks or academic hurdles constructively. Explaining how you resolved difficulties shows maturity, adaptability, and grit."
+      },
+      {
+        "title": "5. Maintain Clear, Engaging, and Professional Prose",
+        "description": "Write with clarity, confidence, and precision. Avoid flowery vocabulary that obscures meaning; communicate like an emerging scientific peer."
+      }
+    ],
+    "donts": [
+      {
+        "title": "1. Do Not Merely Recite Your CV",
+        "description": "Your CV details what you achieved; your SOP narrates who you are as a thinker and why those achievements shaped your research direction."
+      },
+      {
+        "title": "2. Avoid Vague Clichés and Flattery",
+        "description": "Never write 'I have been passionate about this field since childhood' or 'Your university is world-renowned.' Replace generalities with evidence-based reasoning."
+      },
+      {
+        "title": "3. Avoid Overly Emotional Pleading or Seeking Sympathy",
+        "description": "You may mention personal hardship only if it shaped your character or research questions, but maintain a dignified, professional tone throughout."
+      },
+      {
+        "title": "4. Zero Tolerance for Spelling or Grammatical Errors",
+        "description": "Typos in an SOP indicate carelessness and lack of attention to detail. Proofread iteratively or have a peer and mentor review your draft."
+      },
+      {
+        "title": "5. Strictly Respect Word & Page Limits",
+        "description": "Adhere strictly to instructions (typically 1–2 pages or 750–1000 words). Committees evaluate thousands of applications; respect their reading time."
+      }
+    ],
+    "authorNote": "Never label sections with explicit headings like 'Introduction' or 'Why This University' in your final submission. Write in cohesive narrative paragraphs.",
+    "images": [
+      {
+        "url": "/assets/guides/sop-dos-donts-1.jpeg",
+        "caption": "Statement of Purpose (SOP) Do's & Don'ts Strategic Infographic (Part 1)",
+        "previewUrl": "/assets/guides/sop-dos-donts-1.jpeg"
+      },
+      {
+        "url": "/assets/guides/sop-dos-donts-2.jpeg",
+        "caption": "Statement of Purpose (SOP) Do's & Don'ts Strategic Infographic (Part 2)",
+        "previewUrl": "/assets/guides/sop-dos-donts-2.jpeg"
+      }
+    ]
+  },
+  {
+    "id": "google-scholar-professors",
+    "title": "Finding Prospective Graduate Advisors Using Google Scholar",
+    "category": "Faculty Outreach & Matching",
+    "categoryKey": "professors",
+    "readTime": "5 min read",
+    "icon": "Search",
+    "accentColor": "cyan",
+    "coverImage": "/assets/guides/google-scholar-1.jpeg",
+    "pdfUrl": "/assets/guides/prof.pdf",
+    "pdfName": "Google_Scholar_Professor_Outreach_Blueprint.pdf",
+    "summary": "A tactical 5-step methodology to discover active laboratories, identify principal investigators, and prepare high-conversion cold emails.",
+    "definition": "Google Scholar is the world's most powerful open academic database for discovering research supervisors who are actively publishing and receiving grant funding.",
+    "steps": [
+      {
+        "stepNumber": "Step 1",
+        "title": "Access Google Scholar",
+        "instruction": "Open your web browser and navigate directly to scholar.google.com."
+      },
+      {
+        "stepNumber": "Step 2",
+        "title": "Search Targeted Niche Topic Keywords",
+        "instruction": "Instead of broad disciplines like 'biology' or 'computer science', search precise methodologies and subfields.",
+        "examples": [
+          "broiler gut health microbiota",
+          "poultry nutrition amino acid",
+          "chicken liver metabolomics",
+          "deep reinforcement learning autonomous robotics"
+        ]
+      },
+      {
+        "stepNumber": "Step 3",
+        "title": "Filter Recent Publications (Last 3–5 Years)",
+        "instruction": "Select papers published within the last 3–5 years to ensure the laboratory is actively funded. Read the abstract to check alignment with your skills and review the co-author list."
+      },
+      {
+        "stepNumber": "Step 4",
+        "title": "Identify the Principal Investigator (PI / Supervisor)",
+        "instruction": "In academic publications, the last author or corresponding author is usually the Principal Investigator (PI) / laboratory head. Click on their hyperlinked name to inspect their full profile."
+      },
+      {
+        "stepNumber": "Step 5",
+        "title": "Analyze the Professor's Google Scholar Profile",
+        "instruction": "Examine their verified university affiliation, listed research keywords, citation trajectory, and recent preprints to formulate your personalized cold email."
+      }
+    ],
+    "authorNote": "Reference 1 or 2 recent papers from the professor's Google Scholar profile in the second paragraph of your cold email to demonstrate genuine intellectual interest.",
+    "images": [
+      {
+        "url": "/assets/guides/google-scholar-1.jpeg",
+        "caption": "Google Scholar Professor Discovery Workflow (Part 1)",
+        "previewUrl": "/assets/guides/google-scholar-1.jpeg"
+      },
+      {
+        "url": "/assets/guides/google-scholar-2.jpeg",
+        "caption": "Google Scholar Professor Discovery Workflow (Part 2)",
+        "previewUrl": "/assets/guides/google-scholar-2.jpeg"
+      }
+    ]
+  }
+]

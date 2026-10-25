@@ -36,7 +36,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative bg-gradient-to-b from-sky-100 via-blue-50 to-sky-100 text-gray-700 pt-6">
+    <footer className="relative bg-gradient-to-b from-sky-100 via-blue-50 to-sky-100 text-gray-700 pt-12">
       
       {/* 🌊 High-Contrast Wavy SVG Divider (Double Layer for Sharp Visibility) */}
       <div className="absolute top-0 left-0 right-0 -translate-y-[99%] overflow-hidden leading-none pointer-events-none z-10">
