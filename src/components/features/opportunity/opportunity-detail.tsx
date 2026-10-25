@@ -36,6 +36,7 @@ export function OpportunityDetail({ opportunityId }: { opportunityId: string }) 
     : "Not specified";
 
   const isAdmin = currentUser?.role === "ADMIN";
+  const isSourceUrl = /^https?:\/\//i.test(opportunity.source);
 
   return (
     <div className="flex flex-col gap-6">
@@ -63,15 +64,22 @@ export function OpportunityDetail({ opportunityId }: { opportunityId: string }) 
             <CalendarClock className="size-3.5" />
             Deadline: {deadline}
           </span>
-          <a
-            href={opportunity.source}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-1.5 text-primary hover:underline"
-          >
-            <LinkIcon className="size-3.5" />
-            View source
-          </a>
+          {isSourceUrl ? (
+            <a
+              href={opportunity.source}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1.5 text-primary hover:underline"
+            >
+              <LinkIcon className="size-3.5" />
+              View source
+            </a>
+          ) : (
+            <span className="inline-flex items-center gap-1.5">
+              <LinkIcon className="size-3.5" />
+              Source: {opportunity.source}
+            </span>
+          )}
         </div>
 
         <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-border/60 pt-4">

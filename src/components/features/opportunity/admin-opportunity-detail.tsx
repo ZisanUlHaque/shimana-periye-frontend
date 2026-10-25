@@ -28,6 +28,8 @@ export function AdminOpportunityDetail({ opportunityId }: { opportunityId: strin
       })
     : "Not specified";
 
+  const isSourceUrl = /^https?:\/\//i.test(opportunity.source);
+
   return (
     <div className="rounded-2xl border border-border/70 bg-card p-6 shadow-xs">
       <div className="flex flex-wrap items-start justify-between gap-4">
@@ -65,15 +67,22 @@ export function AdminOpportunityDetail({ opportunityId }: { opportunityId: strin
           <CalendarClock className="size-3.5" />
           Deadline: {deadline}
         </span>
-        <a
-          href={opportunity.source}
-          target="_blank"
-          rel="noreferrer"
-          className="inline-flex items-center gap-1.5 text-primary hover:underline"
-        >
-          <LinkIcon className="size-3.5" />
-          View source
-        </a>
+        {isSourceUrl ? (
+          <a
+            href={opportunity.source}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-1.5 text-primary hover:underline"
+          >
+            <LinkIcon className="size-3.5" />
+            View source
+          </a>
+        ) : (
+          <span className="inline-flex items-center gap-1.5">
+            <LinkIcon className="size-3.5" />
+            Source: {opportunity.source}
+          </span>
+        )}
       </div>
 
       <div className="mt-4 border-t border-border/60 pt-4">

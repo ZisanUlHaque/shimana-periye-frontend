@@ -14,6 +14,7 @@ import { useEffect, useRef, useState } from "react";
 import { useGetMe, useLogout } from "@/hooks";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/toast";
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import Image from "next/image";
 
 // 👇 login ছাড়া যা দেখাবে
@@ -21,6 +22,7 @@ const guestNavItems = [
   { label: "Home", href: "/" },
   { label: "Scholarships", href: "/scholarships" },
   { label: "About Us", href: "/about" },
+  { label: "Become a Mentor", href: "/apply-mentor" },
 ];
 
 // 👇 login করার পর যা দেখাবে
@@ -30,6 +32,7 @@ const authNavItems = [
   { label: "About Us", href: "/about" },
   { label: "Roadmaps", href: "/roadmaps" },
   { label: "Mentors", href: "/mentors" },
+  { label: "Become a Mentor", href: "/apply-mentor" },
 ];
 
 export function Header() {
@@ -87,7 +90,7 @@ export function Header() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${solid
-          ? "bg-white/20 backdrop-blur-xl backdrop-saturate-150 border-b border-white/30 shadow-sm"
+          ? "bg-background/80 backdrop-blur-xl border-b border-border/60 shadow-xs"
           : "bg-gradient-to-b from-black/60 via-black/30 to-transparent"
         }`}
     >
@@ -144,6 +147,7 @@ export function Header() {
 
         {/* Right: Actions */}
         <div className="flex items-center gap-3">
+          <ThemeToggle />
           {user ? (
             <div className="relative" ref={dropdownRef}>
               <button
@@ -198,7 +202,14 @@ export function Header() {
                       type="button"
                       onClick={() => {
                         setUserDropdownOpen(false);
-                        router.push("/profile");
+                        const role = user?.role?.toUpperCase();
+                        if (role === "STUDENT") {
+                          router.push("/student/profile");
+                        } else if (role === "MENTOR") {
+                          router.push("/mentor/profile");
+                        } else {
+                          router.push("/admin");
+                        }
                       }}
                       className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-xs font-medium text-foreground hover:bg-muted transition-colors cursor-pointer"
                     >

@@ -10,9 +10,11 @@ import { ReactNode } from "react";
 import { Role } from "@/types";
 import { DashboardSidebar } from "./dashboard-sidebar";
 import { usePathname } from "next/navigation";
-import { Bell, Search } from "lucide-react";
 import Link from "next/link";
 import { Fragment } from "react";
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
+import { ReminderBell } from "@/components/features/reminder/reminder-bell";
+import { DashboardSearch } from "./dashboard-search";
 
 function Breadcrumbs() {
   const pathname = usePathname();
@@ -64,25 +66,15 @@ export default function DashboardShell({
           <Separator orientation="vertical" className="h-5" />
           <Breadcrumbs />
 
-          <div className="ml-auto flex items-center gap-2">
-            {/* Search */}
-            <div className="relative hidden sm:block">
-              <Search className="pointer-events-none absolute left-3 top-1/2 size-3.5 -translate-y-1/2 text-muted-foreground" />
-              <input
-                type="text"
-                placeholder="Search..."
-                className="h-9 w-56 rounded-full border border-border bg-muted/50 pl-9 pr-4 text-xs outline-none transition-all focus:w-64 focus:border-primary/40 focus:bg-background focus:ring-2 focus:ring-primary/10"
-              />
-            </div>
+          <div className="ml-auto flex items-center gap-3">
+            {/* Functional Command Palette & Search */}
+            <DashboardSearch role={role} />
 
-            {/* Notifications */}
-            <button
-              type="button"
-              className="relative flex size-9 items-center justify-center rounded-full border border-border bg-background text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-            >
-              <Bell className="size-4" />
-              <span className="absolute right-2 top-2 size-1.5 rounded-full bg-primary" />
-            </button>
+            {/* Dark / Light Mode Switcher */}
+            <ThemeToggle />
+
+            {/* Live Notifications & Reminders */}
+            <ReminderBell />
           </div>
         </header>
 

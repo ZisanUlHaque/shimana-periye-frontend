@@ -98,6 +98,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={cn(
         "h-full",
         "antialiased",
@@ -107,12 +108,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         roboto.variable,
       )}
     >
-      <Providers>
-        <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col">
+        <Providers>
           {children}
-          <Toaster></Toaster>
-        </body>
-      </Providers>
+          <Toaster />
+        </Providers>
+      </body>
     </html>
   );
 }

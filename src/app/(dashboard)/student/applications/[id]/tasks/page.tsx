@@ -1,19 +1,16 @@
-import type { Metadata } from "next";
+"use client";
+
+import { use } from "react";
 import { ApplicationTaskDialog } from "@/components/features/application-task/application-task-dialog";
 import { ApplicationTaskList } from "@/components/features/application-task/application-task-list";
 import { PageHeader } from "@/components/layout/public/page-header";
-
-export const metadata: Metadata = {
-  title: "Application Tasks",
-  description: "Track the action items for this application.",
-};
 
 interface ApplicationTasksPageProps {
   params: Promise<{ id: string }>;
 }
 
-export default async function ApplicationTasksPage({ params }: ApplicationTasksPageProps) {
-  const { id } = await params;
+export default function ApplicationTasksPage({ params }: ApplicationTasksPageProps) {
+  const { id } = use(params);
 
   return (
     <div className="flex flex-col gap-6">

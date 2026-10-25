@@ -1,6 +1,8 @@
 "use client";
 
-import { Calendar, Building2 } from "lucide-react";
+import { Calendar, Building2, Coins, CheckSquare, Sparkles } from "lucide-react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 import { useGetApplicationById } from "@/hooks/application.hook";
 import { ApplicationStatusBadge, DecisionBadge } from "./application-status-badge";
 import { UpdateApplicationStatusDialog } from "./update-application-status-dialog";
@@ -79,7 +81,7 @@ export function ApplicationDetail({ applicationId }: { applicationId: string }) 
           </div>
         )}
 
-        <div className="mt-5 flex flex-wrap gap-2 border-t border-border/60 pt-4">
+        <div className="mt-5 flex flex-wrap items-center gap-2 border-t border-border/60 pt-4">
           <UpdateApplicationStatusDialog
             applicationId={application.id}
             currentStatus={application.status}
@@ -93,11 +95,31 @@ export function ApplicationDetail({ applicationId }: { applicationId: string }) 
           {application.status === "DECISION" && (
             <RecordDecisionDialog applicationId={application.id} />
           )}
+
+          {/* Quick Hub Links for this Application */}
+          <Link href={`/student/applications/${application.id}/cost-estimate`}>
+            <Button size="sm" variant="outline" className="gap-1.5 text-xs">
+              <Coins className="size-3.5" />
+              Cost Estimator
+            </Button>
+          </Link>
+          <Link href={`/student/applications/${application.id}/tasks`}>
+            <Button size="sm" variant="outline" className="gap-1.5 text-xs">
+              <CheckSquare className="size-3.5" />
+              Manage Tasks
+            </Button>
+          </Link>
+          <Link href={`/student/interview-practice/${application.id}`}>
+            <Button size="sm" variant="outline" className="gap-1.5 text-xs">
+              <Sparkles className="size-3.5" />
+              Mock Interview
+            </Button>
+          </Link>
         </div>
       </div>
 
       <div>
-        <h3 className="mb-3 text-sm font-semibold text-foreground">Checklist</h3>
+        <h3 className="mb-3 text-sm font-semibold text-foreground">Application Checklist</h3>
         <ApplicationTaskList applicationId={application.id} />
       </div>
     </div>

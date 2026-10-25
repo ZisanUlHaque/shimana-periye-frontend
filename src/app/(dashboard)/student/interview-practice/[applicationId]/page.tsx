@@ -1,28 +1,34 @@
-import type { Metadata } from "next";
+import { Suspense } from "react";
+import { InterviewSession } from "@/components/features/interview-practice/interview-session";
 import { PageHeader } from "@/components/layout/public/page-header";
-import { Button } from "@/components/ui/button";
 
-export const metadata: Metadata = {
-  title: "Mock Interview",
-  description: "AI-generated questions and interview practice",
-};
+export const dynamic = "force-dynamic";
 
-export default async function InterviewPracticePage({
-  params,
-}: {
+interface InterviewPracticePageProps {
   params: Promise<{ applicationId: string }>;
-}) {
-  const { applicationId } = await params;
+}
 
+async function InterviewPracticeContent({
+  params,
+}: InterviewPracticePageProps) {
+  const { applicationId } = await params;
+  return <InterviewSession applicationId={applicationId} />;
+}
+
+export default function InterviewPracticePage({
+  params,
+}: InterviewPracticePageProps) {
   return (
-    <div className="flex flex-1 flex-col gap-6 p-6">
+    <div className="flex flex-1 flex-col gap-6 p-4 sm:p-6">
       <PageHeader
-        title="Mock Interview"
-        description={`AI-generated questions for application ${applicationId}`}
-        action={<Button size="sm">Generate Questions</Button>}
+        title="Mock Admissions Interview"
+        description="Practice with questions generated directly from your target degree, professor openings, and field of study."
       />
-      {/* TODO: POST /api/v1/interview-practice/:applicationId/generate */}
-      {/* TODO: POST /api/v1/interview-practice/:applicationId/evaluate */}
+      <Suspense
+        fallback={<div className="h-64 animate-pulse rounded-2xl bg-muted/60" />}
+      >
+        <InterviewPracticeContent params={params} />
+      </Suspense>
     </div>
   );
 }

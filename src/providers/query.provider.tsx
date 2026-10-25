@@ -5,7 +5,11 @@ function makeQueryClient() {
   return new QueryClient({
     defaultOptions: {
       queries: {
-        staleTime: 60 * 1000,
+        staleTime: 15 * 1000, // 15s fresh
+        gcTime: 10 * 60 * 1000, // 10 min cache persistence for instant transitions
+        refetchOnWindowFocus: true, // Smooth auto-refresh when focusing browser tab
+        refetchOnReconnect: true,
+        retry: 1,
       },
     },
   });

@@ -1,12 +1,14 @@
 import apiClient from "@/lib/apiClient";
+import type { IApiResponse } from "@/types/api.type";
 import type {
   ICreateOutreachLogPayload,
   IMarkReplyReceivedPayload,
   IUpdateOutreachLogParams,
+  IOutreachLog,
 } from "@/types/outreach-log.type";
 
 export function getMyOutreachLogs() {
-  return apiClient("/outreach-logs");
+  return apiClient<IApiResponse<IOutreachLog[]>>("/outreach-logs");
 }
 
 export function createOutreachLog(payload: ICreateOutreachLogPayload) {

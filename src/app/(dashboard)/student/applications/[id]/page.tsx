@@ -1,23 +1,34 @@
-import type { Metadata } from "next";
+import { Suspense } from "react";
 import { ApplicationDetail } from "@/components/features/application/application-detail";
 import { PageHeader } from "@/components/layout/public/page-header";
 
-export const metadata: Metadata = {
-  title: "Application Details",
-  description: "Manage status, interview, and decision.",
-};
+export const dynamic = "force-dynamic";
 
 interface ApplicationDetailPageProps {
   params: Promise<{ id: string }>;
 }
 
-export default async function ApplicationDetailPage({ params }: ApplicationDetailPageProps) {
+async function ApplicationDetailContent({
+  params,
+}: ApplicationDetailPageProps) {
   const { id } = await params;
+  return <ApplicationDetail applicationId={id} />;
+}
 
+export default function ApplicationDetailPage({
+  params,
+}: ApplicationDetailPageProps) {
   return (
     <div className="flex flex-col gap-6">
-      <PageHeader title="Application Details" description="Manage status, interview, and decision." />
-      <ApplicationDetail applicationId={id} />
+      <PageHeader
+        title="Application Details"
+        description="Manage status, interview, and decision."
+      />
+      <Suspense
+        fallback={<div className="h-48 animate-pulse rounded-2xl bg-muted/60" />}
+      >
+        <ApplicationDetailContent params={params} />
+      </Suspense>
     </div>
   );
 }
