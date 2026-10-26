@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
 import { Building2 } from "lucide-react";
-import { UniversityCard } from "./university-card";
-import { useUniversities } from "@/hooks/university.hook";
+import { useState } from "react";
+import { ListState } from "@/components/shared/list-state";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ListState } from "@/components/shared/list-state";
+import { useUniversities } from "@/hooks/university.hook";
+import { UniversityCard } from "./university-card";
 
 interface UniversityListProps {
   isAdmin?: boolean;
@@ -49,7 +49,11 @@ export function UniversityList({ isAdmin }: UniversityListProps) {
         {(items) => (
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {items.map((university) => (
-              <UniversityCard key={university.id} university={university} isAdmin={isAdmin} />
+              <UniversityCard
+                key={university.id}
+                university={university}
+                isAdmin={isAdmin}
+              />
             ))}
           </div>
         )}

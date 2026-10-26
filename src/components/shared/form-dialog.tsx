@@ -15,6 +15,7 @@ interface FormDialogProps {
   description?: string;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
+  className?: string;
   children: React.ReactNode | ((close: () => void) => React.ReactNode);
 }
 
@@ -24,6 +25,7 @@ export function FormDialog({
   description,
   open: controlledOpen,
   onOpenChange,
+  className,
   children,
 }: FormDialogProps) {
   const [internalOpen, setInternalOpen] = useState(false);
@@ -34,10 +36,12 @@ export function FormDialog({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger render={trigger} />
-      <DialogContent>
+      <DialogContent className={className}>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
-          {description && <p className="text-sm text-muted-foreground">{description}</p>}
+          {description && (
+            <p className="text-sm text-muted-foreground">{description}</p>
+          )}
         </DialogHeader>
         {typeof children === "function" ? children(close) : children}
       </DialogContent>

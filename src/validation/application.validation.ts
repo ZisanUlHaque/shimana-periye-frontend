@@ -18,7 +18,8 @@ const RecordDecisionZodSchema = z
     if (data.decision === "ACCEPTED" && !data.offerResponseDeadline) {
       ctx.addIssue({
         code: "custom",
-        message: "Offer response deadline is required when decision is Accepted",
+        message:
+          "Offer response deadline is required when decision is Accepted",
         path: ["offerResponseDeadline"],
       });
     }
@@ -28,10 +29,16 @@ const RecordInterviewZodSchema = z.object({
   interviewDate: z.string().min(1, "Interview date is required"),
 });
 
-export type StartApplicationFormValues = z.infer<typeof StartApplicationZodSchema>;
-export type UpdateApplicationStatusFormValues = z.infer<typeof UpdateApplicationStatusZodSchema>;
+export type StartApplicationFormValues = z.infer<
+  typeof StartApplicationZodSchema
+>;
+export type UpdateApplicationStatusFormValues = z.infer<
+  typeof UpdateApplicationStatusZodSchema
+>;
 export type RecordDecisionFormValues = z.infer<typeof RecordDecisionZodSchema>;
-export type RecordInterviewFormValues = z.infer<typeof RecordInterviewZodSchema>;
+export type RecordInterviewFormValues = z.infer<
+  typeof RecordInterviewZodSchema
+>;
 
 export const ApplicationValidation = {
   StartApplicationZodSchema,

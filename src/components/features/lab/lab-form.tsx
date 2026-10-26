@@ -1,14 +1,15 @@
 "use client";
 
 import { useForm } from "@tanstack/react-form";
-import { Loader2 } from "lucide-react";
-import type { ILab } from "@/types/lab.type";
-import { Input } from "@/components/ui/input";
+import { ImageIcon } from "lucide-react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
 import { FieldError } from "@/components/ui/field";
-import { type LabFormValues, LabValidation } from "@/validation/lab.validation";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { useUniversities } from "@/hooks/university.hook";
+import type { ILab } from "@/types/lab.type";
+import { type LabFormValues, LabValidation } from "@/validation/lab.validation";
 
 interface LabFormProps {
   defaultValues?: Partial<ILab>;
@@ -32,12 +33,16 @@ export function LabForm({
       name: defaultValues?.name ?? "",
       universityId: defaultValues?.universityId ?? "",
       focusAreas: defaultValues?.focusAreas ?? [],
+      imageUrl: defaultValues?.imageUrl ?? "",
     } as LabFormValues,
     validators: {
       onSubmit: LabValidation.CreateLabZodSchema,
     },
     onSubmit: ({ value }) => {
-      onSubmit(value);
+      onSubmit({
+        ...value,
+        imageUrl: value.imageUrl || undefined,
+      });
     },
   });
 
@@ -96,7 +101,7 @@ export function LabForm({
                 onChange={(e) => field.handleChange(e.target.value)}
               >
                 <option value="">Select a university</option>
-                {universities.map((u: any) => (
+                {universities.map((u) => (
                   <option key={u.id} value={u.id}>
                     {u.name} ({u.country})
                   </option>
@@ -114,22 +119,68 @@ export function LabForm({
         }}
       </form.Field>
 
-      <form.Subscribe
-        selector={(state) => [state.canSubmit, state.isSubmitting] as const}
-      >
-        {([canSubmit, isFormSubmitting]) => (
-          <Button
-            type="submit"
-            disabled={!canSubmit || isSubmitting}
-            className="mt-2 w-full"
-          >
-            {(isSubmitting || isFormSubmitting) && (
-              <Loader2 className="size-4 animate-spin" />
-            )}
-            {submitLabel}
-          </Button>
+      {/* Image URL */}
+      <form.Field name="imageUrl">
+        {(field) => (
+          <div className="grid gap-1.5">
+            <Label htmlFor="imageUrl">Lab Image URL (optional)</Label>
+            <div className="flex gap-2 items-center">
+              <Input
+                id="imageUrl"
+                placeholder="https://.../lab-photo.jpg"
+                value={field.state.value ?? ""}
+                onBlur={field.handleBlur}
+                onChange={(e) => field.handleChange(e.target.value)}
+                disabled={isSubmitting}
+              />
+              {field.state.value ? (
+                <div className="size-9 shrink-0 rounded-lg border overflow-hidden bg-muted flex items-center justify-center relative">
+                  <Image
+                    src={field.state.value}
+                    alt="Preview"
+                    width={36}
+                    height={36}
+                    unoptimized
+                    className="size-full object-cover"
+                  />
+                </div>
+              ) : (
+                <div className="size-9 shrink-0 rounded-lg border border-dashed flex items-center justify-center text-muted-foreground/60">
+                  <ImageIcon className="size-4" />
+                </div>
+              )}
+            </div>
+          </div>
         )}
-      </form.Subscribe>
+      </form.Field>
+
+      {/* Focus Areas */}
+      <form.Field name="focusAreas">
+        {(field) => (
+          <div className="grid gap-1.5">
+            <Label htmlFor="focusAreas">Focus Areas (comma separated)</Label>
+            <Input
+              id="focusAreas"
+              placeholder="e.g. Robotics, Machine Learning, Computer Vision"
+              value={field.state.value?.join(", ") ?? ""}
+              onBlur={field.handleBlur}
+              onChange={(e) =>
+                field.handleChange(
+                  e.target.value
+                    .split(",")
+                    .map((s) => s.trim())
+                    .filter(Boolean),
+                )
+              }
+              disabled={isSubmitting}
+            />
+          </div>
+        )}
+      </form.Field>
+
+      <Button type="submit" disabled={isSubmitting} className="mt-2 w-full">
+        {isSubmitting ? "Saving..." : submitLabel}
+      </Button>
     </form>
   );
 }

@@ -1,6 +1,9 @@
 import { z } from "zod";
 
-export const scoreRangeByTestType: Record<string, { min: number; max: number }> = {
+export const scoreRangeByTestType: Record<
+  string,
+  { min: number; max: number }
+> = {
   IELTS: { min: 0, max: 9 },
   TOEFL: { min: 0, max: 120 },
   GRE: { min: 260, max: 340 },

@@ -10,7 +10,11 @@ export const DocumentTypeEnum = z.enum([
 
 export const CreateDocumentZodSchema = z.object({
   type: DocumentTypeEnum,
-  applicationId: z.string().uuid("Invalid application ID").optional().or(z.literal("")),
+  applicationId: z
+    .string()
+    .uuid("Invalid application ID")
+    .optional()
+    .or(z.literal("")),
 });
 
 export const UpdateDocumentZodSchema = z.object({

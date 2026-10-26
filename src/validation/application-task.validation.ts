@@ -1,6 +1,11 @@
 import { z } from "zod";
 
-export const TASK_STATUS_OPTIONS = ["PENDING", "IN_PROGRESS", "DONE", "BLOCKED"] as const;
+export const TASK_STATUS_OPTIONS = [
+  "PENDING",
+  "IN_PROGRESS",
+  "DONE",
+  "BLOCKED",
+] as const;
 
 const CreateApplicationTaskZodSchema = z.object({
   title: z
@@ -27,11 +32,12 @@ const UpdateTaskStatusZodSchema = z.object({
   status: z.enum(TASK_STATUS_OPTIONS),
 });
 
-export type ApplicationTaskFormValues = z.infer<typeof CreateApplicationTaskZodSchema>;
+export type ApplicationTaskFormValues = z.infer<
+  typeof CreateApplicationTaskZodSchema
+>;
 
 export const ApplicationTaskValidation = {
   CreateApplicationTaskZodSchema,
   UpdateApplicationTaskZodSchema,
   UpdateTaskStatusZodSchema,
 };
-

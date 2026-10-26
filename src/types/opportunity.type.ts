@@ -6,7 +6,8 @@ export const OpportunityType = {
   LAB_POSITION: "LAB_POSITION",
   FUNDING: "FUNDING",
 } as const;
-export type OpportunityType = (typeof OpportunityType)[keyof typeof OpportunityType];
+export type OpportunityType =
+  (typeof OpportunityType)[keyof typeof OpportunityType];
 
 export type VerificationStatus = "VERIFIED" | "NEEDS_RECHECK";
 
@@ -14,6 +15,7 @@ export interface IOpportunityUniversityRef {
   id: string;
   name: string;
   country: string;
+  imageUrl?: string | null;
 }
 export interface IOpportunityProfessorRef {
   id: string;
@@ -22,10 +24,10 @@ export interface IOpportunityProfessorRef {
 export interface IOpportunityLabRef {
   id: string;
   name: string;
+  imageUrl?: string | null;
 }
 
 // PLACEHOLDER shapes — Professor/Lab/Requirement modules not built yet.
-// Replace once those backend files are shared.
 export interface IProfessorFull {
   id: string;
   name: string;
@@ -36,6 +38,7 @@ export interface ILabFull {
   id: string;
   name: string;
   universityId: string;
+  imageUrl?: string | null;
   [key: string]: unknown;
 }
 export interface IRequirementFull {
@@ -57,6 +60,7 @@ export interface IOpportunity {
   source: string;
   lastCheckedAt: string;
   createdById: string;
+  imageUrl?: string | null;
   isDeleted: boolean;
   deletedAt: string | null;
   createdAt: string;
@@ -64,7 +68,7 @@ export interface IOpportunity {
   university: IOpportunityUniversityRef;
   professor: IOpportunityProfessorRef | null;
   lab: IOpportunityLabRef | null;
-   _count?: { requirements: number };
+  _count?: { requirements: number };
   verificationStatus: VerificationStatus;
 }
 
@@ -87,13 +91,17 @@ export interface ICreateOpportunityPayload {
   deadline?: string | null;
   source: string;
   lastCheckedAt: string;
+  imageUrl?: string;
 }
 
 export interface IUpdateOpportunityPayload
-  extends Partial<Omit<ICreateOpportunityPayload, "professorId" | "labId" | "deadline">> {
+  extends Partial<
+    Omit<ICreateOpportunityPayload, "professorId" | "labId" | "deadline">
+  > {
   professorId?: string | null;
   labId?: string | null;
   deadline?: string | null;
+  imageUrl?: string | null;
 }
 export interface IOpportunityFilters {
   searchTerm?: string;

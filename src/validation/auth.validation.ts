@@ -13,7 +13,10 @@ export const StudentRegistrationZodSchema = z
       .regex(/[a-z]/, "Password must contain at least 1 lowercase letter")
       .regex(/[A-Z]/, "Password must contain at least 1 uppercase letter")
       .regex(/[0-9]/, "Password must contain at least 1 number")
-      .regex(/[^A-Za-z0-9]/, "Password must contain at least 1 special character"),
+      .regex(
+        /[^A-Za-z0-9]/,
+        "Password must contain at least 1 special character",
+      ),
     confirmPassword: z.string().min(1, "Please confirm your password"),
     student: z
       .object({
@@ -40,7 +43,10 @@ export const LoginZodSchema = z.object({
     .regex(/[a-z]/, "Password must contain at least 1 lowercase letter")
     .regex(/[A-Z]/, "Password must contain at least 1 uppercase letter")
     .regex(/[0-9]/, "Password must contain at least 1 number")
-    .regex(/[^A-Za-z0-9]/, "Password must contain at least 1 special character"),
+    .regex(
+      /[^A-Za-z0-9]/,
+      "Password must contain at least 1 special character",
+    ),
 });
 
 export const ResetPasswordZodSchema = z.object({
@@ -51,7 +57,10 @@ export const ResetPasswordZodSchema = z.object({
     .regex(/[a-z]/, "Password must contain at least 1 lowercase letter")
     .regex(/[A-Z]/, "Password must contain at least 1 uppercase letter")
     .regex(/[0-9]/, "Password must contain at least 1 number")
-    .regex(/[^A-Za-z0-9]/, "Password must contain at least 1 special character"),
+    .regex(
+      /[^A-Za-z0-9]/,
+      "Password must contain at least 1 special character",
+    ),
   otp: z.string().length(6, "OTP must be exactly 6 digits!"),
 });
 

@@ -22,7 +22,7 @@ export default function ProfileRedirectPage() {
       } else if (role === "MENTOR") {
         router.replace("/mentor/profile");
       } else {
-        router.replace("/admin");
+        router.replace("/admin/profile");
       }
     }
   }, [user, isLoading, router]);

@@ -27,9 +27,10 @@ export interface ICreateApplicationTaskPayload {
   dependsOnId?: string;
 }
 
-export type IUpdateApplicationTaskPayload = Partial<ICreateApplicationTaskPayload> & {
-  dependsOnId?: string | null;
-};
+export type IUpdateApplicationTaskPayload =
+  Partial<ICreateApplicationTaskPayload> & {
+    dependsOnId?: string | null;
+  };
 
 export interface IUpdateApplicationTaskParams {
   applicationId: string;

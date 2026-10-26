@@ -1,20 +1,30 @@
 "use client";
 
-import { useState } from "react";
 import { Pencil, Plus } from "lucide-react";
+import { useState } from "react";
 import { FormDialog } from "@/components/shared/form-dialog";
 import { Button } from "@/components/ui/button";
-import { OpportunityForm } from "./opportunity-form";
-import { useCreateOpportunity, useUpdateOpportunity } from "@/hooks/opportunity.hook";
-import type { ICreateOpportunityPayload, IOpportunity, IUpdateOpportunityPayload } from "@/types/opportunity.type";
+import {
+  useCreateOpportunity,
+  useUpdateOpportunity,
+} from "@/hooks/opportunity.hook";
+import type {
+  ICreateOpportunityPayload,
+  IOpportunity,
+  IUpdateOpportunityPayload,
+} from "@/types/opportunity.type";
 import type { OpportunityFormValues } from "@/validation";
+import { OpportunityForm } from "./opportunity-form";
 
 interface OpportunityDialogProps {
   opportunity?: IOpportunity;
   trigger?: React.ReactNode;
 }
 
-export function OpportunityDialog({ opportunity, trigger }: OpportunityDialogProps) {
+export function OpportunityDialog({
+  opportunity,
+  trigger,
+}: OpportunityDialogProps) {
   const [open, setOpen] = useState(false);
   const isEdit = !!opportunity;
 
@@ -25,7 +35,9 @@ export function OpportunityDialog({ opportunity, trigger }: OpportunityDialogPro
     if (isEdit) {
       const payload: IUpdateOpportunityPayload = {
         ...values,
-        professorId: values.professorId?.trim() ? values.professorId.trim() : null,
+        professorId: values.professorId?.trim()
+          ? values.professorId.trim()
+          : null,
         labId: values.labId?.trim() ? values.labId.trim() : null,
         deadline: values.deadline?.trim() ? values.deadline.trim() : null,
       } as IUpdateOpportunityPayload;
@@ -33,7 +45,9 @@ export function OpportunityDialog({ opportunity, trigger }: OpportunityDialogPro
     } else {
       const payload: ICreateOpportunityPayload = {
         ...values,
-        professorId: values.professorId?.trim() ? values.professorId.trim() : undefined,
+        professorId: values.professorId?.trim()
+          ? values.professorId.trim()
+          : undefined,
         labId: values.labId?.trim() ? values.labId.trim() : undefined,
         deadline: values.deadline?.trim() ? values.deadline.trim() : undefined,
       } as ICreateOpportunityPayload;
@@ -60,6 +74,7 @@ export function OpportunityDialog({ opportunity, trigger }: OpportunityDialogPro
       onOpenChange={setOpen}
       title={isEdit ? "Edit Opportunity" : "Create Opportunity"}
       trigger={trigger ?? defaultTrigger}
+      className="sm:max-w-xl"
     >
       <OpportunityForm
         defaultValues={opportunity}

@@ -1,7 +1,6 @@
 "use client";
 
 import { Trash2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { ConfirmDialog } from "@/components/shared/confirm-dialog";
 import { useDeleteOpportunity } from "@/hooks/opportunity.hook";
 
@@ -21,7 +20,10 @@ export function DeleteOpportunityDialog({ id }: DeleteOpportunityDialogProps) {
       destructive
       onConfirm={() => deleteMutation.mutate(id)}
       trigger={
-        <button className="flex size-7 items-center justify-center rounded-md text-muted-foreground hover:bg-destructive/10 hover:text-destructive">
+        <button
+          type="button"
+          className="flex size-7 items-center justify-center rounded-md text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
+        >
           <Trash2 className="size-3.5" />
         </button>
       }

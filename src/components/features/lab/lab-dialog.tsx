@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import { FlaskConical, Plus } from "lucide-react";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -10,11 +11,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { LabForm } from "./lab-form";
 import { useCreateLab, useUpdateLab } from "@/hooks/lab.hook";
 import type { ILab } from "@/types/lab.type";
 import type { LabFormValues } from "@/validation/lab.validation";
+import { LabForm } from "./lab-form";
 
 interface LabDialogProps {
   lab?: ILab;

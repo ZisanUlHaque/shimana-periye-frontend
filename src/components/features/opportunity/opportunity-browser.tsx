@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import type { IOpportunityFilters } from "@/types/opportunity.type";
 import { OpportunityFilterBar } from "./opportunity-filter-bar";
 import { OpportunityList } from "./opportunity-list";
-import type { IOpportunityFilters } from "@/types/opportunity.type";
 
 export function OpportunityBrowser({ isAdmin = false }: { isAdmin?: boolean }) {
   const [filters, setFilters] = useState<IOpportunityFilters>({});

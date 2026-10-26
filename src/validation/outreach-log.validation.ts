@@ -1,8 +1,16 @@
 import { z } from "zod";
 
 export const CreateOutreachLogZodSchema = z.object({
-  professorId: z.string().uuid("Invalid Professor").optional().or(z.literal("")),
-  opportunityId: z.string().uuid("Invalid Opportunity").optional().or(z.literal("")),
+  professorId: z
+    .string()
+    .uuid("Invalid Professor")
+    .optional()
+    .or(z.literal("")),
+  opportunityId: z
+    .string()
+    .uuid("Invalid Opportunity")
+    .optional()
+    .or(z.literal("")),
   emailSentAt: z.string().optional().or(z.literal("")),
   followUpAt: z.string().optional().or(z.literal("")),
   notes: z.string().max(1000, "Notes are too long").optional(),

@@ -1,8 +1,8 @@
 "use client";
 
 import { Trash2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { ConfirmDialog } from "@/components/shared/confirm-dialog";
+import { Button } from "@/components/ui/button";
 import { useDeleteUniversity } from "@/hooks/university.hook";
 
 interface DeleteUniversityDialogProps {
@@ -19,7 +19,11 @@ export function DeleteUniversityDialog({
   return (
     <ConfirmDialog
       trigger={
-        <Button size="icon" variant="ghost" className="text-destructive hover:text-destructive">
+        <Button
+          size="icon"
+          variant="ghost"
+          className="text-destructive hover:text-destructive"
+        >
           <Trash2 className="size-4" />
         </Button>
       }

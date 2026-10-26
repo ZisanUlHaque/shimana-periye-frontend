@@ -1,9 +1,20 @@
 import { z } from "zod";
 
 export const CreateRecommendationRequestZodSchema = z.object({
-  applicationId: z.string().uuid("Invalid Application ID").optional().or(z.literal("")),
-  professorName: z.string().min(2, "Professor name must be at least 2 characters").max(150),
-  professorEmail: z.string().email("Invalid email").optional().or(z.literal("")),
+  applicationId: z
+    .string()
+    .uuid("Invalid Application ID")
+    .optional()
+    .or(z.literal("")),
+  professorName: z
+    .string()
+    .min(2, "Professor name must be at least 2 characters")
+    .max(150),
+  professorEmail: z
+    .string()
+    .email("Invalid email")
+    .optional()
+    .or(z.literal("")),
   followUpAt: z.string().optional().or(z.literal("")),
 });
 

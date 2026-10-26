@@ -1,11 +1,11 @@
 "use client";
 
 import { FlaskConical } from "lucide-react";
+import { ListState } from "@/components/shared/list-state";
 import { useLabs } from "@/hooks/lab.hook";
 import type { ILab, ILabFilters } from "@/types/lab.type";
 import { LabCard } from "./lab-card";
 import { LabDialog } from "./lab-dialog";
-import { ListState } from "@/components/shared/list-state";
 
 interface LabListProps {
   filters?: ILabFilters;

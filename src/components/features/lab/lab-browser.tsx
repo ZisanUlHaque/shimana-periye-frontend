@@ -1,8 +1,8 @@
 "use client";
 
+import { Search } from "lucide-react";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
 import { LabList } from "./lab-list";
 
 export function LabBrowser({ isAdmin = false }: { isAdmin?: boolean }) {
@@ -19,7 +19,10 @@ export function LabBrowser({ isAdmin = false }: { isAdmin?: boolean }) {
           className="pl-9 text-xs"
         />
       </div>
-      <LabList filters={{ searchTerm: searchTerm || undefined }} isAdmin={isAdmin} />
+      <LabList
+        filters={{ searchTerm: searchTerm || undefined }}
+        isAdmin={isAdmin}
+      />
     </div>
   );
 }

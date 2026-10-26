@@ -1,4 +1,4 @@
-import { Role } from "./role.enum";
+import type { Role } from "./role.enum";
 
 export interface ILoginUserPayload {
   email: string;

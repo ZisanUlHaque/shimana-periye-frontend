@@ -1,21 +1,24 @@
 "use client";
 
-import { Plus, Pencil } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Pencil, Plus } from "lucide-react";
 import { FormDialog } from "@/components/shared/form-dialog";
-import { UniversityForm } from "./university-form";
+import { Button } from "@/components/ui/button";
 import {
   useCreateUniversity,
   useUpdateUniversity,
 } from "@/hooks/university.hook";
 import type { IUniversity } from "@/types/university.type";
+import { UniversityForm } from "./university-form";
 
 interface UniversityDialogProps {
   university?: IUniversity;
   trigger?: React.ReactNode;
 }
 
-export function UniversityDialog({ university, trigger }: UniversityDialogProps) {
+export function UniversityDialog({
+  university,
+  trigger,
+}: UniversityDialogProps) {
   const isEdit = !!university;
   const createMutation = useCreateUniversity();
   const updateMutation = useUpdateUniversity(university?.id ?? "");
@@ -26,8 +29,16 @@ export function UniversityDialog({ university, trigger }: UniversityDialogProps)
     <FormDialog
       trigger={
         trigger ?? (
-          <Button size={isEdit ? "icon" : "default"} variant={isEdit ? "ghost" : "default"} className="gap-1.5">
-            {isEdit ? <Pencil className="size-4" /> : <Plus className="size-4" />}
+          <Button
+            size={isEdit ? "icon" : "default"}
+            variant={isEdit ? "ghost" : "default"}
+            className="gap-1.5"
+          >
+            {isEdit ? (
+              <Pencil className="size-4" />
+            ) : (
+              <Plus className="size-4" />
+            )}
             {!isEdit && "Add University"}
           </Button>
         )

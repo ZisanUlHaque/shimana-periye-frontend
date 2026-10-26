@@ -27,7 +27,9 @@ export interface IMentorApplicationStatus {
 
 export interface IApproveMentorPayload {
   mentorProfileId: string;
-  verificationStatus: MentorVerificationStatus.APPROVED | MentorVerificationStatus.REJECTED;
+  verificationStatus:
+    | MentorVerificationStatus.APPROVED
+    | MentorVerificationStatus.REJECTED;
   rejectionReason?: string;
 }
 

@@ -7,7 +7,8 @@ export const ApplicationStatus = {
   CLOSED: "CLOSED",
 } as const;
 
-export type ApplicationStatus = (typeof ApplicationStatus)[keyof typeof ApplicationStatus];
+export type ApplicationStatus =
+  (typeof ApplicationStatus)[keyof typeof ApplicationStatus];
 
 export const Decision = {
   PENDING: "PENDING",
@@ -18,7 +19,10 @@ export const Decision = {
 
 export type Decision = (typeof Decision)[keyof typeof Decision];
 
-export const APPLICATION_STATUS_TRANSITIONS: Record<ApplicationStatus, ApplicationStatus[]> = {
+export const APPLICATION_STATUS_TRANSITIONS: Record<
+  ApplicationStatus,
+  ApplicationStatus[]
+> = {
   DRAFT: ["IN_PROGRESS"],
   IN_PROGRESS: ["SUBMITTED"],
   SUBMITTED: ["INTERVIEW", "DECISION", "CLOSED"],

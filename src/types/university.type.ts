@@ -3,6 +3,7 @@ export interface IUniversity {
   name: string;
   country: string;
   website?: string | null;
+  imageUrl?: string | null;
   isDeleted: boolean;
   createdAt: string;
   updatedAt: string;
@@ -28,12 +29,14 @@ export interface ICreateUniversityPayload {
   name: string;
   country: string;
   website?: string;
+  imageUrl?: string;
 }
 
 export interface IUpdateUniversityPayload {
   name?: string;
   country?: string;
   website?: string;
+  imageUrl?: string;
 }
 
 export interface IUniversityFilters {
