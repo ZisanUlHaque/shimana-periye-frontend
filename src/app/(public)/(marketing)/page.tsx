@@ -1,26 +1,25 @@
-import HeroSection from '@/components/home/Hero';
-import ApplicationCommandCenter from '@/components/sections/ApplicationCommandCenter';
-import ComparisonSection from '@/components/sections/ComparisonSection';
-//import ComparisonSection from '@/components/sections/ComparisonSection';
-import CountriesSection from '@/components/sections/CountriesSection';
-import LiveActivitySection from '@/components/sections/LiveActivitySection';
-import MentorCardsSection from '@/components/sections/MentorCardsSection';
-//import UniversityMarquee from '@/components/sections/UniversityMarquee';
-import React from 'react';
+import HeroSection from "@/components/home/Hero";
+import ApplicationCommandCenter from "@/components/sections/ApplicationCommandCenter";
+import ComparisonSection from "@/components/sections/comparison/comparison-section";
+import CountriesSection from "@/components/sections/CountriesSection";
+import LiveActivitySection from "@/components/sections/LiveActivitySection";
+import MentorCardsSection from "@/components/sections/MentorCardsSection";
+import { Roadmap, studyAbroadMilestones } from "@/components/sections/roadmap";
 
 const page = () => {
-    return (
-<>
-<HeroSection></HeroSection>
+  return (
+    <>
+      <HeroSection></HeroSection>
 
-<LiveActivitySection></LiveActivitySection>
+      <LiveActivitySection></LiveActivitySection>
 
-<CountriesSection></CountriesSection>
-<ComparisonSection></ComparisonSection>
-<ApplicationCommandCenter></ApplicationCommandCenter>
-<MentorCardsSection></MentorCardsSection>
-</>
-    );
+      <CountriesSection></CountriesSection>
+      <ComparisonSection></ComparisonSection>
+      <Roadmap milestones={studyAbroadMilestones} />
+      <ApplicationCommandCenter></ApplicationCommandCenter>
+      <MentorCardsSection></MentorCardsSection>
+    </>
+  );
 };
 
 export default page;
