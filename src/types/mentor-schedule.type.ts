@@ -54,10 +54,28 @@ export interface IBooking {
   id: string;
   scheduleId: string;
   studentId: string;
+  slotNumber?: number;
+  slotDurationMinutes?: number;
   applicationId?: string | null;
   topic?: string;
   notes?: string;
   status: BookingStatus;
+  startDateTime?: string;
+  endDateTime?: string;
+  meetingLink?: string;
+  mentor?: {
+    id: string;
+    name: string;
+    email: string;
+    imageUrl?: string | null;
+    institution?: string | null;
+    designation?: string | null;
+    mentorProfile?: {
+      institution?: string | null;
+      designation?: string | null;
+      expertise?: string[];
+    };
+  } | null;
   schedule?: IMentorSchedule;
   application?: {
     id: string;

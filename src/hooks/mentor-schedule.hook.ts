@@ -1,24 +1,24 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { toast } from "@/components/ui/toast";
 import {
-  getAvailableSchedules,
-  getMySchedules,
-  createSchedule,
-  updateSchedule,
-  deleteSchedule,
   bookInterviewSlot,
+  createSchedule,
+  deleteSchedule,
+  getAvailableSchedules,
   getMyBookings,
+  getMySchedules,
 } from "@/api/mentor-schedule.api";
+import { toast } from "@/components/ui/toast";
+import { useGetMe } from "@/hooks/auth.hook";
 import type {
-  ICreateSchedulePayload,
-  IUpdateSchedulePayload,
   IBookSchedulePayload,
+  ICreateSchedulePayload,
 } from "@/types/mentor-schedule.type";
 
 export const MENTOR_SCHEDULE_KEYS = {
   available: ["mentor-schedules", "available"] as const,
   mySchedules: ["mentor-schedules", "me"] as const,
-  myBookings: ["mentor-schedules", "bookings", "me"] as const,
+  myBookings: (userId?: string) =>
+    ["mentor-schedules", "bookings", "me", userId ?? "anon"] as const,
 };
 
 export function useAvailableSchedules(params?: Record<string, string>) {
@@ -36,9 +36,13 @@ export function useMyMentorSchedules() {
 }
 
 export function useMyBookings() {
+  const { data: userData } = useGetMe();
+  const userId = userData?.data?.id;
+
   return useQuery({
-    queryKey: MENTOR_SCHEDULE_KEYS.myBookings,
+    queryKey: MENTOR_SCHEDULE_KEYS.myBookings(userId),
     queryFn: getMyBookings,
+    enabled: Boolean(userId),
   });
 }
 
@@ -48,10 +52,14 @@ export function useCreateMentorSchedule() {
     mutationFn: (payload: ICreateSchedulePayload) => createSchedule(payload),
     onSuccess: () => {
       toast.add({ title: "Availability slot created!", type: "success" });
-      queryClient.invalidateQueries({ queryKey: MENTOR_SCHEDULE_KEYS.mySchedules });
-      queryClient.invalidateQueries({ queryKey: MENTOR_SCHEDULE_KEYS.available });
+      queryClient.invalidateQueries({
+        queryKey: MENTOR_SCHEDULE_KEYS.mySchedules,
+      });
+      queryClient.invalidateQueries({
+        queryKey: MENTOR_SCHEDULE_KEYS.available,
+      });
     },
-    onError: (err: any) => {
+    onError: (err: Error) => {
       toast.add({
         title: "Failed to create slot",
         description: err?.message,
@@ -67,10 +75,14 @@ export function useBookInterviewSlot() {
     mutationFn: (payload: IBookSchedulePayload) => bookInterviewSlot(payload),
     onSuccess: () => {
       toast.add({ title: "Session successfully booked!", type: "success" });
-      queryClient.invalidateQueries({ queryKey: MENTOR_SCHEDULE_KEYS.myBookings });
-      queryClient.invalidateQueries({ queryKey: MENTOR_SCHEDULE_KEYS.available });
+      queryClient.invalidateQueries({
+        queryKey: ["mentor-schedules", "bookings"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: MENTOR_SCHEDULE_KEYS.available,
+      });
     },
-    onError: (err: any) => {
+    onError: (err: Error) => {
       toast.add({
         title: "Failed to book session",
         description: err?.message,
@@ -86,10 +98,14 @@ export function useDeleteMentorSchedule() {
     mutationFn: (id: string) => deleteSchedule(id),
     onSuccess: () => {
       toast.add({ title: "Schedule slot removed", type: "success" });
-      queryClient.invalidateQueries({ queryKey: MENTOR_SCHEDULE_KEYS.mySchedules });
-      queryClient.invalidateQueries({ queryKey: MENTOR_SCHEDULE_KEYS.available });
+      queryClient.invalidateQueries({
+        queryKey: MENTOR_SCHEDULE_KEYS.mySchedules,
+      });
+      queryClient.invalidateQueries({
+        queryKey: MENTOR_SCHEDULE_KEYS.available,
+      });
     },
-    onError: (err: any) => {
+    onError: (err: Error) => {
       toast.add({
         title: "Failed to delete slot",
         description: err?.message,

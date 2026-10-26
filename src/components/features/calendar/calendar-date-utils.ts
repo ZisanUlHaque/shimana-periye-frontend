@@ -26,14 +26,36 @@ export function formatEventDateLabel(dateStr: string) {
 
 export function formatEventTime(dateStr: string, allDay?: boolean) {
   if (allDay) return "All day";
-  return (
-    new Date(dateStr).toLocaleTimeString("en-US", {
-      timeZone: "Asia/Dhaka",
-      hour: "numeric",
-      minute: "2-digit",
-      hour12: true,
-    }) + " (BST)"
-  );
+  return `${new Date(dateStr).toLocaleTimeString("en-US", {
+    timeZone: "Asia/Dhaka",
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  })} (BST)`;
+}
+
+export function formatEventTimeRange(
+  startStr: string,
+  endStr?: string,
+  allDay?: boolean,
+) {
+  if (allDay) return "All day";
+  const start = new Date(startStr);
+  const startTime = start.toLocaleTimeString("en-US", {
+    timeZone: "Asia/Dhaka",
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  });
+  if (!endStr) return `${startTime} (BST)`;
+  const end = new Date(endStr);
+  const endTime = end.toLocaleTimeString("en-US", {
+    timeZone: "Asia/Dhaka",
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  });
+  return `${startTime} – ${endTime} (BST)`;
 }
 
 export function dateKey(dateStr: string) {

@@ -1,18 +1,17 @@
 "use client";
 
-import { ICalendarEvent } from "@/types/calendar.type";
-import { CALENDAR_EVENT_TYPE_META } from "./calendar-event-meta";
-import { cn } from "@/lib/utils";
-import { formatEventTime } from "./calendar-date-utils";
 import {
-  Video,
-  ExternalLink,
   Calendar as CalendarIcon,
-  Clock,
   CheckCircle2,
-  AlertCircle,
+  Clock,
+  ExternalLink,
+  Video,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import type { ICalendarEvent } from "@/types/calendar.type";
+import { formatEventTimeRange } from "./calendar-date-utils";
+import { CALENDAR_EVENT_TYPE_META } from "./calendar-event-meta";
 
 interface CalendarEventItemProps {
   event: ICalendarEvent;
@@ -32,6 +31,19 @@ export function CalendarEventItem({ event, isPast }: CalendarEventItemProps) {
     }
   }
 
+  // Calculate live and ended states based on timestamps
+  const now = new Date();
+  const startTime = new Date(event.start);
+  const endTime = event.end
+    ? new Date(event.end)
+    : new Date(startTime.getTime() + 45 * 60 * 1000);
+
+  const hasEnded = Boolean(isPast || now.getTime() > endTime.getTime());
+  const isLive =
+    !hasEnded &&
+    now.getTime() >= startTime.getTime() - 15 * 60 * 1000 &&
+    now.getTime() <= endTime.getTime();
+
   // Clean description by removing raw meeting URL so it doesn't clutter card text
   const cleanDescription = event.description
     ? event.description
@@ -44,7 +56,7 @@ export function CalendarEventItem({ event, isPast }: CalendarEventItemProps) {
     <div
       className={cn(
         "group relative flex flex-col justify-between rounded-2xl border border-border/70 bg-card p-5 shadow-xs transition-all duration-200 hover:border-border hover:shadow-md min-h-[220px]",
-        isPast && "opacity-60 bg-muted/15"
+        hasEnded && "opacity-65 bg-muted/15",
       )}
       style={{ borderTopColor: event.color, borderTopWidth: 4 }}
     >
@@ -67,11 +79,21 @@ export function CalendarEventItem({ event, isPast }: CalendarEventItemProps) {
               {meta?.label ?? event.type}
             </span>
 
-            {event.status && (
+            {isLive ? (
+              <span className="rounded-md border border-emerald-500/30 bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 px-2 py-0.5 text-[10px] font-bold flex items-center gap-1">
+                <span className="size-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                Live Now
+              </span>
+            ) : hasEnded ? (
+              <span className="rounded-md bg-muted px-2 py-0.5 text-[10px] font-semibold text-muted-foreground flex items-center gap-1">
+                <CheckCircle2 className="size-3 text-emerald-500" />
+                Completed
+              </span>
+            ) : event.status ? (
               <span className="rounded-md bg-muted/70 px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground">
                 {event.status}
               </span>
-            )}
+            ) : null}
           </div>
         </div>
 
@@ -94,35 +116,65 @@ export function CalendarEventItem({ event, isPast }: CalendarEventItemProps) {
         <div className="flex items-center justify-between text-xs text-muted-foreground">
           <span className="inline-flex items-center gap-1.5 font-medium">
             <Clock className="size-3.5 text-primary/80" />
-            {formatEventTime(event.start, event.allDay)}
+            {formatEventTimeRange(event.start, event.end, event.allDay)}
           </span>
 
-          {isPast ? (
+          {hasEnded ? (
             <span className="text-[10px] font-semibold text-muted-foreground">
-              Past
+              Session Passed
+            </span>
+          ) : isLive ? (
+            <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
+              <span className="size-2 rounded-full bg-emerald-500 animate-pulse" />
+              In Progress
             </span>
           ) : (
-            <span className="size-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="size-2 rounded-full bg-emerald-500" />
           )}
         </div>
 
-        {meetingLink && (
-          <a
-            href={meetingLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full mt-1"
-          >
-            <Button
-              size="sm"
-              className="w-full gap-1.5 text-xs h-8.5 bg-emerald-600 hover:bg-emerald-700 text-white shadow-xs"
+        {/* Action button: depends on whether the session has ended */}
+        {meetingLink &&
+          (hasEnded ? (
+            <div className="flex items-center justify-between rounded-xl bg-muted/40 border border-border/50 px-3 py-2 text-xs text-muted-foreground mt-1">
+              <span className="inline-flex items-center gap-1.5 font-medium">
+                <CheckCircle2 className="size-3.5 text-emerald-500" />
+                Session Completed
+              </span>
+              <a
+                href={meetingLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[11px] text-muted-foreground/80 hover:text-foreground underline flex items-center gap-1"
+              >
+                Revisit Link
+                <ExternalLink className="size-2.5" />
+              </a>
+            </div>
+          ) : (
+            <a
+              href={meetingLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full mt-1"
             >
-              <Video className="size-3.5" />
-              <span>Join Google Meet</span>
-              <ExternalLink className="size-3" />
-            </Button>
-          </a>
-        )}
+              <Button
+                size="sm"
+                className={cn(
+                  "w-full gap-1.5 text-xs h-8.5 text-white shadow-xs font-semibold",
+                  isLive
+                    ? "bg-emerald-600 hover:bg-emerald-700 animate-pulse"
+                    : "bg-emerald-600 hover:bg-emerald-700",
+                )}
+              >
+                <Video className="size-3.5" />
+                <span>
+                  {isLive ? "Join Google Meet Now (Live)" : "Join Google Meet"}
+                </span>
+                <ExternalLink className="size-3" />
+              </Button>
+            </a>
+          ))}
       </div>
     </div>
   );

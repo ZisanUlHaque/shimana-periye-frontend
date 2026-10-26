@@ -1,3 +1,4 @@
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   forgotPassword,
   getMe,
@@ -9,7 +10,6 @@ import {
   userLogout,
   verifyStudentEmail,
 } from "@/api/auth.api";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export function useLogin() {
   const queryClient = useQueryClient();
@@ -41,9 +41,9 @@ export function useLogout() {
   return useMutation({
     mutationFn: userLogout,
     onSuccess: () => {
-      // 1. Immediately clear the user data from React Query cache
+      // 1. Clear all user session and cached queries to prevent data leaking across accounts
       queryClient.setQueryData(["user"], null);
-      queryClient.invalidateQueries({ queryKey: ["user"] });
+      queryClient.clear();
     },
   });
 }
