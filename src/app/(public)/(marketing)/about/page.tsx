@@ -1,199 +1,176 @@
+import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Sparkles, Lightbulb, Rocket, TrendingUp, Users } from "lucide-react";
-import {
-  LiveHeroCard,
-  AnimatedStats,
-  ValuesExperience,
-} from "./AboutInteractive";
+import { ArrowRight, MapPin } from "lucide-react";
+import { Marquee, Reveal, StatsRow, TeamCarousel, Testimonials, ValueGrid } from "./AboutInteractive";
 
 export const metadata = {
   title: "About Us | ShimanaPeriye",
-  description:
-    "The student-built platform helping thousands navigate universities, scholarships, visas and mentors — without the consultancy chaos.",
+  description: "ShimanaPeriye makes studying abroad clearer with universities, scholarships, mentors, and preparation tools in one place.",
 };
 
-const timeline = [
-  {
-    icon: Lightbulb,
-    tag: "THE SPARK",
-    text: "A handful of admits compared notes and realised everyone was stuck on the same problems.",
-  },
-  {
-    icon: Rocket,
-    tag: "THE BUILD",
-    text: "Roadmaps, mentor matching and deadline tracking — designed with students, not for a sales deck.",
-  },
-  {
-    icon: TrendingUp,
-    tag: "NOW",
-    text: "Thousands of journeys on one platform, across 50+ countries. And we're just getting started.",
-  },
+const G = "/assets/guides/";
+const heading = "font-[family-name:var(--font-heading)] font-semibold tracking-[-0.03em] text-foreground";
+const wrap = "mx-auto max-w-6xl px-5 sm:px-8";
+
+const stats = [
+  { to: 10, suffix: "K+", label: "Students guided" },
+  { to: 500, suffix: "+", label: "Universities explored" },
+  { to: 50, suffix: "+", label: "Countries within reach" },
+  { to: 120, suffix: "+", label: "Verified mentors" },
 ];
+const values = [
+  { icon: "heart" as const, title: "Student-first", body: "We design around missed deadlines, scattered tabs, and too many unknowns." },
+  { icon: "shield" as const, title: "Honest guidance", body: "No fake guarantees or sales pressure. Mentors who have walked the path." },
+  { icon: "globe" as const, title: "Global, not generic", body: "Shaped around your destination, field, budget, and ambitions." },
+  { icon: "compass" as const, title: "Clarity over noise", body: "One next step is better than a hundred open tabs." },
+];
+const tools = ["University search", "Scholarships", "Mentors", "Preparation", "Applications", "Global community", "Visa guidance", "Deadline planner"];
+const team = [
+  { name: "Zisan Ul Haque", role: "Team Lead & Full-Stack Developer", image: G + "zisan.png" },
+  { name: "Afsana Nur Labonno", role: "Frontend Developer", image: G + "laaa.jpeg" },
+  { name: "Al Amin Sarder", role: "Video Editor & UI", image: G + "alamin.jpeg" },
+  { name: "Zahin Rahman Rufaida", role: "Researcher", image: G + "Zahin.jpeg" },
+  { name: "Mst.Nusrat Ananna", role: "Researcher", image: G + "ananna.png" },
+];
+const places = [
+  { name: "United Kingdom", detail: "Universities, funding and visa guidance", image: "https://plus.unsplash.com/premium_photo-1682799116921-de130f76c1d0?q=80&w=1172&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D" },
+  { name: "North America", detail: "Build a shortlist that fits your goals", image: "https://images.unsplash.com/photo-1501466044931-62695aada8e9?q=80&w=1087&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D" },
+  { name: "Everywhere next", detail: "Explore 50+ countries with confidence", image: "https://plus.unsplash.com/premium_photo-1697730221799-f2aa87ab2c5d?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D" },
+];
+
+const Photo = ({ src, alt, className }: { src: string; alt: string; className: string }) => (
+  <div className={`group relative overflow-hidden rounded-2xl bg-muted ${className}`}>
+    <Image alt={alt} className="object-cover transition duration-700 group-hover:scale-105" fill sizes="(max-width:768px) 100vw, 33vw" src={src} />
+  </div>
+);
 
 export default function AboutPage() {
   return (
-    <div className="bg-white">
-      {/* ---------------- HERO ---------------- */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-sky-50 via-white to-white pt-28 sm:pt-36">
-        <div
-          className="pointer-events-none absolute inset-0 opacity-40"
-          style={{
-            backgroundImage:
-              "radial-gradient(circle, #94a3b8 1px, transparent 1px)",
-            backgroundSize: "24px 24px",
-            maskImage:
-              "radial-gradient(ellipse at center, black, transparent 70%)",
-          }}
-        />
-        <div className="pointer-events-none absolute -left-20 top-10 h-72 w-72 rounded-full bg-emerald-200/40 blur-3xl" />
-        <div className="pointer-events-none absolute -right-20 top-32 h-72 w-72 rounded-full bg-sky-200/40 blur-3xl" />
-
-        <div className="relative mx-auto grid max-w-6xl items-center gap-14 px-6 pb-24 lg:grid-cols-2">
-          <div>
-            <span className="inline-flex items-center gap-2 rounded-full bg-emerald-100 px-4 py-1.5 text-xs font-semibold text-emerald-700">
-              <Sparkles className="h-3.5 w-3.5" /> THE STORY
-            </span>
-            <h1 className="mt-5 text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
-              Built by students who got tired of
-              <span className="bg-gradient-to-r from-emerald-500 to-sky-500 bg-clip-text text-transparent">
-                {" "}
-                the maze.
-              </span>
-            </h1>
-            <p className="mt-5 max-w-lg text-lg text-slate-600">
-              ShimanaPeriye started as a shared spreadsheet and a group chat.
-              Today it&apos;s the all-in-one companion for universities,
-              scholarships, mentors and visas — so no one has to figure it out
-              alone.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link
-                href="/register"
-                className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-emerald-500 to-sky-500 px-6 py-3.5 font-semibold text-white shadow-lg shadow-emerald-200"
-              >
-                Get started <ArrowRight className="h-4 w-4" />
-              </Link>
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-6 py-3.5 font-semibold text-slate-700 hover:bg-slate-50"
-              >
-                Talk to us
-              </Link>
+    <div className="overflow-hidden bg-background font-[family-name:var(--font-sans)] text-foreground">
+      {/* Hero */}
+      <section className="bg-gradient-to-b from-primary/10 to-background pb-20 pt-32 sm:pt-40">
+        <div className={wrap}>
+          <Reveal className="mx-auto max-w-3xl text-center">
+            <h1 className={`${heading} text-5xl leading-[1.05] sm:text-7xl`}>Where ambition meets a clearer path.</h1>
+            <p className="mx-auto mt-5 max-w-md text-sm leading-6 text-muted-foreground">Our mission is to close the gap between students and the opportunities abroad, with clarity and confidence at every step.</p>
+          </Reveal>
+          <Reveal className="mt-14 grid gap-4 md:grid-cols-3 md:grid-rows-[1fr_1fr]" delay={0.15}>
+            <Photo alt="Aminul Islam" className="min-h-72 md:row-span-2 md:min-h-[26rem]" src={G + "about2.avif"} />
+            <div className="flex flex-col justify-between rounded-2xl bg-primary p-6 text-primary-foreground">
+              <p className={`${heading} text-5xl !text-primary-foreground`}>10K+</p>
+              <p className="text-base font-medium">Students guided</p>
             </div>
-          </div>
-
-          <LiveHeroCard />
+            <Photo alt="Mentors" className="min-h-60" src={"https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D"} />
+            <Photo alt="Campus" className="min-h-60" src="https://plus.unsplash.com/premium_photo-1681842124524-98822110352f?q=80&w=1202&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D" />
+            <Photo alt="Community" className="min-h-60 md:hidden" src={"https://plus.unsplash.com/premium_photo-1727209457571-00be81de277c?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D"} />
+            <div className="flex flex-col justify-between rounded-2xl bg-foreground p-6 text-background md:col-start-3">
+              <p className={`${heading} text-5xl !text-background`}>120+</p>
+              <p className="text-base font-medium">Verified mentors</p>
+            </div>
+          </Reveal>
         </div>
       </section>
 
-      {/* ---------------- STATS ---------------- */}
-      <section className="relative mx-auto max-w-6xl px-6 pb-24">
-        <AnimatedStats />
+      {/* Mission + stats */}
+      <section className="py-20 sm:py-28">
+        <div className={wrap}>
+          <div className="grid gap-10 md:grid-cols-2">
+            <Reveal><h2 className={`${heading} text-4xl leading-tight sm:text-5xl`}>Making study abroad clearer for everyone</h2></Reveal>
+            <Reveal className="space-y-5 text-sm leading-6 text-muted-foreground" delay={0.1}>
+              <p>What began as a shared spreadsheet and a group chat has grown into a platform for students from Bangladesh and beyond. Our journey has been fueled by passion, collaboration, and a relentless drive to make a difference.</p>
+              <p>The best opportunities are often hidden behind confusing forms and scattered deadlines. We bring universities, scholarships, mentors, and preparation into one calm workspace, so students can decide at their own pace.</p>
+            </Reveal>
+          </div>
+          <div className="mt-16"><StatsRow stats={stats} /></div>
+        </div>
       </section>
 
-      {/* ---------------- TIMELINE ---------------- */}
-      <section className="bg-gradient-to-b from-white to-emerald-50/40 py-24">
-        <div className="mx-auto max-w-4xl px-6">
-          <div className="text-center">
-            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600">
-              Why we exist
-            </span>
-            <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-              Studying abroad is hard.
-              <br className="hidden sm:block" /> Finding clear help
-              shouldn&apos;t be.
-            </h2>
-          </div>
+      {/* Core values */}
+      <section className="py-16 sm:py-24">
+        <div className={wrap}>
+          <Reveal className="mx-auto mb-12 max-w-xl text-center">
+            <h2 className={`${heading} text-4xl sm:text-5xl`}>Our core values</h2>
+            <p className="mt-4 text-sm leading-6 text-muted-foreground">We believe in building long-term confidence, based on trust and mutual respect, not short-term pressure.</p>
+          </Reveal>
+          <ValueGrid values={values} />
+        </div>
+      </section>
 
-          <div className="relative mt-16">
-            <div className="absolute left-6 top-0 h-full w-px bg-gradient-to-b from-emerald-300 via-sky-300 to-transparent sm:left-1/2 sm:-translate-x-1/2" />
+      {/* Backed by the best */}
+      <section className="py-16 sm:py-24">
+        <div className={wrap}>
+          <Reveal className="mx-auto mb-10 max-w-xl text-center">
+            <h2 className={`${heading} text-4xl sm:text-5xl`}>Everything in one place</h2>
+            <p className="mt-4 text-sm leading-6 text-muted-foreground">From the first search to the final application, the tools you need work together.</p>
+          </Reveal>
+        </div>
+        <Marquee items={tools} />
+      </section>
 
-            <div className="space-y-10">
-              {timeline.map((item, i) => {
-                const Icon = item.icon;
-                const isEven = i % 2 === 0;
-                return (
-                  <div
-                    key={item.tag}
-                    className={`relative flex flex-col gap-4 sm:flex-row sm:items-center ${
-                      isEven ? "" : "sm:flex-row-reverse"
-                    }`}
-                  >
-                    <div className="absolute left-6 z-10 flex h-12 w-12 -translate-x-1/2 items-center justify-center rounded-2xl border-4 border-white bg-gradient-to-br from-emerald-500 to-sky-500 text-white shadow-lg sm:left-1/2">
-                      <Icon className="h-5 w-5" />
-                    </div>
-
-                    <div className="w-full pl-16 sm:w-1/2 sm:pl-0">
-                      <div
-                        className={`rounded-3xl border border-white bg-white/80 p-6 shadow-sm backdrop-blur transition-all hover:-translate-y-1 hover:shadow-lg ${
-                          isEven ? "sm:mr-10" : "sm:ml-10"
-                        }`}
-                      >
-                        <p className="text-xs font-bold uppercase tracking-wider text-emerald-600">
-                          0{i + 1} · {item.tag}
-                        </p>
-                        <p className="mt-2 text-sm text-slate-600">
-                          {item.text}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="hidden sm:block sm:w-1/2" />
-                  </div>
-                );
-              })}
+      {/* Founder */}
+      <section className="py-16 sm:py-24">
+        <div className={`${wrap} grid items-center gap-10 md:grid-cols-[1fr_0.9fr]`}>
+          <Reveal>
+            <h2 className={`${heading} text-4xl sm:text-5xl`}>A word from the founder</h2>
+            <div className="mt-6 max-w-md space-y-4 text-sm leading-6 text-muted-foreground">
+              <p>We started ShimanaPeriye because talented students were spending more energy navigating the system than preparing for the future they wanted.</p>
+              <p>Our work is to make the path easier to understand, one decision at a time. Thank you for being part of this story.</p>
             </div>
+            <p className="mt-8 text-sm font-semibold">Zisan Ul Haque</p>
+            <p className="text-xs text-muted-foreground">Founder, ShimanaPeriye</p>
+          </Reveal>
+          <Reveal delay={0.1} className="rounded-3xl bg-primary/5 p-4">
+            <Photo alt="Student celebrating on campus" className="aspect-[4/3] !rounded-2xl" src={G + "about1.png"} />
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Team */}
+      <section className="py-16 sm:py-24">
+        <div className={wrap}>
+          <Reveal className="mx-auto mb-12 max-w-xl text-center">
+            <h2 className={`${heading} text-4xl sm:text-5xl`}>Meet the team</h2>
+            <p className="mt-4 text-sm leading-6 text-muted-foreground">Behind every great experience is a group of builders, mentors, and learners.</p>
+          </Reveal>
+          <TeamCarousel team={team} />
+        </div>
+      </section>
+
+      {/* Destinations */}
+      <section className="py-16 sm:py-24">
+        <div className={wrap}>
+          <Reveal className="mx-auto mb-12 max-w-xl text-center">
+            <h2 className={`${heading} text-4xl sm:text-5xl`}>Our students are all over the world</h2>
+            <p className="mt-4 text-sm leading-6 text-muted-foreground">Compare destinations and take the next step with more context.</p>
+          </Reveal>
+          <div className="grid gap-5 md:grid-cols-3">
+            {places.map((p, i) => (
+              <Reveal delay={i * 0.08} key={p.name}>
+                <Photo alt={p.name} className="aspect-[4/3]" src={p.image} />
+                <p className="mt-4 flex items-center gap-1.5 text-base font-semibold"><MapPin className="size-4 text-primary" />{p.name}</p>
+                <p className="mt-1 text-xs text-muted-foreground">{p.detail}</p>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* ---------------- VALUES (interactive) ---------------- */}
-      <section className="py-24">
-        <div className="mx-auto max-w-6xl px-6">
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-              What we refuse to compromise on
-            </h2>
-            <p className="mt-3 text-slate-600">
-              Four principles that shape every screen you see.
-            </p>
-          </div>
-          <div className="mt-14">
-            <ValuesExperience />
-          </div>
-        </div>
-      </section>
-
-      {/* ---------------- CTA ---------------- */}
-      <section className="pb-28">
-        <div className="mx-auto max-w-4xl px-6">
-          <div className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-slate-900 via-emerald-950 to-slate-900 px-8 py-14 text-center sm:px-16">
-            <div className="pointer-events-none absolute -left-10 -top-10 h-40 w-40 rounded-full bg-emerald-400/20 blur-3xl" />
-            <div className="pointer-events-none absolute -right-10 bottom-0 h-56 w-56 rounded-full bg-sky-400/10 blur-3xl" />
-            <div className="pointer-events-none absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full border border-emerald-500/20 [animation-duration:10s] animate-ping" />
-
-            <Users className="relative mx-auto h-8 w-8 text-emerald-400" />
-            <h2 className="relative mt-4 text-3xl font-bold text-white sm:text-4xl">
-              Your next chapter can start today.
-            </h2>
-            <p className="relative mx-auto mt-3 max-w-md text-sm text-slate-300">
-              Create a roadmap, talk to a mentor, or just explore destinations
-              — free to start.
-            </p>
-            <div className="relative mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <Link
-                href="/register"
-                className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-emerald-500 to-sky-500 px-6 py-3.5 font-semibold text-white shadow-lg shadow-emerald-900/40"
-              >
-                Get started <ArrowRight className="h-4 w-4" />
-              </Link>
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-2 rounded-2xl border border-white/15 bg-white/5 px-6 py-3.5 font-semibold text-white hover:bg-white/10"
-              >
-                Talk to us
-              </Link>
+      {/* CTA */}
+      <section className="pb-24 pt-10 sm:pb-32">
+        <div className={wrap}>
+          <Reveal className="grid items-center gap-10 overflow-hidden rounded-3xl bg-primary/5 p-8 sm:p-14 md:grid-cols-2">
+            <div>
+              <h2 className={`${heading} text-4xl sm:text-5xl`}>Start your journey today.</h2>
+              <p className="mt-4 max-w-sm text-sm leading-6 text-muted-foreground">Discover opportunities, organise the details, and find the support to keep moving.</p>
+              <div className="mt-7 flex gap-3">
+                <Link className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-medium text-primary-foreground transition hover:bg-primary/90" href="/register">Get started <ArrowRight className="size-4" /></Link>
+                <Link className="inline-flex items-center rounded-full border border-border px-5 py-3 text-sm font-medium transition hover:bg-card" href="/contact">Learn more</Link>
+              </div>
             </div>
-          </div>
+            <div className="group relative aspect-[16/11] overflow-hidden rounded-xl border border-border bg-card shadow-2xl shadow-primary/15 md:-mr-24 md:translate-y-4 lg:-mr-32">
+              <Image alt="ShimanaPeriye dashboard" className="object-cover object-left-top transition duration-700 group-hover:scale-[1.03]" fill sizes="(max-width:768px) 100vw, 50vw" src="/dashboard.png" />
+            </div>
+          </Reveal>
         </div>
       </section>
     </div>
