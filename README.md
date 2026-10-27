@@ -68,38 +68,38 @@ Students aiming for graduate studies abroad face fragmented information scattere
 
 ```mermaid
 flowchart TD
-    subgraph Landing["🌐 Public Portal"]
-        Home["Landing Page"]
-        Guides["Preparation Guides & PDF Viewer"]
-        Catalog["Browse Opportunities & Scholarships"]
+    subgraph Public_Portal [Public Portal]
+        Home[Landing Page]
+        Guides[Preparation Guides and PDF Viewer]
+        Catalog[Browse Opportunities and Scholarships]
     end
 
-    subgraph Auth["🔐 Authentication & Role Guard"]
-        Login["Login / Register / Google OAuth"]
-        RBAC{"Role Authorization"}
+    subgraph Auth_Guard [Authentication and Access Control]
+        Login[Login / Register / Google OAuth]
+        RBAC{Role Authorization}
     end
 
-    subgraph StudentPortal["🎓 Student Workspace (/student)"]
-        SDash["Dashboard & Readiness Gauge"]
-        SProfile["Academic Records, CV, Tests & Papers"]
-        SMatch["Opportunity Matching & Gap Analysis"]
-        SApp["Application Kanban, Subtasks & Cost Estimator"]
-        SDocs["Document Vault & AI Statement Review"]
-        SMentor["1-on-1 Mentor Booking & Live Meet"]
-        SOutreach["Professor Outreach & LOR Requests"]
+    subgraph Student_Workspace [Student Workspace]
+        SDash[Dashboard and Readiness Gauge]
+        SProfile[Academic Records, CV, Tests and Experience]
+        SMatch[Opportunity Matching and Gap Analysis]
+        SApp[Application Kanban, Tasks and Cost Estimator]
+        SDocs[Document Vault and AI Review]
+        SMentor[1-on-1 Mentor Booking and Live Meet]
+        SOutreach[Professor Outreach and LOR Requests]
     end
 
-    subgraph MentorPortal["🧑‍🏫 Mentor Portal (/mentor)"]
-        MDash["Mentor Workspace"]
-        MReview["Document Review & Version Comments"]
-        MSchedule["Publish Availability & Manage Slots"]
+    subgraph Mentor_Workspace [Mentor Workspace]
+        MDash[Mentor Dashboard]
+        MReview[Document Review and Feedback]
+        MSchedule[Availability Slots Management]
     end
 
-    subgraph AdminPortal["🛡️ Admin Portal (/admin)"]
-        ADash["Platform Overview & Metrics"]
-        AUsers["User Management & Moderation"]
-        AModerate["Mentor Verification Review Queue"]
-        AData["Maintain Universities, Labs & Fundings"]
+    subgraph Admin_Workspace [Admin Workspace]
+        ADash[Platform Overview and Metrics]
+        AUsers[User Moderation and Management]
+        AModerate[Mentor Verification Review Queue]
+        AData[Maintain Universities and Scholarships]
     end
 
     Home --> Login
@@ -226,16 +226,34 @@ npx @biomejs/biome check src
 3. **Email SMTP in Dev Mode:** Local automated reminders utilize Ethereal / Nodemailer stream transport when live production SMTP credentials are not supplied in `.env`.
 
 ### 👥 Team Contributions (Who Did What)
-- **Md. Zisanul Haque (Team Lead & Full-Stack Architect):**
-  - Designed the end-to-end system architecture, Next.js 16 setup, and Express + Prisma data models.
-  - Implemented the 1-on-1 Mentor Booking engine, slot duration calculation, Google Meet integration, and Calendar sync.
-  - Resolved dynamic route hydration, Base UI trigger types, and React Query cache partitioning.
-- **Frontend Engineer 2:**
-  - Implemented the Opportunity Matching engine, Requirement Gap analysis, and Shortlist Comparison matrix.
-  - Built the Application Kanban pipeline, sub-task dependency logic, and Cost Estimator.
-- **UI/UX Designer & Engineer 3:**
-  - Designed the responsive Tailwind CSS v4 styling, dark/light theme tokens, and glassmorphic hero sections.
-  - Created the Preparation Guides & Roadmaps page, document viewer, and visual readiness gauge.
+
+- **Md. Zisan Ul Haque** *(Team Lead & Full-Stack Developer)*:
+  - Architected the end-to-end full-stack system architecture, relational database schemas (Prisma ORM with PostgreSQL), and RESTful API endpoints in Express.js.
+  - Implemented the real-time 1-on-1 Mentor Booking system, including automated 30-minute slot calculations, conflict prevention, Google Meet room integration, and 1-click Google Calendar `.ics` sync.
+  - Built role-based access control (RBAC) middleware for Students, Mentors, and Admins; designed server authentication and JWT verification pipelines.
+  - Resolved dynamic route hydration, Base UI trigger types, TypeScript strict checks, and Next.js 16 Turbo build optimisations.
+
+- **Afsana Nur Labonno** *(Frontend Developer)*:
+  - Engineered the core Student Workspace pages, including Opportunity Matching with dynamic score calculation and Requirement Gap analysis.
+  - Built the Shortlist Comparison Matrix allowing side-by-side evaluation of research fit, funding, requirements, and deadlines.
+  - Developed the Application Kanban board, multi-level subtask checklists with prerequisite dependencies (`dependsOnId`), and the multi-currency Cost Estimator.
+  - Created the Document Vault supporting multi-version SOP/CV uploads, mentor review status updates, and interactive feedback threads.
+
+- **Al Amin Sarder** *(UI/UX Designer & Video Editor)*:
+  - Conceptualized and designed the complete UI/UX design system in Figma, establishing responsive layouts, typography, and dark/light color themes using Tailwind CSS v4.
+  - Designed key visual components including the interactive radial Readiness Score gauge, application milestone timeline, and glassmorphic dashboard cards.
+  - Built the Preparation Guides interface and embedded PDF document viewer for study abroad roadmaps.
+  - Scripted, recorded, directed, and edited the official 5–10 minute demonstration video, highlighting real-time user journeys across Student, Mentor, and Admin roles.
+
+- **Zahin Rahman Rufaida** *(Researcher)*:
+  - Conducted extensive research on global university admission criteria, minimum test score thresholds (IELTS, TOEFL, GRE, GMAT), and GPA scales across US, UK, European, and Asian universities.
+  - Curated, structured, and verified realistic opportunity datasets for universities, research labs, professor profiles, and scholarship programs, including `source` URLs and `lastCheckedAt` verification timestamps.
+  - Formulated the opportunity-to-profile matching criteria and scoring weights used in the automated gap analysis algorithm.
+
+- **Mst.Nusrat Ananna** *(Researcher)*:
+  - Researched graduate academic application standards and formulated guidelines, checklists, and templates for Statements of Purpose (SOP), CVs, Cold Emails, and Letters of Recommendation (LOR).
+  - Authored structured content for the platform's Preparation Guides library (`preparation-guides.json`) and PDF template downloads.
+  - Developed realistic financial cost estimation models and assumptions (tuition fees, living expenses, travel, visa costs, health insurance) across target study abroad destinations.
 
 ---
 
