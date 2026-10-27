@@ -91,12 +91,15 @@ export interface ICreateOpportunityPayload {
   deadline?: string | null;
   source: string;
   lastCheckedAt: string;
-  imageUrl?: string;
+  imageUrl?: string | null;
 }
 
 export interface IUpdateOpportunityPayload
   extends Partial<
-    Omit<ICreateOpportunityPayload, "professorId" | "labId" | "deadline">
+    Omit<
+      ICreateOpportunityPayload,
+      "professorId" | "labId" | "deadline" | "imageUrl"
+    >
   > {
   professorId?: string | null;
   labId?: string | null;

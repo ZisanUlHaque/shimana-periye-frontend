@@ -1,17 +1,17 @@
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   addNewDocumentVersion,
   createDocument,
   deleteDocument,
   getAiFeedbackForDocument,
   getDocumentById,
+  getDocumentsForMentor,
   getMyDocuments,
   updateDocument,
-  getDocumentsForMentor,
   updateVersionReviewStatus,
 } from "@/api/document.api";
-import { STUDENT_COMPLETENESS_QUERY_KEY } from "./student-profile.hook";
 import { toast } from "@/components/ui/toast";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { STUDENT_COMPLETENESS_QUERY_KEY } from "./student-profile.hook";
 
 export const DOCUMENTS_QUERY_KEY = ["documents"];
 
@@ -141,10 +141,19 @@ export function useGetAiFeedback() {
   });
 }
 
-export function useGetDocumentsForMentor(studentProfileId: string, applicationId?: string) {
+export function useGetDocumentsForMentor(
+  studentProfileId?: string,
+  applicationId?: string,
+) {
   return useQuery({
-    queryKey: [...DOCUMENTS_QUERY_KEY, "mentor", studentProfileId, applicationId],
-    queryFn: () => getDocumentsForMentor(studentProfileId, applicationId),
+    queryKey: [
+      ...DOCUMENTS_QUERY_KEY,
+      "mentor",
+      studentProfileId,
+      applicationId,
+    ],
+    queryFn: () =>
+      getDocumentsForMentor(studentProfileId as string, applicationId),
     enabled: Boolean(studentProfileId),
   });
 }
@@ -153,8 +162,13 @@ export function useUpdateVersionReviewStatus() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ versionId, reviewStatus }: { versionId: string; reviewStatus: string }) =>
-      updateVersionReviewStatus(versionId, reviewStatus),
+    mutationFn: ({
+      versionId,
+      reviewStatus,
+    }: {
+      versionId: string;
+      reviewStatus: string;
+    }) => updateVersionReviewStatus(versionId, reviewStatus),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: DOCUMENTS_QUERY_KEY });
       queryClient.invalidateQueries({ queryKey: ["dashboard", "mentor"] });

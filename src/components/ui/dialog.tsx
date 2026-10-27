@@ -15,8 +15,11 @@ function DialogTrigger({
   children,
   render,
   ...props
-}: DialogPrimitive.Trigger.Props & { asChild?: boolean }) {
-  let resolvedRender =
+}: Omit<DialogPrimitive.Trigger.Props, "render"> & {
+  asChild?: boolean;
+  render?: React.ReactNode | DialogPrimitive.Trigger.Props["render"];
+}) {
+  let resolvedRender: any =
     render ??
     (asChild && React.isValidElement(children) ? children : undefined);
 

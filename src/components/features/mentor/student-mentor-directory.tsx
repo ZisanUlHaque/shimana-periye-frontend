@@ -165,10 +165,9 @@ export function StudentMentorDirectory({
                           <h4 className="text-xs font-bold text-foreground truncate">
                             {userName}
                           </h4>
-                          <ShieldCheck
-                            className="size-3.5 text-emerald-500 shrink-0"
-                            title="Verified Mentor"
-                          />
+                          <span title="Verified Mentor">
+                            <ShieldCheck className="size-3.5 text-emerald-500 shrink-0" />
+                          </span>
                         </div>
                         <span className="text-[11px] text-muted-foreground truncate block mt-0.5">
                           {userEmail}

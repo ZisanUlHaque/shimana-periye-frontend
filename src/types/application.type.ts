@@ -35,6 +35,7 @@ export interface IApplicationOpportunitySummary {
   id: string;
   title: string;
   type?: string;
+  fieldOfStudy?: string;
   university?: {
     id: string;
     name: string;

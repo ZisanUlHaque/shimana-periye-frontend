@@ -90,7 +90,7 @@ export function AdminDashboardView() {
     dashboard?.applications?.total ?? dashboard?.totalApplications ?? 0;
   const pendingMentors: IMentorProfile[] =
     dashboard?.mentors?.pendingList ?? dashboard?.pendingMentors ?? [];
-  const recentUsers: IUser[] = dashboard?.recentUsers ?? [];
+  const recentUsers = (dashboard?.recentUsers ?? []) as IUser[];
   const roleBreakdown: Record<string, number> =
     dashboard?.users?.byRole ?? dashboard?.usersByRole ?? {};
 

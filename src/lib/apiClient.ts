@@ -6,6 +6,8 @@ const apiClient = ofetch.create({
   baseURL: BASE_URL,
   credentials: "include",
   onResponseError({ response, error }) {
+    if (!error) return;
+
     // 1. Extract backend error message if returned in standard response format
     const data = response?._data;
     const backendMessage = data?.message || data?.error;
@@ -16,7 +18,11 @@ const apiClient = ofetch.create({
     }
 
     // 2. Extract validation error sources if provided (e.g. Zod / Prisma issues)
-    if (data?.errorSources && Array.isArray(data.errorSources) && data.errorSources.length > 0) {
+    if (
+      data?.errorSources &&
+      Array.isArray(data.errorSources) &&
+      data.errorSources.length > 0
+    ) {
       error.message = data.errorSources
         .map((s: any) => s.message || `${s.path} is invalid`)
         .join(", ");
@@ -30,24 +36,29 @@ const apiClient = ofetch.create({
     } else if (status === 401) {
       error.message = "Session expired or unauthorized. Please log in again.";
     } else if (status === 403) {
-      error.message = "Access restricted. You do not have permission for this resource.";
+      error.message =
+        "Access restricted. You do not have permission for this resource.";
     } else if (status === 404) {
       error.message = "Requested resource could not be found.";
     } else if (status === 409) {
-      error.message = "Conflict detected. This action has already been completed.";
+      error.message =
+        "Conflict detected. This action has already been completed.";
     } else if (status === 422) {
-      error.message = "Validation error. Please verify your data and try again.";
+      error.message =
+        "Validation error. Please verify your data and try again.";
     } else if (status && status >= 500) {
-      error.message = "Server encountered an error. Please try again in a moment.";
+      error.message =
+        "Server encountered an error. Please try again in a moment.";
     } else {
       // Clean any accidental URLs or methods in the error string
       let rawMsg = error?.message || "An unexpected error occurred.";
       rawMsg = rawMsg
-        .replace(/https?:\/\/[^\s\)]+/gi, "")
+        .replace(/https?:\/\/[^\s)]+/gi, "")
         .replace(/\[(GET|POST|PUT|PATCH|DELETE)\]\s*""?:?/gi, "")
         .replace(/\(\s*\)/g, "")
         .trim();
-      error.message = rawMsg || "Network request failed. Please check your connection.";
+      error.message =
+        rawMsg || "Network request failed. Please check your connection.";
     }
   },
 });

@@ -15,8 +15,11 @@ function AlertDialogTrigger({
   children,
   render,
   ...props
-}: AlertDialogPrimitive.Trigger.Props & { asChild?: boolean }) {
-  let resolvedRender =
+}: Omit<AlertDialogPrimitive.Trigger.Props, "render"> & {
+  asChild?: boolean;
+  render?: React.ReactNode | AlertDialogPrimitive.Trigger.Props["render"];
+}) {
+  let resolvedRender: any =
     render ??
     (asChild && React.isValidElement(children) ? children : undefined);
 

@@ -172,7 +172,7 @@ export function MyBookingsList() {
         const rawStart = b.startDateTime || b.schedule?.startDateTime;
         const rawEnd = b.endDateTime || b.schedule?.endDateTime;
         const meetingLink = b.meetingLink || b.schedule?.meetingLink;
-        const mentor = b.mentor || b.schedule?.mentor;
+        const mentor = (b.mentor || b.schedule?.mentor) as IBooking["mentor"];
 
         const initialStart = rawStart ? new Date(rawStart) : null;
         const initialEnd = rawEnd
