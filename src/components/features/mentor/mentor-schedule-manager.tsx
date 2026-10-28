@@ -325,13 +325,13 @@ export function MentorScheduleManager() {
 
                               <div className="flex items-center gap-1.5 text-[11px] font-medium text-emerald-600 dark:text-emerald-400">
                                 <Clock className="size-3" />
-                                {b.formattedTimeBD || (b.startDateTime && b.endDateTime
+                                {b.formattedTimeBD?.replace(/â€“|–/g, "-") || (b.startDateTime && b.endDateTime
                                   ? `${new Date(b.startDateTime).toLocaleTimeString([], {
                                       timeZone: "Asia/Dhaka",
                                       hour: "2-digit",
                                       minute: "2-digit",
                                       hour12: true,
-                                    })} – ${new Date(b.endDateTime).toLocaleTimeString([], {
+                                    })} - ${new Date(b.endDateTime).toLocaleTimeString([], {
                                       timeZone: "Asia/Dhaka",
                                       hour: "2-digit",
                                       minute: "2-digit",

@@ -1,6 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import { useMentorDashboard } from "@/hooks/dashboard.hook";
+import { MenteeReviewDialog } from "@/components/features/mentor/mentee-review-dialog";
 import { PageHeader } from "@/components/layout/public/page-header";
 import {
   ClipboardList,
@@ -22,6 +24,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 
 export default function MentorApplicationsPage() {
+  const [reviewingStudent, setReviewingStudent] = useState<any>(null);
   const { data, isLoading } = useMentorDashboard();
   const dashboard = data?.data;
   const students = dashboard?.students ?? [];
@@ -215,18 +218,27 @@ export default function MentorApplicationsPage() {
               </div>
 
               <div className="mt-4 pt-2">
-                <Link href={`/mentor`}>
-                  <Button size="sm" className="w-full gap-1.5 text-xs h-9 bg-primary text-primary-foreground shadow-xs">
-                    <FileText className="size-3.5" />
-                    Open Mentorship Workspace
-                    <ArrowRight className="size-3.5" />
-                  </Button>
-                </Link>
+                <Button
+                  size="sm"
+                  onClick={() => setReviewingStudent(student)}
+                  className="w-full gap-1.5 text-xs h-9 bg-primary text-primary-foreground shadow-xs cursor-pointer"
+                >
+                  <FileText className="size-3.5" />
+                  Review Documents & Progress
+                  <ArrowRight className="size-3.5" />
+                </Button>
               </div>
             </div>
           ))}
         </div>
       )}
+
+      {/* ── Mentee Document Review & Feedback Studio Modal ── */}
+      <MenteeReviewDialog
+        open={Boolean(reviewingStudent)}
+        onOpenChange={(open) => !open && setReviewingStudent(null)}
+        student={reviewingStudent}
+      />
     </div>
   );
 }

@@ -31,6 +31,9 @@ import {
   Briefcase,
   Phone,
   Send,
+  FileText,
+  Upload,
+  FileCheck,
 } from "lucide-react";
 import { toast } from "@/components/ui/toast";
 import Link from "next/link";
@@ -60,6 +63,7 @@ export function ApplyMentorForm() {
   const [bio, setBio] = useState("");
   const [expertise, setExpertise] = useState<string[]>([]);
   const [customTag, setCustomTag] = useState("");
+  const [resumeFile, setResumeFile] = useState<File | null>(null);
 
   // OTP state
   const [otp, setOtp] = useState("");
@@ -118,6 +122,7 @@ export function ApplyMentorForm() {
         contactNumber: contactNumber || undefined,
         bio: bio || undefined,
         expertise: expertise.length > 0 ? expertise : undefined,
+        file: resumeFile,
       },
       {
         onSuccess: () => {
@@ -470,6 +475,70 @@ export function ApplyMentorForm() {
                   value={bio}
                   onChange={(e) => setBio(e.target.value)}
                 />
+              </div>
+
+              {/* Academic CV / Resume Upload */}
+              <div className="space-y-1.5">
+                <Label className="text-xs font-semibold flex items-center justify-between">
+                  <span className="flex items-center gap-1.5">
+                    <FileText className="size-3.5 text-primary" />
+                    Academic CV / Resume (PDF / Word)
+                  </span>
+                  <span className="text-[11px] text-muted-foreground font-normal">Max 10MB</span>
+                </Label>
+
+                <div className="flex flex-col gap-2">
+                  <label className="flex flex-col items-center justify-center border-2 border-dashed border-border/80 hover:border-primary/60 bg-muted/20 hover:bg-muted/40 rounded-xl p-4 cursor-pointer transition-all">
+                    <input
+                      type="file"
+                      accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                      className="hidden"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          if (file.size > 10 * 1024 * 1024) {
+                            toast.add({
+                              title: "File too large",
+                              description: "Resume must be under 10MB.",
+                              type: "error",
+                            });
+                            return;
+                          }
+                          setResumeFile(file);
+                        }
+                      }}
+                    />
+                    <div className="flex flex-col items-center gap-1.5 text-center">
+                      <Upload className="size-6 text-primary" />
+                      <span className="text-xs font-semibold text-foreground">
+                        {resumeFile ? resumeFile.name : "Click to select or drag and drop your CV / Resume"}
+                      </span>
+                      <span className="text-[10px] text-muted-foreground">
+                        {resumeFile
+                          ? `${(resumeFile.size / (1024 * 1024)).toFixed(2)} MB • Click to replace file`
+                          : "Supports PDF and Word formats (.pdf, .doc, .docx)"}
+                      </span>
+                    </div>
+                  </label>
+
+                  {resumeFile && (
+                    <div className="flex items-center justify-between bg-primary/5 border border-primary/20 rounded-lg px-3 py-1.5 text-xs">
+                      <span className="flex items-center gap-2 text-primary font-medium truncate">
+                        <FileCheck className="size-4 shrink-0" />
+                        {resumeFile.name}
+                      </span>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => setResumeFile(null)}
+                        className="h-6 w-6 p-0 text-muted-foreground hover:text-destructive"
+                      >
+                        <X className="size-3.5" />
+                      </Button>
+                    </div>
+                  )}
+                </div>
               </div>
 
               <Button

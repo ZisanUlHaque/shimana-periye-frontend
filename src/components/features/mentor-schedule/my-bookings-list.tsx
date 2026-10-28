@@ -29,7 +29,7 @@ function formatTimeRange(start: Date, end: Date): string {
       minute: "2-digit",
       hour12: true,
     });
-  return `${formatTime(start)} – ${formatTime(end)}`;
+  return `${formatTime(start)} - ${formatTime(end)}`;
 }
 
 function calculateDurationMinutes(start: Date, end: Date): number {
@@ -181,33 +181,15 @@ export function MyBookingsList() {
             ? new Date(initialStart.getTime() + 30 * 60 * 1000)
             : null;
 
-        // Calculate student's allocated slot time (protecting against raw multi-hour mentor windows)
-        let slotDuration =
-          b.slotDurationMinutes ||
-          (initialStart && initialEnd
-            ? calculateDurationMinutes(initialStart, initialEnd)
-            : 30);
-
-        let start = initialStart;
-        let end = initialEnd;
-
-        // If duration exceeds 60 mins and represents the mentor's total schedule block, derive student slot
-        if (slotDuration > 60 && initialStart && initialEnd) {
-          const totalSlots =
-            b.schedule?.totalSlots ||
-            Math.max(Math.round(slotDuration / 30), 1);
-          const perSlotMin = Math.max(
-            Math.floor(slotDuration / totalSlots),
-            30,
-          );
-          const slotIdx = (b.slotNumber || 1) - 1;
-
-          start = new Date(
-            initialStart.getTime() + slotIdx * perSlotMin * 60 * 1000,
-          );
-          end = new Date(start.getTime() + perSlotMin * 60 * 1000);
-          slotDuration = perSlotMin;
-        }
+        // Each mock interview / consultation slot is strictly 30 minutes
+        const slotIdx = Math.max((b.slotNumber || 1) - 1, 0);
+        let start = initialStart
+          ? new Date(initialStart.getTime() + slotIdx * 30 * 60 * 1000)
+          : null;
+        let end = start
+          ? new Date(start.getTime() + 30 * 60 * 1000)
+          : null;
+        let slotDuration = 30;
 
         const hasEnded = Boolean(end && now.getTime() > end.getTime());
         const isLive = Boolean(

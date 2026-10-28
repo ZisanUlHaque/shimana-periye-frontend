@@ -101,7 +101,7 @@ export default function LoginForm() {
               ? "/admin"
               : role === "MENTOR"
               ? "/mentor"
-              : "/student";
+              : "/";
 
           router.replace(target);
         },

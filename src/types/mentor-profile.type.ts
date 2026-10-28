@@ -12,6 +12,8 @@ export interface IApplyAsMentorPayload {
   contactNumber?: string;
   bio?: string;
   expertise?: string[];
+  file?: File | null;
+  resumeUrl?: string;
 }
 
 export interface IVerifyMentorEmailPayload {
@@ -41,6 +43,8 @@ export interface IMentorProfile {
   institution?: string | null;
   designation?: string | null;
   contactNumber?: string | null;
+  resumeUrl?: string | null;
+  resumePublicId?: string | null;
   verificationStatus: MentorVerificationStatus;
   rejectionReason?: string | null;
   reviewedBy?: string | null;

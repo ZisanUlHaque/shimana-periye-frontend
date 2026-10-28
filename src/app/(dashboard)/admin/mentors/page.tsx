@@ -13,6 +13,11 @@ import {
   Search,
   ShieldCheck,
   XCircle,
+  Eye,
+  FileText,
+  Download,
+  ExternalLink,
+  Sparkles,
 } from "lucide-react";
 import { useState } from "react";
 import { PageHeader } from "@/components/layout/public/page-header";
@@ -61,6 +66,31 @@ export default function AdminMentorsPage() {
   const [selectedMentorForReject, setSelectedMentorForReject] =
     useState<IMentorProfile | null>(null);
   const [rejectionReason, setRejectionReason] = useState("");
+  const [dossierOpen, setDossierOpen] = useState(false);
+  const [dossierMentor, setDossierMentor] = useState<IMentorProfile | null>(null);
+  const [downloadingResume, setDownloadingResume] = useState(false);
+
+  const handleDownloadResume = async (url: string, candidateName: string) => {
+    try {
+      setDownloadingResume(true);
+      const res = await fetch(url);
+      if (!res.ok) throw new Error("Network response was not ok");
+      const blob = await res.blob();
+      const cleanName = `${candidateName.replace(/[^a-zA-Z0-9_-]/g, "_")}_Resume.pdf`;
+      const objectUrl = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = objectUrl;
+      link.download = cleanName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(objectUrl);
+    } catch {
+      window.open(url, "_blank");
+    } finally {
+      setDownloadingResume(false);
+    }
+  };
 
   const mentors: IMentorProfile[] = mentorsRes?.data ?? [];
 
@@ -357,60 +387,75 @@ export default function AdminMentorsPage() {
                 </div>
 
                 {/* Action Buttons */}
-                <div className="pt-3 border-t border-border/60 flex items-center justify-end gap-2">
-                  {/* Approve Action */}
-                  {!isApproved && (
-                    <AlertDialog>
-                      <AlertDialogTrigger
-                        render={
-                          <Button
-                            size="sm"
-                            className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs h-8 gap-1.5 rounded-lg px-3"
-                            disabled={approveMutation.isPending}
-                          >
-                            <CheckCircle2 className="size-3.5" />
-                            Approve Application
-                          </Button>
-                        }
-                      />
-                      <AlertDialogContent>
-                        <AlertDialogHeader>
-                          <AlertDialogTitle className="flex items-center gap-2 text-emerald-600">
-                            <ShieldCheck className="size-5" />
-                            Approve {mentor.user?.name || "Mentor"}?
-                          </AlertDialogTitle>
-                          <AlertDialogDescription>
-                            This will verify the mentor&apos;s credentials and
-                            grant them access to host consultation slots, review
-                            student applications, and offer SOP guidance.
-                          </AlertDialogDescription>
-                        </AlertDialogHeader>
-                        <AlertDialogFooter>
-                          <AlertDialogCancel>Cancel</AlertDialogCancel>
-                          <AlertDialogAction
-                            onClick={() => handleApprove(mentor)}
-                            className="bg-emerald-600 hover:bg-emerald-700 text-white"
-                          >
-                            Yes, Approve Mentor
-                          </AlertDialogAction>
-                        </AlertDialogFooter>
-                      </AlertDialogContent>
-                    </AlertDialog>
-                  )}
+                <div className="pt-3 border-t border-border/60 flex flex-wrap items-center justify-between gap-2">
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => {
+                      setDossierMentor(mentor);
+                      setDossierOpen(true);
+                    }}
+                    className="text-xs h-8 gap-1.5 rounded-lg border-primary/30 text-primary hover:bg-primary/10"
+                  >
+                    <Eye className="size-3.5" />
+                    Review Profile & Resume
+                  </Button>
 
-                  {/* Reject / Revoke Action */}
-                  {!isRejected && (
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => handleOpenReject(mentor)}
-                      className="text-destructive border-destructive/40 hover:bg-destructive/10 text-xs h-8 gap-1.5 rounded-lg"
-                      disabled={approveMutation.isPending}
-                    >
-                      <XCircle className="size-3.5" />
-                      {isApproved ? "Revoke Approval" : "Reject Application"}
-                    </Button>
-                  )}
+                  <div className="flex items-center gap-2">
+                    {/* Approve Action */}
+                    {!isApproved && (
+                      <AlertDialog>
+                        <AlertDialogTrigger
+                          render={
+                            <Button
+                              size="sm"
+                              className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs h-8 gap-1.5 rounded-lg px-3"
+                              disabled={approveMutation.isPending}
+                            >
+                              <CheckCircle2 className="size-3.5" />
+                              Approve
+                            </Button>
+                          }
+                        />
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle className="flex items-center gap-2 text-emerald-600">
+                              <ShieldCheck className="size-5" />
+                              Approve {mentor.user?.name || "Mentor"}?
+                            </AlertDialogTitle>
+                            <AlertDialogDescription>
+                              This will verify the mentor&apos;s credentials and
+                              grant them access to host consultation slots, review
+                              student applications, and offer SOP guidance.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction
+                              onClick={() => handleApprove(mentor)}
+                              className="bg-emerald-600 hover:bg-emerald-700 text-white"
+                            >
+                              Yes, Approve Mentor
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
+                    )}
+
+                    {/* Reject / Revoke Action */}
+                    {!isRejected && (
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => handleOpenReject(mentor)}
+                        className="text-destructive border-destructive/40 hover:bg-destructive/10 text-xs h-8 gap-1.5 rounded-lg"
+                        disabled={approveMutation.isPending}
+                      >
+                        <XCircle className="size-3.5" />
+                        {isApproved ? "Revoke" : "Reject"}
+                      </Button>
+                    )}
+                  </div>
                 </div>
               </div>
             );
@@ -478,6 +523,248 @@ export default function AdminMentorsPage() {
               </Button>
             </DialogFooter>
           </form>
+        </DialogContent>
+      </Dialog>
+
+      {/* ── Mentor Full Profile & Resume Dossier Modal ── */}
+      <Dialog open={dossierOpen} onOpenChange={setDossierOpen}>
+        <DialogContent className="max-w-3xl w-[95vw] max-h-[90vh] flex flex-col p-6 overflow-hidden">
+          <DialogHeader className="border-b border-border/60 pb-3">
+            <div className="flex items-center justify-between">
+              <div>
+                <DialogTitle className="text-lg font-bold text-foreground flex items-center gap-2">
+                  <GraduationCap className="size-5 text-primary" />
+                  Mentor Candidate Dossier
+                </DialogTitle>
+                <DialogDescription className="text-xs text-muted-foreground mt-0.5">
+                  Verify academic credentials, institutional affiliations, and review attached CV before granting mentorship privileges.
+                </DialogDescription>
+              </div>
+            </div>
+          </DialogHeader>
+
+          {dossierMentor && (
+            <div className="flex-1 overflow-y-auto pr-1 flex flex-col gap-5 py-3">
+              {/* Top Profile Summary Strip */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-2xl bg-muted/30 border border-border/60">
+                <div className="flex items-center gap-3.5">
+                  <Avatar className="size-14 border border-border/80 shadow-xs">
+                    <AvatarImage src={dossierMentor.user?.imageUrl ?? undefined} />
+                    <AvatarFallback className="bg-primary/10 text-primary font-bold text-base">
+                      {dossierMentor.user?.name?.[0]?.toUpperCase() || "M"}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <h3 className="text-base font-bold text-foreground">
+                      {dossierMentor.user?.name}
+                    </h3>
+                    <p className="text-xs text-muted-foreground flex items-center gap-1.5 mt-0.5">
+                      <Mail className="size-3.5 text-muted-foreground" />
+                      {dossierMentor.user?.email}
+                    </p>
+                    {dossierMentor.contactNumber && (
+                      <p className="text-xs text-muted-foreground flex items-center gap-1.5 mt-0.5">
+                        <Phone className="size-3.5 text-muted-foreground" />
+                        {dossierMentor.contactNumber}
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                <div className="flex sm:flex-col items-end justify-between sm:justify-center gap-2">
+                  <Badge
+                    variant="outline"
+                    className={`font-semibold text-xs px-2.5 py-1 ${
+                      dossierMentor.verificationStatus === "APPROVED"
+                        ? "bg-emerald-500/10 text-emerald-600 border-emerald-500/30"
+                        : dossierMentor.verificationStatus === "REJECTED"
+                        ? "bg-destructive/10 text-destructive border-destructive/30"
+                        : "bg-amber-500/10 text-amber-600 border-amber-500/30"
+                    }`}
+                  >
+                    {dossierMentor.verificationStatus}
+                  </Badge>
+                  <span className="text-[11px] text-muted-foreground">
+                    Applied: {new Date(dossierMentor.createdAt).toLocaleDateString()}
+                  </span>
+                </div>
+              </div>
+
+              {/* Institution and Designation Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                <div className="p-3.5 rounded-xl border border-border/60 bg-card">
+                  <span className="text-[11px] font-semibold text-muted-foreground flex items-center gap-1.5 uppercase tracking-wide">
+                    <Building className="size-3.5 text-primary" />
+                    Affiliated Institution / University
+                  </span>
+                  <p className="font-bold text-foreground mt-1 text-sm">
+                    {dossierMentor.institution || "Not specified by applicant"}
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-xl border border-border/60 bg-card">
+                  <span className="text-[11px] font-semibold text-muted-foreground flex items-center gap-1.5 uppercase tracking-wide">
+                    <Briefcase className="size-3.5 text-primary" />
+                    Current Academic / Professional Role
+                  </span>
+                  <p className="font-bold text-foreground mt-1 text-sm">
+                    {dossierMentor.designation || "Not specified by applicant"}
+                  </p>
+                </div>
+              </div>
+
+              {/* Mentorship Expertise Tags */}
+              <div className="space-y-2">
+                <span className="text-xs font-semibold text-foreground flex items-center gap-1.5">
+                  <Sparkles className="size-3.5 text-primary" />
+                  Areas of Advising Expertise
+                </span>
+                <div className="flex flex-wrap gap-1.5">
+                  {dossierMentor.expertise && dossierMentor.expertise.length > 0 ? (
+                    dossierMentor.expertise.map((exp) => (
+                      <span
+                        key={exp}
+                        className="px-2.5 py-1 rounded-md bg-primary/10 text-primary text-xs font-medium border border-primary/20"
+                      >
+                        {exp}
+                      </span>
+                    ))
+                  ) : (
+                    <span className="text-xs text-muted-foreground italic">
+                      No specific expertise categories marked.
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              {/* Mentorship Statement & Bio */}
+              <div className="space-y-1.5">
+                <span className="text-xs font-semibold text-foreground flex items-center gap-1.5">
+                  <FileText className="size-3.5 text-primary" />
+                  Candidate Background & Statement
+                </span>
+                <div className="rounded-xl border border-border/60 bg-muted/20 p-4 text-xs text-foreground/90 leading-relaxed italic whitespace-pre-wrap">
+                  {dossierMentor.bio || "No mentorship statement provided."}
+                </div>
+              </div>
+
+              {/* Uploaded Resume / CV Section */}
+              <div className="space-y-2">
+                <span className="text-xs font-semibold text-foreground flex items-center gap-1.5">
+                  <FileText className="size-3.5 text-primary" />
+                  Academic CV / Resume Document
+                </span>
+
+                {dossierMentor.resumeUrl ? (
+                  <div className="rounded-2xl border border-primary/30 bg-primary/5 p-4 flex flex-col gap-3">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-primary/20 pb-3">
+                      <div className="flex items-center gap-2 text-xs">
+                        <div className="flex size-8 items-center justify-center rounded-lg bg-primary/15 text-primary font-bold">
+                          PDF
+                        </div>
+                        <div>
+                          <p className="font-semibold text-foreground">
+                            {dossierMentor.user?.name}&apos;s Official Resume
+                          </p>
+                          <span className="text-[10px] text-muted-foreground">
+                            Hosted on Cloudinary Document Storage
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-2">
+                        <a
+                          href={dossierMentor.resumeUrl}
+                          target="_blank"
+                          rel="noreferrer noopener"
+                        >
+                          <Button size="sm" variant="outline" className="h-8 text-xs gap-1">
+                            <ExternalLink className="size-3.5" />
+                            Open in New Tab
+                          </Button>
+                        </a>
+                        <Button
+                          size="sm"
+                          disabled={downloadingResume}
+                          onClick={() =>
+                            handleDownloadResume(
+                              dossierMentor.resumeUrl!,
+                              dossierMentor.user?.name || "Mentor_Candidate",
+                            )
+                          }
+                          className="h-8 text-xs gap-1"
+                        >
+                          <Download className="size-3.5" />
+                          {downloadingResume ? "Downloading..." : "Download"}
+                        </Button>
+                      </div>
+                    </div>
+
+                    {/* Inline Document Preview Frame */}
+                    <div className="w-full h-80 rounded-xl overflow-hidden border border-border/60 bg-background/80">
+                      <iframe
+                        src={dossierMentor.resumeUrl}
+                        title="Candidate Resume Preview"
+                        className="w-full h-full border-0"
+                      />
+                    </div>
+                  </div>
+                ) : (
+                  <div className="rounded-xl border border-dashed border-border/80 bg-muted/20 p-6 text-center text-xs text-muted-foreground">
+                    <FileText className="size-6 text-muted-foreground/60 mx-auto mb-1.5" />
+                    <span>No separate resume file was uploaded with this application.</span>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Modal Footer with Direct Decision Actions */}
+          {dossierMentor && (
+            <DialogFooter className="border-t border-border/60 pt-3 flex sm:items-center justify-between gap-2">
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => setDossierOpen(false)}
+              >
+                Close Dossier
+              </Button>
+
+              <div className="flex items-center gap-2">
+                {dossierMentor.verificationStatus !== "REJECTED" && (
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => {
+                      setDossierOpen(false);
+                      handleOpenReject(dossierMentor);
+                    }}
+                    className="text-destructive border-destructive/40 hover:bg-destructive/10 text-xs h-9 gap-1.5"
+                    disabled={approveMutation.isPending}
+                  >
+                    <XCircle className="size-3.5" />
+                    Reject Application
+                  </Button>
+                )}
+
+                {dossierMentor.verificationStatus !== "APPROVED" && (
+                  <Button
+                    size="sm"
+                    onClick={() => {
+                      handleApprove(dossierMentor);
+                      setDossierOpen(false);
+                    }}
+                    className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs h-9 gap-1.5"
+                    disabled={approveMutation.isPending}
+                  >
+                    <CheckCircle2 className="size-3.5" />
+                    Approve & Issue Credentials
+                  </Button>
+                )}
+              </div>
+            </DialogFooter>
+          )}
         </DialogContent>
       </Dialog>
     </div>

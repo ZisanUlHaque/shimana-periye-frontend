@@ -9,6 +9,7 @@ import {
   getMyDocuments,
   updateDocument,
   updateVersionReviewStatus,
+  createDocumentComment,
 } from "@/api/document.api";
 import { toast } from "@/components/ui/toast";
 import { STUDENT_COMPLETENESS_QUERY_KEY } from "./student-profile.hook";
@@ -181,6 +182,30 @@ export function useUpdateVersionReviewStatus() {
     onError: (error: any) => {
       toast.add({
         title: "Failed to update review status",
+        description: error?.message ?? "Something went wrong.",
+        type: "error",
+      });
+    },
+  });
+}
+
+export function useCreateDocumentComment() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: createDocumentComment,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: DOCUMENTS_QUERY_KEY });
+      queryClient.invalidateQueries({ queryKey: ["dashboard", "mentor"] });
+      toast.add({
+        title: "Feedback comment posted",
+        description: "Student has been notified of your review notes.",
+        type: "success",
+      });
+    },
+    onError: (error: any) => {
+      toast.add({
+        title: "Failed to post comment",
         description: error?.message ?? "Something went wrong.",
         type: "error",
       });

@@ -40,10 +40,20 @@ const REVIEW_STATUS_CONFIG: Record<
     badgeClass: "bg-muted text-muted-foreground border-border",
     dotClass: "bg-muted-foreground",
   },
+  IN_REVIEW: {
+    label: "Under Review",
+    badgeClass: "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20",
+    dotClass: "bg-blue-500",
+  },
   SUBMITTED: {
     label: "Under Review",
     badgeClass: "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20",
     dotClass: "bg-blue-500",
+  },
+  CHANGES_REQUESTED: {
+    label: "Changes Requested",
+    badgeClass: "bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/20",
+    dotClass: "bg-purple-500",
   },
   REVIEWED: {
     label: "Feedback Ready",
@@ -77,11 +87,9 @@ export function DocumentCard({ document }: { document: IDocument }) {
   const backendBaseUrl =
     process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000/api/v1";
 
-  const downloadUrl = (latestVersion as any)?.directDownloadUrl
-    ? (latestVersion as any).directDownloadUrl
-    : `${backendBaseUrl}/documents/${document.id}/download${
-        latestVersion?.id ? `?versionId=${latestVersion.id}` : ""
-      }`;
+  const downloadUrl = `${backendBaseUrl}/documents/${document.id}/download${
+    latestVersion?.id ? `?versionId=${latestVersion.id}` : ""
+  }`;
 
   const statusStyle =
     REVIEW_STATUS_CONFIG[latestVersion?.reviewStatus ?? "DRAFT"] ??

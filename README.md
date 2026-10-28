@@ -27,10 +27,10 @@
 
 ---
 
-## 🎥 Demo Video (Mandatory)
+## 🎥 Demo Video
 
-> 🎬 **Watch the Full Product Walkthrough Demo (5–10 Minutes):**  
-> **[▶️ Click to Watch Demo Video on Google Drive](https://youtu.be/demo-placeholder-gradpath)**  
+> 🎬 **Watch the Full Product Walkthrough Demo:**  
+> **[▶️ Click to Watch Demo Video on YouTube](https://youtu.be/CDkUl5r1YLg?si=59AoiJ2IzGpk2qzY)**  
 > *(Unlisted, accessible to anyone with the link — showcases end-to-end Student, Mentor, and Administrator workflows)*
 
 ---

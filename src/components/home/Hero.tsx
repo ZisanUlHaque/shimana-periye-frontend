@@ -649,10 +649,10 @@ export default function HeroSection() {
               </Link>
 
               <Link
-                href="/universities"
+                href="/scholarships"
                 className="group inline-flex items-center gap-2 rounded-full border border-white/35 bg-white/[0.12] px-7 py-3.5 text-sm font-medium text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.4)] backdrop-blur-2xl transition-all duration-300 hover:border-white/60 hover:bg-white/[0.22]"
               >
-                Explore Universities
+                Explore Scholarships
                 <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
               </Link>
             </motion.div>

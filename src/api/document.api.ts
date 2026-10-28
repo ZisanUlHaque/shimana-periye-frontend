@@ -70,3 +70,13 @@ export function updateVersionReviewStatus(versionId: string, reviewStatus: strin
     body: { reviewStatus },
   });
 }
+
+export function createDocumentComment(payload: {
+  documentVersionId: string;
+  comment: string;
+}) {
+  return apiClient("/document-comments", {
+    method: "POST",
+    body: payload,
+  });
+}

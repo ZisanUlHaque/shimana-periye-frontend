@@ -45,13 +45,23 @@ const STATUS_CONFIG: Record<
     badgeClass: "bg-muted text-muted-foreground border-border",
     icon: Clock,
   },
-  SUBMITTED: {
-    label: "Awaiting Mentor Review",
+  IN_REVIEW: {
+    label: "Under Mentor Review",
     badgeClass: "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20",
     icon: Clock,
   },
+  SUBMITTED: {
+    label: "Under Mentor Review",
+    badgeClass: "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20",
+    icon: Clock,
+  },
+  CHANGES_REQUESTED: {
+    label: "Changes Requested / Feedback Given",
+    badgeClass: "bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/20",
+    icon: MessageSquare,
+  },
   REVIEWED: {
-    label: "Feedback Provided",
+    label: "Changes Requested / Feedback Given",
     badgeClass: "bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/20",
     icon: MessageSquare,
   },
@@ -84,7 +94,6 @@ export function DocumentDetailView({ documentId }: { documentId: string }) {
 
   const getDownloadUrl = (ver: any) => {
     if (!ver) return "#";
-    if (ver.directDownloadUrl) return ver.directDownloadUrl;
     return `${backendBaseUrl}/documents/${documentId}/download?versionId=${ver.id}`;
   };
 

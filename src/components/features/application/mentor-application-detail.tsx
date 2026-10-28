@@ -34,13 +34,13 @@ import {
 const REVIEW_STATUS_OPTIONS = [
   { value: "DRAFT", label: "Draft", class: "bg-muted text-muted-foreground" },
   {
-    value: "SUBMITTED",
+    value: "IN_REVIEW",
     label: "Under Review",
     class: "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20",
   },
   {
-    value: "REVIEWED",
-    label: "Feedback Given",
+    value: "CHANGES_REQUESTED",
+    label: "Changes Requested",
     class: "bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/20",
   },
   {
@@ -71,7 +71,6 @@ export function MentorApplicationDetail({ applicationId }: { applicationId: stri
 
   const getDownloadUrl = (docId: string, ver: any) => {
     if (!ver) return "#";
-    if (ver.directDownloadUrl) return ver.directDownloadUrl;
     return `${backendBaseUrl}/documents/${docId}/download?versionId=${ver.id}`;
   };
 

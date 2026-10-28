@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useMentorDashboard } from "@/hooks/dashboard.hook";
 import { useMyMentorSchedules, useCreateMentorSchedule } from "@/hooks/mentor-schedule.hook";
+import { MenteeReviewDialog } from "@/components/features/mentor/mentee-review-dialog";
 import { StatCard } from "@/components/shared/stat-card";
 import {
   Users,
@@ -41,6 +42,7 @@ export function MentorDashboardView() {
   const createSlotMutation = useCreateMentorSchedule();
 
   const [activeTab, setActiveTab] = useState<"mentees" | "sessions" | "quickSlot">("mentees");
+  const [reviewingStudent, setReviewingStudent] = useState<any>(null);
 
   // Quick slot state
   const [quickDate, setQuickDate] = useState("");
@@ -365,19 +367,15 @@ export function MentorDashboardView() {
                     </div>
 
                     <div className="mt-4 pt-3 border-t border-border/50 flex items-center justify-between gap-2">
-                      <Link
-                        href={`/mentor/applications`}
-                        className="w-full"
+                      <Button
+                        size="sm"
+                        onClick={() => setReviewingStudent(student)}
+                        variant={hasPendingDocs ? "default" : "outline"}
+                        className="w-full text-xs gap-1.5 rounded-xl font-semibold cursor-pointer"
                       >
-                        <Button
-                          size="sm"
-                          variant={hasPendingDocs ? "default" : "outline"}
-                          className="w-full text-xs gap-1.5 rounded-xl font-semibold"
-                        >
-                          <FileText className="size-3.5" />
-                          {hasPendingDocs ? "Review Document Drafts" : "Inspect Progress"}
-                        </Button>
-                      </Link>
+                        <FileText className="size-3.5" />
+                        {hasPendingDocs ? "Review Document Drafts" : "Inspect Progress"}
+                      </Button>
                     </div>
                   </div>
                 );
@@ -520,13 +518,13 @@ export function MentorDashboardView() {
 
                                 <div className="flex items-center gap-1 text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">
                                   <Clock className="size-3" />
-                                  {b.formattedTimeBD || (b.startDateTime && b.endDateTime
+                                  {b.formattedTimeBD?.replace(/â€“|–/g, "-") || (b.startDateTime && b.endDateTime
                                     ? `${new Date(b.startDateTime).toLocaleTimeString([], {
                                         timeZone: "Asia/Dhaka",
                                         hour: "2-digit",
                                         minute: "2-digit",
                                         hour12: true,
-                                      })} – ${new Date(b.endDateTime).toLocaleTimeString([], {
+                                      })} - ${new Date(b.endDateTime).toLocaleTimeString([], {
                                         timeZone: "Asia/Dhaka",
                                         hour: "2-digit",
                                         minute: "2-digit",
@@ -639,6 +637,13 @@ export function MentorDashboardView() {
           </form>
         </div>
       )}
+
+      {/* ── Mentee Document Review & Feedback Studio Modal ── */}
+      <MenteeReviewDialog
+        open={Boolean(reviewingStudent)}
+        onOpenChange={(open) => !open && setReviewingStudent(null)}
+        student={reviewingStudent}
+      />
     </div>
   );
 }

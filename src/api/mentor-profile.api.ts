@@ -8,10 +8,25 @@ import type {
   IMentorProfile,
 } from "@/types/mentor-profile.type";
 
-export function applyAsMentor(payload: IApplyAsMentorPayload) {
+export function applyAsMentor(payload: IApplyAsMentorPayload | FormData) {
+  let body: any = payload;
+  if (!(payload instanceof FormData) && (payload as IApplyAsMentorPayload).file) {
+    const p = payload as IApplyAsMentorPayload;
+    const formData = new FormData();
+    formData.append("name", p.name);
+    formData.append("email", p.email);
+    if (p.institution) formData.append("institution", p.institution);
+    if (p.designation) formData.append("designation", p.designation);
+    if (p.contactNumber) formData.append("contactNumber", p.contactNumber);
+    if (p.bio) formData.append("bio", p.bio);
+    if (p.expertise) formData.append("expertise", JSON.stringify(p.expertise));
+    if (p.file) formData.append("file", p.file);
+    body = formData;
+  }
+
   return apiClient<IApiResponse<any>>("/mentor-profile/apply", {
     method: "POST",
-    body: payload,
+    body,
   });
 }
 

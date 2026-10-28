@@ -13,6 +13,7 @@ import {
   ArrowRight,
   type LucideIcon,
 } from "lucide-react";
+import Link from "next/link";
 
 interface ComparisonRow {
   icon: LucideIcon;
@@ -155,12 +156,12 @@ export default function ComparisonSection() {
       </div>
 
       <div className="mt-10 flex justify-center px-6">
-        <button
-          type="button"
+        <Link
+          href="/register"
           className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-emerald-500 to-sky-500 px-8 py-3.5 font-semibold text-white shadow-lg shadow-emerald-200 transition-all hover:shadow-xl hover:shadow-emerald-300"
         >
           Start your journey the smart way <ArrowRight className="h-4 w-4" />
-        </button>
+        </Link>
       </div>
 
       <style>{`
