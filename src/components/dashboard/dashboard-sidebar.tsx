@@ -72,7 +72,7 @@ export function DashboardSidebar({ role }: { role: Role }) {
           <div className="relative flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-primary/15 to-primary/5 ring-1 ring-primary/10">
             <Image
               src="/logo1.png"
-              alt="ShimanaPeriye"
+              alt="PUB GradPath"
               width={28}
               height={28}
               className="object-contain"
@@ -81,7 +81,7 @@ export function DashboardSidebar({ role }: { role: Role }) {
           </div>
           <div className="flex min-w-0 flex-col">
             <span className="truncate text-sm font-bold tracking-tight text-sidebar-foreground">
-              ShimanaPeriye
+              PUB GradPath
             </span>
             <span className="flex items-center gap-1 text-[10px] font-medium text-muted-foreground">
               <Plane className="size-2.5 text-primary" />

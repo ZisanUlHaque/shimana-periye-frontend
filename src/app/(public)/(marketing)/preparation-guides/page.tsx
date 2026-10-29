@@ -14,7 +14,7 @@ import { PreparationGuidesView } from "@/components/features/preparation-guides/
 import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
-  title: "Admissions Preparation Guides & Roadmaps | ShimanaPeriye",
+  title: "Admissions Preparation Guides & Roadmaps | PUB GradPath",
   description:
     "Comprehensive academic preparation guides for Letters of Recommendation (LOR), Statement of Purpose (SOP), Motivation Letters, Academic CVs, and Google Scholar Professor Matching with downloadable PDF templates and verified layouts.",
 };

@@ -26,7 +26,7 @@ export default function RegisterPage() {
             {/* Logo */}
             <Link href={"/"}>
               <div className="font-serif text-2xl text-primary italic">
-                ShimanaPeriye
+                PUB GradPath
               </div>
             </Link>
 

@@ -1,9 +1,9 @@
 import { ApplyMentorForm } from "@/components/features/mentor/apply-mentor-form";
 
 export const metadata = {
-  title: "Become a Mentor | ShimanaPeriye",
+  title: "Become a Mentor | PUB GradPath",
   description:
-    "Apply to become an academic mentor at ShimanaPeriye. Guide prospective students through admissions, SOPs, and research fellowships.",
+    "Apply to become an academic mentor at PUB GradPath. Guide prospective students through admissions, SOPs, and research fellowships.",
 };
 
 export default function ApplyMentorPage() {

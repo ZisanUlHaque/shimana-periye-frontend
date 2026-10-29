@@ -10,14 +10,14 @@ export default function LoginPage() {
           <div className="space-y-6 px-4 md:px-8">
             <Link href={"/"}>
               <div className="font-serif text-2xl text-primary italic">
-                ShimanaPeriye
+                PUB GradPath
               </div>
             </Link>
 
             <div className="space-y-2">
               <h1 className="text-4xl font-bold text-foreground">Login</h1>
               <p className="text-sm text-muted-foreground">
-                Login to access your ShimanaPeriye account
+                Login to access your PUB GradPath account
               </p>
             </div>
 

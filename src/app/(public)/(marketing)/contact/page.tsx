@@ -77,7 +77,7 @@ export default function ContactPage() {
             <InfoCard
               icon={Mail}
               title="Email"
-              body="hello@shimanaperiye.com"
+              body="support@pubgradpath.com"
               hint="Best for detailed questions"
             />
             <InfoCard

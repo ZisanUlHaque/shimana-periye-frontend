@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * "Old way vs ShimanaPeriye way" — an interactive before/after.
+ * "Old way vs PUB GradPath way" — an interactive before/after.
  *
  * - Six topics as tabs (vertical on desktop, a scrolling chip row on mobile).
  *   They auto-advance with a progress bar that pauses on hover, while you drag,
@@ -197,7 +197,7 @@ export default function ComparisonSection({
           The old way vs.
           <span className="bg-gradient-to-r from-emerald-500 to-sky-500 bg-clip-text text-transparent">
             {" "}
-            the ShimanaPeriye way.
+            the PUB GradPath way.
           </span>
         </motion.h2>
         <motion.p
@@ -380,7 +380,7 @@ export default function ComparisonSection({
               className="pointer-events-none absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-white/90 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-emerald-600 shadow-sm backdrop-blur"
             >
               <CheckCircle2 className="size-3.5" />
-              ShimanaPeriye
+              PUB GradPath
             </motion.span>
 
             {/* Handle */}
@@ -389,11 +389,11 @@ export default function ComparisonSection({
               <div
                 role="slider"
                 tabIndex={0}
-                aria-label="Compare the old way with the ShimanaPeriye way"
+                aria-label="Compare the old way with the PUB GradPath way"
                 aria-valuemin={0}
                 aria-valuemax={100}
                 aria-valuenow={100 - ariaPos}
-                aria-valuetext={`${100 - ariaPos}% ShimanaPeriye way shown`}
+                aria-valuetext={`${100 - ariaPos}% PUB GradPath way shown`}
                 onKeyDown={onKeyDown}
                 className="absolute left-0 top-1/2 flex size-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 shadow-[0_12px_30px_-8px_rgba(15,23,42,0.45)] outline-none transition-transform focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 active:scale-95"
               >
@@ -451,7 +451,7 @@ export default function ComparisonSection({
               <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-emerald-500" />
               <div>
                 <p className="text-[11px] font-bold uppercase tracking-wider text-emerald-600">
-                  With ShimanaPeriye
+                  With PUB GradPath
                 </p>
                 <motion.p
                   key={`u-${item.id}`}

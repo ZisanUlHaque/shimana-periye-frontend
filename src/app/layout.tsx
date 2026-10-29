@@ -17,16 +17,16 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const SITE_URL = "https://shimanaperiye.com"; 
+const SITE_URL = "https://pubgradpath.com"; 
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "ShimanaPeriye | Your Path to Studying Abroad",
-    template: "%s | ShimanaPeriye",
+    default: "PUB GradPath | Higher-Study Discovery & Application Workspace",
+    template: "%s | PUB GradPath",
   },
   description:
-    "ShimanaPeriye helps students find universities, track scholarships, and connect with verified mentors to plan their journey abroad — all in one place.",
+    "PUB GradPath helps students find universities, track scholarships, and connect with verified mentors to plan their journey abroad — all in one place.",
   keywords: [
     "study abroad",
     "scholarships",
@@ -35,12 +35,12 @@ export const metadata: Metadata = {
     "student visa",
     "graduate path",
     "international education",
-    "ShimanaPeriye",
+    "PUB GradPath",
   ],
-  authors: [{ name: "ShimanaPeriye" }],
-  creator: "ShimanaPeriye",
-  publisher: "ShimanaPeriye",
-  applicationName: "ShimanaPeriye",
+  authors: [{ name: "PUB GradPath" }],
+  creator: "PUB GradPath",
+  publisher: "PUB GradPath",
+  applicationName: "PUB GradPath",
   category: "Education",
   robots: {
     index: true,
@@ -66,8 +66,8 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: SITE_URL,
-    siteName: "ShimanaPeriye",
-    title: "ShimanaPeriye | Your Path to Studying Abroad",
+    siteName: "PUB GradPath",
+    title: "PUB GradPath | Higher-Study Discovery & Application Workspace",
     description:
       "Find universities, track scholarships, and connect with verified mentors to plan your journey abroad.",
     images: [
@@ -75,17 +75,17 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "ShimanaPeriye - Your Path to Studying Abroad",
+        alt: "PUB GradPath - Higher-Study Discovery & Application Workspace",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "ShimanaPeriye | Your Path to Studying Abroad",
+    title: "PUB GradPath | Higher-Study Discovery & Application Workspace",
     description:
       "Find universities, track scholarships, and connect with verified mentors to plan your journey abroad.",
     images: ["/og-image.png"],
-    creator: "@shimanaperiye",
+    creator: "@pubgradpath",
   },
   formatDetection: {
     email: false,

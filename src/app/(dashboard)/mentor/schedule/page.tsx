@@ -1,7 +1,7 @@
 import { MentorScheduleManager } from "@/components/features/mentor/mentor-schedule-manager";
 
 export const metadata = {
-  title: "Mentorship Schedule | ShimanaPeriye",
+  title: "Mentorship Schedule | PUB GradPath",
   description: "Manage your mentorship availability slots and student bookings.",
 };
 

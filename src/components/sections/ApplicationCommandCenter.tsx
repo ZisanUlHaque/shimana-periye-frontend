@@ -232,7 +232,7 @@ export default function ApplicationCommandCenter() {
                   <span className="h-2.5 w-2.5 rounded-full bg-amber-400/80" />
                   <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/80" />
                   <span className="ml-3 flex-1 truncate rounded-full bg-white/5 px-3 py-1 font-mono text-[10px] text-slate-500">
-                    mission.shimana / fall-2026
+                    mission.gradpath / fall-2026
                   </span>
                   <span className="hidden items-center gap-1 rounded-full bg-emerald-400/10 px-2 py-0.5 text-[10px] font-semibold text-emerald-300 sm:inline-flex">
                     <span className="relative flex h-1.5 w-1.5">

@@ -156,7 +156,7 @@ export function Header() {
               <div className="size-12 overflow-hidden rounded-lg">
                 <Image
                   src="/logo1.png"
-                  alt="ShimanaPeriye Logo"
+                  alt="PUB GradPath Logo"
                   width={32}
                   height={32}
                   className="h-full w-full object-cover"
@@ -168,7 +168,7 @@ export function Header() {
                   solid ? "text-primary" : "text-white"
                 }`}
               >
-                ShimanaPeriye
+                PUB GradPath
               </span>
             </Link>
           </div>

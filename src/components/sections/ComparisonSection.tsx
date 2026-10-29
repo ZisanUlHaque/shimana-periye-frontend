@@ -127,7 +127,7 @@ export default function ComparisonSection() {
           The old way vs.
           <span className="bg-gradient-to-r from-emerald-500 to-sky-500 bg-clip-text text-transparent">
             {" "}
-            the ShimanaPeriye way.
+            the PUB GradPath way.
           </span>
         </h2>
         <p className="mt-3 text-slate-600">

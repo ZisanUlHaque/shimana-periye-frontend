@@ -253,7 +253,7 @@ export default function LiveActivitySection() {
         </h2>
         <p className="mx-auto mt-3 max-w-xl text-center text-slate-400">
           Real students, real universities, real progress — updating in real time
-          across ShimanaPeriye.
+          across PUB GradPath.
         </p>
 
         <div className="mt-12 grid gap-8 lg:grid-cols-5 lg:gap-10">

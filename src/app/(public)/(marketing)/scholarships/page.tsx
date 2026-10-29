@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
-  title: "Find Scholarships & Research Positions | ShimanaPeriye",
+  title: "Find Scholarships & Research Positions | PUB GradPath",
   description:
     "Explore fully funded graduate scholarships, doctoral fellowships, research assistantships, and global lab positions.",
 };

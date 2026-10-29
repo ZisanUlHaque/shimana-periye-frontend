@@ -10,7 +10,7 @@ export default function ForgotPasswordPage() {
           <div className="space-y-6 px-4 md:px-8">
             <Link href={"/"}>
               <div className="font-serif text-2xl text-primary italic">
-                ShimanaPeriye
+                PUB GradPath
               </div>
             </Link>
 

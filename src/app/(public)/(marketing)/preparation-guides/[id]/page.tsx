@@ -63,11 +63,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const guide = guidesData.find((g) => g.id === id);
 
   if (!guide) {
-    return { title: "Guide Not Found | ShimanaPeriye" };
+    return { title: "Guide Not Found | PUB GradPath" };
   }
 
   return {
-    title: `${guide.title} | ShimanaPeriye Preparation Guides`,
+    title: `${guide.title} | PUB GradPath Preparation Guides`,
     description: guide.summary,
   };
 }

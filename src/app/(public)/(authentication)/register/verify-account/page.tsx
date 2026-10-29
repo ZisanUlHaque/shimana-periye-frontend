@@ -11,7 +11,7 @@ export default function VerifyAccountPage() {
           <div className="space-y-6 px-4 md:px-8">
             <Link href={"/"}>
               <div className="font-serif text-2xl text-primary italic">
-                ShimanaPeriye
+                PUB GradPath
               </div>
             </Link>
 
@@ -20,7 +20,7 @@ export default function VerifyAccountPage() {
                 Verify Account
               </h1>
               <p className="text-sm text-muted-foreground">
-                Verify your email to activate your ShimanaPeriye account
+                Verify your email to activate your PUB GradPath account
               </p>
             </div>
 
@@ -48,7 +48,7 @@ export default function VerifyAccountPage() {
           <div className="relative h-[400px] overflow-hidden rounded-2xl lg:h-[600px]">
             <Image
               src="https://plus.unsplash.com/premium_photo-1690474616377-2802a9ac2d12?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D"
-              alt="ShimanaPeriye Account Verification"
+              alt="PUB GradPath Account Verification"
               fill
               className="object-cover"
               priority

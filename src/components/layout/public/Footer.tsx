@@ -110,7 +110,7 @@ export default function Footer() {
 
         {/* Faded Watermark */}
         <h1 className="absolute bottom-10 left-1/2 -translate-x-1/2 text-[18vw] sm:text-[14vw] font-black text-emerald-900/[0.03] select-none pointer-events-none tracking-tighter whitespace-nowrap">
-          ShimanaPeriye
+          PUB GradPath
         </h1>
 
         <div className="relative mx-auto max-w-7xl px-6 pt-6 pb-12">
@@ -123,7 +123,7 @@ export default function Footer() {
                 <div className="size-11 overflow-hidden rounded-xl bg-white shadow-md shadow-emerald-500/10 border border-emerald-100 p-0.5 flex items-center justify-center">
                   <Image
                     src="/logo1.png"
-                    alt="ShimanaPeriye Logo"
+                    alt="PUB GradPath Logo"
                     width={40}
                     height={40}
                     className="h-full w-full object-cover rounded-lg"
@@ -131,7 +131,7 @@ export default function Footer() {
                   />
                 </div>
                 <span className="text-xl font-bold bg-gradient-to-r from-slate-900 via-emerald-800 to-sky-700 bg-clip-text text-transparent">
-                  ShimanaPeriye
+                  PUB GradPath
                 </span>
               </Link>
               <p className="text-sm text-slate-600 leading-relaxed">
@@ -196,7 +196,7 @@ export default function Footer() {
 
           {/* Bottom Bar */}
           <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 font-medium">
-            <p>© {new Date().getFullYear()} ShimanaPeriye. All rights reserved.</p>
+            <p>© {new Date().getFullYear()} PUB GradPath. All rights reserved.</p>
             
             <div className="flex items-center gap-2 bg-white/70 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-slate-200/80 shadow-xs">
               <span className="text-emerald-600 font-semibold">🌐 Available in 50+ Countries</span>

@@ -4,8 +4,8 @@ import { ArrowRight, MapPin } from "lucide-react";
 import { Marquee, Reveal, StatsRow, TeamCarousel, Testimonials, ValueGrid } from "./AboutInteractive";
 
 export const metadata = {
-  title: "About Us | ShimanaPeriye",
-  description: "ShimanaPeriye makes studying abroad clearer with universities, scholarships, mentors, and preparation tools in one place.",
+  title: "About Us | PUB GradPath",
+  description: "PUB GradPath makes studying abroad clearer with universities, scholarships, mentors, and preparation tools in one place.",
 };
 
 const G = "/assets/guides/";
@@ -113,11 +113,11 @@ export default function AboutPage() {
           <Reveal>
             <h2 className={`${heading} text-4xl sm:text-5xl`}>A word from the founder</h2>
             <div className="mt-6 max-w-md space-y-4 text-sm leading-6 text-muted-foreground">
-              <p>We started ShimanaPeriye because talented students were spending more energy navigating the system than preparing for the future they wanted.</p>
+              <p>We started PUB GradPath because talented students were spending more energy navigating the system than preparing for the future they wanted.</p>
               <p>Our work is to make the path easier to understand, one decision at a time. Thank you for being part of this story.</p>
             </div>
             <p className="mt-8 text-sm font-semibold">Zisan Ul Haque</p>
-            <p className="text-xs text-muted-foreground">Founder, ShimanaPeriye</p>
+            <p className="text-xs text-muted-foreground">Founder, PUB GradPath</p>
           </Reveal>
           <Reveal delay={0.1} className="rounded-3xl bg-primary/5 p-4">
             <Photo alt="Student celebrating on campus" className="aspect-[4/3] !rounded-2xl" src={G + "about1.png"} />
@@ -168,7 +168,7 @@ export default function AboutPage() {
               </div>
             </div>
             <div className="group relative aspect-[16/11] overflow-hidden rounded-xl border border-border bg-card shadow-2xl shadow-primary/15 md:-mr-24 md:translate-y-4 lg:-mr-32">
-              <Image alt="ShimanaPeriye dashboard" className="object-cover object-left-top transition duration-700 group-hover:scale-[1.03]" fill sizes="(max-width:768px) 100vw, 50vw" src="/dashboard.png" />
+              <Image alt="PUB GradPath dashboard" className="object-cover object-left-top transition duration-700 group-hover:scale-[1.03]" fill sizes="(max-width:768px) 100vw, 50vw" src="/dashboard.png" />
             </div>
           </Reveal>
         </div>

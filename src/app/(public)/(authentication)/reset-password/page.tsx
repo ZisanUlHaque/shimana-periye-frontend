@@ -11,7 +11,7 @@ export default function ResetPasswordPage() {
           <div className="space-y-6 px-4 md:px-8">
             <Link href={"/"}>
               <div className="font-serif text-2xl text-primary italic">
-                ShimanaPeriye
+                PUB GradPath
               </div>
             </Link>
 
@@ -20,7 +20,7 @@ export default function ResetPasswordPage() {
                 Reset Password
               </h1>
               <p className="text-sm text-muted-foreground">
-                Choose a new password for your ShimanaPeriye account
+                Choose a new password for your PUB GradPath account
               </p>
             </div>
 

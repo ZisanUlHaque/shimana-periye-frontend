@@ -1,4 +1,4 @@
-Here is the complete API reference for **PUB GradPath (ShimanaPeriye)**, categorized by **Public**, **Student**, **Mentor**, **Admin**, and **Shared Authenticated** routes.
+Here is the complete API reference for **PUB GradPath**, categorized by **Public**, **Student**, **Mentor**, **Admin**, and **Shared Authenticated** routes.
 
 All routes are prefixed with: `{{BASE_URL}}/api/v1`
 
