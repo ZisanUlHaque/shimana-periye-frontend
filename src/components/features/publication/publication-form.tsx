@@ -30,6 +30,8 @@ export function PublicationForm({
       title: defaultValues?.title ?? "",
       venue: defaultValues?.venue ?? "",
       year: defaultValues?.year ?? undefined,
+      paperId: defaultValues?.paperId ?? "",
+      doi: defaultValues?.doi ?? "",
       link: defaultValues?.link ?? "",
     } as PublicationFormValues,
     validators: {
@@ -106,7 +108,7 @@ export function PublicationForm({
         }}
       </form.Field>
 
-      {/* Year and Link */}
+      {/* Year and Paper ID */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <form.Field name="year">
           {(field) => {
@@ -140,17 +142,74 @@ export function PublicationForm({
           }}
         </form.Field>
 
+        <form.Field name="paperId">
+          {(field) => {
+            const hasError =
+              field.state.meta.isTouched && field.state.meta.errors.length > 0;
+            return (
+              <div className="grid gap-1.5">
+                <Label htmlFor="paperId">Paper ID</Label>
+                <Input
+                  id="paperId"
+                  placeholder="e.g. arXiv:2401.09876, #104"
+                  value={(field.state.value as string) ?? ""}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => field.handleChange(e.target.value)}
+                  disabled={isSubmitting}
+                />
+                {hasError && (
+                  <FieldError className="text-xs">
+                    {field.state.meta.errors
+                      .map((e) => e?.message || String(e))
+                      .join(", ")}
+                  </FieldError>
+                )}
+              </div>
+            );
+          }}
+        </form.Field>
+      </div>
+
+      {/* DOI (Digital Object Identifier) and Paper Link */}
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <form.Field name="doi">
+          {(field) => {
+            const hasError =
+              field.state.meta.isTouched && field.state.meta.errors.length > 0;
+            return (
+              <div className="grid gap-1.5">
+                <Label htmlFor="doi">DOI (Digital Object Identifier)</Label>
+                <Input
+                  id="doi"
+                  placeholder="10.1109/... or https://doi.org/..."
+                  value={(field.state.value as string) ?? ""}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => field.handleChange(e.target.value)}
+                  disabled={isSubmitting}
+                />
+                {hasError && (
+                  <FieldError className="text-xs">
+                    {field.state.meta.errors
+                      .map((e) => e?.message || String(e))
+                      .join(", ")}
+                  </FieldError>
+                )}
+              </div>
+            );
+          }}
+        </form.Field>
+
         <form.Field name="link">
           {(field) => {
             const hasError =
               field.state.meta.isTouched && field.state.meta.errors.length > 0;
             return (
               <div className="grid gap-1.5">
-                <Label htmlFor="link">DOI / Paper URL</Label>
+                <Label htmlFor="link">Paper URL / Direct Link</Label>
                 <Input
                   id="link"
                   type="url"
-                  placeholder="https://doi.org/..."
+                  placeholder="https://..."
                   value={(field.state.value as string) ?? ""}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}

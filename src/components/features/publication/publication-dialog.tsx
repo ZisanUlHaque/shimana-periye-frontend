@@ -41,6 +41,8 @@ export function PublicationDialog({
       title: values.title,
       venue: values.venue || undefined,
       year: values.year ? Number(values.year) : undefined,
+      paperId: values.paperId || undefined,
+      doi: values.doi || undefined,
       link: values.link || undefined,
     };
 
@@ -66,7 +68,7 @@ export function PublicationDialog({
           )
         }
       />
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-lg">
         <DialogHeader>
           <div className="flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
             <BookOpen className="size-5" />

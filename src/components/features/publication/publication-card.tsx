@@ -1,16 +1,24 @@
 "use client";
 
-import { BookOpen, ExternalLink, Pencil, Trash2 } from "lucide-react";
+import { BookOpen, ExternalLink, Hash, Link2, Pencil, Trash2 } from "lucide-react";
 import type { IPublication } from "@/types/publication.type";
 import { PublicationDialog } from "./publication-dialog";
 import { DeletePublicationDialog } from "./delete-publication-dialog";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 
 interface PublicationCardProps {
   publication: IPublication;
 }
 
 export function PublicationCard({ publication }: PublicationCardProps) {
+  const cleanDoi = publication.doi?.replace(/^https?:\/\/(dx\.)?doi\.org\//, "").trim();
+  const doiUrl = cleanDoi
+    ? publication.doi?.startsWith("http")
+      ? publication.doi
+      : `https://doi.org/${cleanDoi}`
+    : null;
+
   return (
     <div className="group relative flex flex-col gap-3 rounded-2xl border border-border/70 bg-card p-5 shadow-xs transition-all duration-200 hover:border-border hover:shadow-sm">
       <div className="flex items-start justify-between gap-3">
@@ -26,6 +34,18 @@ export function PublicationCard({ publication }: PublicationCardProps) {
               {publication.venue ?? "Independent Publication"}
               {publication.year && ` • ${publication.year}`}
             </p>
+
+            {publication.paperId && (
+              <div className="mt-1.5 flex items-center gap-1.5">
+                <Badge
+                  variant="secondary"
+                  className="text-[10px] font-mono px-2 py-0.5 bg-muted/60 text-muted-foreground border border-border/50"
+                >
+                  <Hash className="size-2.5 mr-0.5 opacity-70" />
+                  ID: {publication.paperId}
+                </Badge>
+              </div>
+            )}
           </div>
         </div>
 
@@ -57,19 +77,35 @@ export function PublicationCard({ publication }: PublicationCardProps) {
         </div>
       </div>
 
-      {publication.link && (
-        <div className="flex items-center gap-1.5 border-t border-border/60 pt-3 text-xs">
-          <a
-            href={publication.link}
-            target="_blank"
-            rel="noreferrer noopener"
-            className="inline-flex items-center gap-1 text-primary hover:underline"
-          >
-            <span className="truncate max-w-[320px]">
-              {publication.link.replace(/^https?:\/\//, "")}
-            </span>
-            <ExternalLink className="size-3 shrink-0" />
-          </a>
+      {/* Footer Links (DOI & Paper Link) */}
+      {(doiUrl || publication.link) && (
+        <div className="flex flex-wrap items-center gap-3 border-t border-border/60 pt-3 text-xs">
+          {doiUrl && (
+            <a
+              href={doiUrl}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="inline-flex items-center gap-1 text-primary hover:underline font-mono text-[11px]"
+            >
+              <Link2 className="size-3 shrink-0" />
+              <span>DOI: {cleanDoi}</span>
+              <ExternalLink className="size-2.5 shrink-0 opacity-70" />
+            </a>
+          )}
+
+          {publication.link && publication.link !== doiUrl && (
+            <a
+              href={publication.link}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="inline-flex items-center gap-1 text-muted-foreground hover:text-foreground hover:underline"
+            >
+              <span className="truncate max-w-[240px]">
+                {publication.link.replace(/^https?:\/\//, "")}
+              </span>
+              <ExternalLink className="size-3 shrink-0" />
+            </a>
+          )}
         </div>
       )}
     </div>
