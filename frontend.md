@@ -2,7 +2,7 @@
 ### Higher-Study Discovery and Application Workspace (Problem Set D2)
 **Version:** 1.0 (Hackathon & Production Edition)  
 **Target Platform:** Web (Desktop-first, Responsive Tablet & Mobile)  
-**Backend API Specification:** Complete ShimanaPeriye REST API (`/api/v1`)  
+**Backend API Specification:** Complete PUB GradPath REST API (`/api/v1`)  
 **Status:** Canonical Implementation Guide for Frontend Developers
 
 ---

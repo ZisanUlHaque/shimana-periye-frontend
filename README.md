@@ -1,4 +1,4 @@
-# 🎓 ShimanaPeriye — PUB GradPath
+# 🎓 PUB GradPath
 ### Higher-Study Discovery & Application Workspace
 
 [![Next.js](https://img.shields.io/badge/Next.js-16.4.2-black?style=flat&logo=next.js)](https://nextjs.org/)
@@ -13,7 +13,7 @@
 
 - **Track:** Track D — Academic and EdTech Platforms
 - **Problem ID & Title:** **D2. PUB GradPath — Higher-Study Discovery and Application Workspace**
-- **Project Name:** **ShimanaPeriye**
+- **Project Name:** **PUB GradPath**
 - **Team Name:** *Semicolon Survivors*
 
 ### 👥 Team Members
@@ -138,18 +138,6 @@ flowchart TD
 | **Preparation Guides & PDF Viewer** | **Done** | Rich educational roadmaps on Letter of Recommendation (LOR), SOP drafting, and professor outreach with embedded PDF template downloads. |
 | **Timezone-Accurate Scheduling** | **Done** | Fully synced with Bangladesh Standard Time (BST / `Asia:Dhaka`) across calendar events, email notifications, and slot allocations. |
 | **Multi-Role RBAC & Portals** | **Done** | Dedicated dashboards for **Student**, **Mentor**, and **Administrator** with client-side role guards and server JWT verification. |
-
----
-
-## 🔑 Sample Login Accounts for Every Role
-
-The database comes pre-seeded with sample accounts for testing all three roles:
-
-| Role | Email Address | Password | Permissions & Testing Scope |
-| :--- | :--- | :--- | :--- |
-| **Student** | `student@gradpath.test` | `Student123!` | Full applicant workspace: profile, matching, applications, cost estimator, 1-on-1 mentor booking. |
-| **Mentor** | `mentor@gradpath.test` | `Mentor123!` | Review student documents, leave comments, set 30-min interview slots, manage mentees. |
-| **Admin** | `admin@gradpath.test` | `Admin123!` | User moderation (activate/block), review self-registered mentor queue, maintain opportunities. |
 
 ---
 

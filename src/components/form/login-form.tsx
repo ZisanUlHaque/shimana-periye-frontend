@@ -21,35 +21,6 @@ import { cn } from "@/lib/utils";
 import { useLogin } from "@/hooks";
 import { useQueryClient } from "@tanstack/react-query";
 
-const DEMO_ACCOUNTS = [
-  {
-    role: "Admin",
-    email: "admin@gradpath.test",
-    password: "Admin@1234",
-    icon: Shield,
-    redirect: "/admin",
-    accent: "hover:border-violet-500/50 hover:bg-violet-500/5",
-    iconBg: "bg-violet-500/15 text-violet-600 dark:text-violet-400",
-  },
-  {
-    role: "Mentor",
-    email: "mentor@gradpath.test",
-    password: "Mentor@1234",
-    icon: User,
-    redirect: "/mentor",
-    accent: "hover:border-blue-500/50 hover:bg-blue-500/5",
-    iconBg: "bg-blue-500/15 text-blue-600 dark:text-blue-400",
-  },
-  {
-    role: "Student",
-    email: "student@gradpath.test",
-    password: "Student@1234",
-    icon: GraduationCap,
-    redirect: "/student",
-    accent: "hover:border-emerald-500/50 hover:bg-emerald-500/5",
-    iconBg: "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400",
-  },
-] as const;
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
@@ -117,37 +88,6 @@ export default function LoginForm() {
     );
   };
 
-  const handleDemoLogin = (account: (typeof DEMO_ACCOUNTS)[number]) => {
-    setDemoLoading(account.role);
-    setEmail(account.email);
-    setPassword(account.password);
-
-    login(
-      { email: account.email, password: account.password },
-      {
-        onSuccess: (res: any) => {
-          toast.add({
-            title: `Signed in as ${account.role}`,
-            description: `Redirecting to ${account.role.toLowerCase()} dashboard…`,
-            type: "success",
-          });
-
-          queryClient.setQueryData(["user"], res);
-          queryClient.invalidateQueries({ queryKey: ["user"] });
-
-          router.replace(account.redirect);
-        },
-        onError: () => {
-          toast.add({
-            title: "Demo credentials filled",
-            description: "Click Sign In to continue.",
-            type: "info",
-          });
-          setDemoLoading(null);
-        },
-      }
-    );
-  };
 
   return (
     <div className="flex flex-col gap-6">
@@ -236,54 +176,6 @@ export default function LoginForm() {
           <GoogleLoginComponent />
         </div>
       </form>
-
-      {/* Quick Demo Access Bar */}
-      <div className="pt-2">
-        <div className="flex items-center gap-2 mb-2.5">
-          <FastForward className="size-3.5 text-primary" />
-          <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
-            Quick Demo Sign-in
-          </span>
-        </div>
-        <div className="grid grid-cols-3 gap-2">
-          {DEMO_ACCOUNTS.map((acc) => {
-            const Icon = acc.icon;
-            const isThisLoading = demoLoading === acc.role;
-            return (
-              <button
-                key={acc.role}
-                type="button"
-                onClick={() => handleDemoLogin(acc)}
-                disabled={loginPending}
-                className={cn(
-                  "flex flex-col items-center gap-1.5 p-3 rounded-2xl border border-border/70 bg-card text-center transition-all duration-200",
-                  acc.accent,
-                  isThisLoading && "opacity-75"
-                )}
-              >
-                <div
-                  className={cn(
-                    "flex size-9 items-center justify-center rounded-xl transition-colors",
-                    acc.iconBg
-                  )}
-                >
-                  {isThisLoading ? (
-                    <Spinner className="size-4" />
-                  ) : (
-                    <Icon className="size-4" />
-                  )}
-                </div>
-                <span className="text-xs font-bold text-foreground">
-                  {acc.role}
-                </span>
-                <span className="text-[10px] text-muted-foreground line-clamp-1">
-                  1-Click
-                </span>
-              </button>
-            );
-          })}
-        </div>
-      </div>
     </div>
   );
 }

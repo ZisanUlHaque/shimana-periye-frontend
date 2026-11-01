@@ -1,6 +1,6 @@
-import LoginForm from "@/components/form/login-form"
-import Image from "next/image"
-import Link from "next/link"
+import LoginForm from "@/components/form/login-form";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function LoginPage() {
   return (
@@ -22,6 +22,17 @@ export default function LoginPage() {
             </div>
 
             <LoginForm />
+
+            {/* register Link */}
+            <p className="text-center text-sm text-muted-foreground">
+              Don't have an account?{" "}
+              <Link
+                href="/register"
+                className="font-medium text-primary hover:underline"
+              >
+                Register
+              </Link>
+            </p>
           </div>
 
           <div className="relative h-[400px] overflow-hidden rounded-2xl lg:h-[600px]">
@@ -41,5 +52,5 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }
